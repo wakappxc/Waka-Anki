@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anki 快速制卡</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"PingFang SC"', '"Hiragino Sans GB"', '"Microsoft YaHei"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+      },
+    },
+  },
+}
+</script>
+<style>
+  .card-flip { perspective: 800px; }
+  .card-flip-inner {
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+  .card-flip.flipped .card-flip-inner { transform: rotateY(180deg); }
+  .card-front, .card-back {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .card-back { transform: rotateY(180deg); }
+  .toast { animation: slideIn 0.3s ease; }
+  @keyframes slideIn {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal-overlay { background: rgba(0,0,0,0.4); }
+  .card-item-enter { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  textarea, input[type="text"] { transition: border-color 0.2s; }
+  textarea:focus, input[type="text"]:focus { outline: none; }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-800">
+
+<!-- Toast container -->
+<div id="toast" class="fixed top-4 right-4 z-50 hidden"></div>
+
+<!-- Help modal -->
+<div id="helpModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+  <div class="modal-overlay absolute inset-0" onclick="document.getElementById('helpModal').classList.add('hidden')"></div>
+  <div class="bg-white rounded-2xl shadow-xl p-6 max-w-lg mx-4 relative z-10 max-h-[80vh] overflow-y-auto">
+    <h2 class="text-xl font-bold mb-4 text-blue-600">使用说明</h2>
+    <div class="space-y-3 text-sm leading-relaxed">
+      <div>
+        <h3 class="font-semibold text-gray-700">单张制卡</h3>
+        <p class="text-gray-600">填写正面（问题）和背面（答案），可选填标签和卡组名，点击"添加卡片"。</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-700">批量制卡</h3>
+        <p class="text-gray-600">每行一张卡片，用逗号、Tab 或竖线分隔正面和背面。例如：</p>
+        <pre class="bg-gray-100 p-2 rounded mt-1 text-xs">你好,Hello
+苹果,Apple
+计算机,Computer</pre>
+        <p class="text-gray-500 mt-1">系统会自动检测分隔符。</p>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-700">导出与导入 Anki</h3>
+        <ol class="list-decimal list-inside text-gray-600 space-y-1">
+          <li>点击"导出"下载 TXT 文件</li>
+          <li>打开 Anki → 文件 → 导入</li>
+          <li>选择下载的 TXT 文件</li>
+          <li>分隔符选"Tab"，确认字段映射后导入</li>
+        </ol>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-700">关于卡组</h3>
+        <p class="text-gray-600">卡组名支持 <code class="bg-gray-100 px-1 rounded">::</code> 分隔符创建嵌套卡组，如 <code class="bg-gray-100 px-1 rounded">英语::基础词汇</code>。</p>
+      </div>
+    </div>
+    <button onclick="document.getElementById('helpModal').classList.add('hidden')" class="mt-5 w-full py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">知道了</button>
+  </div>
+</div>
+
+<!-- Confirm modal -->
+<div id="confirmModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+  <div class="modal-overlay absolute inset-0" onclick="closeConfirm()"></div>
+  <div class="bg-white rounded-2xl shadow-xl p-6 max-w-sm mx-4 relative z-10">
+    <p id="confirmMsg" class="text-gray-700 mb-5"></p>
+    <div class="flex gap-3 justify-end">
+      <button onclick="closeConfirm()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">取消</button>
+      <button id="confirmBtn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="bg-white shadow-sm sticky top-0 z-30">
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2 sm:gap-3">
+      <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white text-lg shrink-0">🃟</div>
+      <h1 class="text-lg sm:text-xl font-bold text-gray-800">Anki 快速制卡</h1>
+      <span id="cardCount" class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-medium">0 张</span>
+    </div>
+    <div class="flex gap-1 sm:gap-2">
+      <button id="clearBtn" class="px-3 py-1.5 text-sm text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed" disabled>清空数据</button>
+      <button onclick="document.getElementById('helpModal').classList.remove('hidden')" class="px-3 py-1.5 text-sm text-gray-500 hover:text-blue-500 hover:bg-blue-50 rounded-lg transition-colors">帮助</button>
+    </div>
+  </div>
+</header>
+
+<!-- Main content -->
+<main class="max-w-7xl mx-auto p-3 sm:p-6">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+
+    <!-- Left: Creation panel -->
+    <section class="bg-white rounded-xl shadow-sm p-4 sm:p-5">
+      <!-- Mode tabs -->
+      <div class="flex border-b border-gray-200 mb-4">
+        <button data-mode="single" class="mode-tab flex-1 py-2 text-sm font-medium border-b-2 border-blue-500 text-blue-600 transition-colors">单张制卡</button>
+        <button data-mode="batch" class="mode-tab flex-1 py-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-gray-600 transition-colors">批量制卡</button>
+      </div>
+
+      <!-- Single card form -->
+      <form id="singleForm" class="space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1">正面 <span class="text-red-400">*</span></label>
+          <input type="text" name="front" required placeholder="输入问题或关键词" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1">背面 <span class="text-red-400">*</span></label>
+          <input type="text" name="back" required placeholder="输入答案或释义" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">标签</label>
+            <input type="text" name="tags" placeholder="如：英语 单词" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">卡组</label>
+            <input type="text" name="deck" placeholder="如：英语词汇" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button type="submit" id="addBtn" class="flex-1 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">添加卡片</button>
+          <button type="button" id="cancelEditBtn" class="hidden px-3 py-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors text-sm">取消编辑</button>
+        </div>
+      </form>
+
+      <!-- Batch card form -->
+      <div id="batchForm" class="space-y-3 hidden">
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1">粘贴内容</label>
+          <textarea id="batchText" rows="6" placeholder="每行一张卡片，用逗号、Tab 或 | 分隔正面和背面&#10;&#10;例如：&#10;你好,Hello&#10;苹果,Apple&#10;计算机,Computer" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50 resize-none"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-500 mb-1">分隔符</label>
+          <select id="delimiter" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:border-blue-400">
+            <option value="auto">自动检测</option>
+            <option value=",">逗号 (,)</option>
+            <option value="\t">Tab</option>
+            <option value="|">竖线 (|)</option>
+            <option value="none">每行 = 正面（背面为空）</option>
+          </select>
+        </div>
+        <!-- Batch preview -->
+        <div id="batchPreview" class="hidden">
+          <p class="text-xs font-medium text-gray-500 mb-2">解析预览（共 <span id="batchCount">0</span> 张）</p>
+          <div id="batchPreviewList" class="max-h-40 overflow-y-auto space-y-1 text-xs"></div>
+        </div>
+        <button id="batchGenerateBtn" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">批量生成卡片</button>
+      </div>
+    </section>
+
+    <!-- Center: Preview panel -->
+    <section class="bg-white rounded-xl shadow-sm p-4 sm:p-5 flex flex-col items-center justify-center min-h-[300px]">
+      <p class="text-xs font-medium text-gray-400 mb-3 uppercase tracking-wide">卡片预览</p>
+      <div id="previewPlaceholder" class="text-center text-gray-300">
+        <div class="text-5xl mb-3">🃟</div>
+        <p class="text-sm">选择左侧卡片<br>或添加新卡片查看预览</p>
+        <p class="text-xs text-gray-300 mt-1">点击卡片可翻转</p>
+      </div>
+      <div id="previewCard" class="card-flip w-full max-w-sm hidden" onclick="this.classList.toggle('flipped')">
+        <div class="card-flip-inner relative w-full" style="min-height:260px">
+          <!-- Front -->
+          <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-xl p-5 flex flex-col justify-center items-center text-center">
+            <p class="text-xs text-blue-400 mb-2 uppercase tracking-wide">正面 · 问题</p>
+            <p id="previewFront" class="text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+          </div>
+          <!-- Back -->
+          <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-xl p-5 flex flex-col justify-center items-center text-center">
+            <p class="text-xs text-green-400 mb-2 uppercase tracking-wide">背面 · 答案</p>
+            <p id="previewBack" class="text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+          </div>
+        </div>
+        <div class="flex justify-center gap-4 mt-3 text-xs text-gray-400">
+          <span id="previewTags"></span>
+          <span id="previewDeck"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Card list panel -->
+    <section class="bg-white rounded-xl shadow-sm p-4 sm:p-5 flex flex-col min-h-[300px]">
+      <div class="flex items-center justify-between mb-3">
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide">卡片列表</p>
+        <button id="clearAllBtn2" class="text-xs text-gray-300 hover:text-red-400 transition-colors hidden">全部删除</button>
+      </div>
+      <div id="cardListEmpty" class="flex-1 flex items-center justify-center text-gray-300 text-sm">
+        <p>暂无卡片，开始制卡吧</p>
+      </div>
+      <div id="cardList" class="flex-1 space-y-2 overflow-y-auto max-h-[500px] pr-1 hidden"></div>
+    </section>
+  </div>
+
+  <!-- Export bar -->
+  <div class="mt-4 sm:mt-6 bg-white rounded-xl shadow-sm p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <p class="text-sm text-gray-500">
+      共 <span id="exportCount" class="font-semibold text-gray-700">0</span> 张卡片
+    </p>
+    <div class="flex gap-2 w-full sm:w-auto">
+      <button id="exportBtn" disabled class="flex-1 sm:flex-none px-5 py-2.5 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+        导出 Anki 格式
+      </button>
+    </div>
+  </div>
+</main>
+
+<script>
+'use strict';
+// ===== State =====
+const STORAGE_KEY = 'anki-fast-cards';
+
+let state = {
+  cards: [],
+  selectedCardId: null,
+  editingCardId: null,
+  mode: 'single',
+};
+
+// ===== Helpers =====
+const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => document.querySelectorAll(sel);
+
+function genId() {
+  return crypto.randomUUID?.() ?? Date.now().toString(36) + Math.random().toString(36).slice(2, 11);
+}
+
+function escapeTXTField(field) {
+  const s = String(field ?? '');
+  if (/[\t\n\r"]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+
+// ===== Toast =====
+let toastTimer;
+function showToast(msg, type = 'info') {
+  const el = $('#toast');
+  const colors = { success: 'bg-green-500', error: 'bg-red-500', info: 'bg-gray-700' };
+  el.className = `toast fixed top-4 right-4 z-50 ${colors[type]} text-white px-4 py-2 rounded-lg shadow-lg text-sm`;
+  el.textContent = msg;
+  el.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.add('hidden'), 2500);
+}
+
+// ===== Confirm modal =====
+let confirmCallback = null;
+function showConfirm(msg, cb) {
+  $('#confirmMsg').textContent = msg;
+  $('#confirmModal').classList.remove('hidden');
+  confirmCallback = cb;
+  $('#confirmBtn').onclick = () => { closeConfirm(); cb(); };
+}
+function closeConfirm() {
+  $('#confirmModal').classList.add('hidden');
+  confirmCallback = null;
+}
+
+// ===== Persistence =====
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.cards));
+  } catch (e) {
+    showToast('本地存储空间不足，请清理旧卡片', 'error');
+  }
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (Array.isArray(data)) state.cards = data;
+    }
+  } catch (e) {
+    state.cards = [];
+  }
+}
+
+// ===== Card operations =====
+function addCard(front, back, tags, deck) {
+  const card = {
+    id: genId(),
+    front: front.trim(),
+    back: back.trim(),
+    tags: tags.trim(),
+    deck: deck.trim(),
+  };
+  state.cards.push(card);
+  saveState();
+  if (!state.selectedCardId) selectCard(card.id);
+  return card;
+}
+
+function updateCard(id, front, back, tags, deck) {
+  const card = state.cards.find(c => c.id === id);
+  if (!card) return;
+  card.front = front.trim();
+  card.back = back.trim();
+  card.tags = tags.trim();
+  card.deck = deck.trim();
+  saveState();
+}
+
+function removeCard(id) {
+  state.cards = state.cards.filter(c => c.id !== id);
+  if (state.selectedCardId === id) {
+    state.selectedCardId = state.cards.length > 0 ? state.cards[state.cards.length - 1].id : null;
+  }
+  if (state.editingCardId === id) {
+    state.editingCardId = null;
+    resetForm();
+  }
+  saveState();
+}
+
+function clearAll() {
+  state.cards = [];
+  state.selectedCardId = null;
+  state.editingCardId = null;
+  resetForm();
+  saveState();
+}
+
+function selectCard(id) {
+  state.selectedCardId = id;
+  if (state.editingCardId && state.editingCardId !== id) {
+    // Don't change selection while editing a different card
+    return;
+  }
+}
+
+// ===== Form helpers =====
+function resetForm() {
+  const form = $('#singleForm');
+  form.reset();
+  form.front.value = '';
+  form.back.value = '';
+  form.tags.value = '';
+  form.deck.value = '';
+  state.editingCardId = null;
+  $('#addBtn').textContent = '添加卡片';
+  $('#cancelEditBtn').classList.add('hidden');
+  form.front.focus();
+}
+
+function fillFormForEdit(card) {
+  const form = $('#singleForm');
+  form.front.value = card.front;
+  form.back.value = card.back;
+  form.tags.value = card.tags;
+  form.deck.value = card.deck;
+  state.editingCardId = card.id;
+  $('#addBtn').textContent = '保存修改';
+  $('#cancelEditBtn').classList.remove('hidden');
+  // Switch to single mode if in batch
+  if (state.mode === 'batch') switchMode('single');
+  form.front.focus();
+}
+
+// ===== Mode switching =====
+function switchMode(mode) {
+  state.mode = mode;
+  $$('.mode-tab').forEach(tab => {
+    const isActive = tab.dataset.mode === mode;
+    tab.classList.toggle('border-blue-500', isActive);
+    tab.classList.toggle('text-blue-600', isActive);
+    tab.classList.toggle('border-transparent', !isActive);
+    tab.classList.toggle('text-gray-400', !isActive);
+  });
+  $('#singleForm').classList.toggle('hidden', mode !== 'single');
+  $('#batchForm').classList.toggle('hidden', mode !== 'batch');
+  if (mode === 'single') resetForm();
+}
+
+// ===== Batch parsing =====
+function detectDelimiter(text) {
+  const lines = text.split('\n').filter(l => l.trim()).slice(0, 10);
+  if (lines.length === 0) return 'none';
+  const delimiters = [',', '\t', '|'];
+  let best = { delim: 'none', count: 0 };
+  for (const d of delimiters) {
+    let total = 0;
+    for (const line of lines) {
+      total += (line.match(new RegExp('\\' + d, 'g')) || []).length;
+    }
+    if (total > best.count) best = { delim: d, count: total };
+  }
+  return best.count > 0 ? best.delim : 'none';
+}
+
+function parseBatchText(text, forcedDelimiter) {
+  const lines = text.split('\n').filter(l => l.trim());
+  const delim = forcedDelimiter === 'auto' ? detectDelimiter(text) : forcedDelimiter;
+  const result = [];
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    if (delim === 'none') {
+      result.push({ front: trimmed, back: '' });
+    } else if (delim === '\t') {
+      const parts = trimmed.split('\t');
+      result.push({ front: parts[0]?.trim() ?? '', back: parts.slice(1).join('\t').trim() });
+    } else {
+      // Split by delimiter but respect quoted fields
+      const parts = [];
+      let current = '';
+      let inQuotes = false;
+      for (const ch of trimmed) {
+        if (ch === '"') { inQuotes = !inQuotes; continue; }
+        if (ch === delim && !inQuotes) { parts.push(current.trim()); current = ''; continue; }
+        current += ch;
+      }
+      parts.push(current.trim());
+      result.push({
+        front: parts[0]?.trim() ?? '',
+        back: parts.slice(1).join(delim).trim(),
+      });
+    }
+  }
+  return result;
+}
+
+// ===== Rendering =====
+function renderAll() {
+  renderCardList();
+  renderPreview();
+  renderStats();
+}
+
+function renderCardList() {
+  const listEl = $('#cardList');
+  const emptyEl = $('#cardListEmpty');
+
+  if (state.cards.length === 0) {
+    listEl.classList.add('hidden');
+    emptyEl.classList.remove('hidden');
+    return;
+  }
+
+  emptyEl.classList.add('hidden');
+  listEl.classList.remove('hidden');
+  listEl.innerHTML = state.cards.map(c => {
+    const isSelected = c.id === state.selectedCardId;
+    const isEditing = c.id === state.editingCardId;
+    const frontPreview = c.front.length > 30 ? c.front.slice(0, 30) + '…' : c.front;
+    return `
+      <div class="card-item-enter flex items-center gap-2 p-2.5 rounded-lg cursor-pointer transition-colors ${isSelected ? 'bg-blue-50 border border-blue-200' : 'bg-gray-50 border border-transparent hover:bg-gray-100'}" data-card-id="${c.id}">
+        <div class="flex-1 min-w-0" data-action="select">
+          <p class="text-sm font-medium text-gray-700 truncate">${escapeHTML(frontPreview)}</p>
+          <p class="text-xs text-gray-400 truncate">${escapeHTML(c.back || '(空)')}</p>
+          <div class="flex gap-2 mt-1">
+            ${c.tags ? `<span class="text-[10px] text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">${escapeHTML(c.tags)}</span>` : ''}
+            ${c.deck ? `<span class="text-[10px] text-green-500 bg-green-50 px-1.5 py-0.5 rounded">${escapeHTML(c.deck)}</span>` : ''}
+          </div>
+        </div>
+        <div class="flex gap-1 shrink-0">
+          <button data-action="edit" data-id="${c.id}" class="p-1 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors" title="编辑">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          </button>
+          <button data-action="delete" data-id="${c.id}" class="p-1 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition-colors" title="删除">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderPreview() {
+  const card = state.cards.find(c => c.id === state.selectedCardId);
+  const placeholder = $('#previewPlaceholder');
+  const preview = $('#previewCard');
+  const flipEl = $('.card-flip');
+
+  if (!card) {
+    placeholder.classList.remove('hidden');
+    preview.classList.add('hidden');
+    return;
+  }
+
+  placeholder.classList.add('hidden');
+  preview.classList.remove('hidden');
+  if (flipEl) flipEl.classList.remove('flipped');
+
+  $('#previewFront').textContent = card.front || '(空)';
+  $('#previewBack').textContent = card.back || '(空)';
+  $('#previewTags').textContent = card.tags || '';
+  $('#previewDeck').textContent = card.deck || '';
+}
+
+function renderStats() {
+  const count = state.cards.length;
+  $('#cardCount').textContent = `${count} 张`;
+  $('#exportCount').textContent = count;
+  const hasCards = count > 0;
+  $('#clearBtn').disabled = !hasCards;
+  $('#exportBtn').disabled = !hasCards;
+  $('#clearAllBtn2').classList.toggle('hidden', !hasCards);
+}
+
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ===== Export =====
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportTXT() {
+  if (state.cards.length === 0) return;
+  const lines = [
+    '#separator:tab',
+    '#html:true',
+    ...state.cards.map(c =>
+      [c.front, c.back, c.tags, c.deck].map(escapeTXTField).join('\t')
+    ),
+  ];
+  const txt = lines.join('\n');
+  const blob = new Blob([txt], { type: 'text/tab-separated-values;charset=utf-8;' });
+  downloadBlob(blob, 'anki-cards.txt');
+  showToast(`已导出 ${state.cards.length} 张卡片为 Anki 格式`, 'success');
+}
+
+// ===== Event handling =====
+function setupEvents() {
+  // Mode tabs
+  $$('.mode-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchMode(tab.dataset.mode));
+  });
+
+  // Single form submit
+  $('#singleForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const front = form.front.value.trim();
+    const back = form.back.value.trim();
+
+    if (!front || !back) {
+      showToast('正面和背面为必填项', 'error');
+      return;
+    }
+
+    if (state.editingCardId) {
+      updateCard(state.editingCardId, front, back, form.tags.value, form.deck.value);
+      showToast('卡片已更新', 'success');
+      resetForm();
+    } else {
+      addCard(front, back, form.tags.value, form.deck.value);
+      showToast('卡片已添加', 'success');
+      form.reset();
+      form.front.focus();
+      // Keep tags and deck for convenience
+      form.tags.value = '';
+      form.deck.value = '';
+    }
+    renderAll();
+  });
+
+  // Cancel edit
+  $('#cancelEditBtn').addEventListener('click', resetForm);
+
+  // Batch text live preview
+  $('#batchText').addEventListener('input', () => {
+    const text = $('#batchText').value;
+    const delim = $('#delimiter').value;
+    if (!text.trim()) {
+      $('#batchPreview').classList.add('hidden');
+      return;
+    }
+    const parsed = parseBatchText(text, delim);
+    $('#batchCount').textContent = parsed.length;
+    $('#batchPreviewList').innerHTML = parsed.slice(0, 50).map((p, i) =>
+      `<div class="flex gap-2 py-1 border-b border-gray-100">
+        <span class="text-gray-400 w-5 shrink-0">${i + 1}.</span>
+        <span class="text-gray-700 flex-1 truncate">${escapeHTML(p.front)}</span>
+        <span class="text-gray-400">→</span>
+        <span class="text-gray-500 flex-1 truncate">${escapeHTML(p.back || '(空)')}</span>
+      </div>`
+    ).join('');
+    if (parsed.length > 50) {
+      $('#batchPreviewList').insertAdjacentHTML('beforeend',
+        `<p class="text-gray-400 text-center py-1">…还有 ${parsed.length - 50} 张卡片</p>`);
+    }
+    $('#batchPreview').classList.remove('hidden');
+  });
+
+  // Delimiter change triggers re-parse
+  $('#delimiter').addEventListener('change', () => {
+    $('#batchText').dispatchEvent(new Event('input'));
+  });
+
+  // Batch generate
+  $('#batchGenerateBtn').addEventListener('click', () => {
+    const text = $('#batchText').value;
+    if (!text.trim()) {
+      showToast('请粘贴内容后再生成', 'error');
+      return;
+    }
+    const delim = $('#delimiter').value;
+    const parsed = parseBatchText(text, delim);
+
+    if (parsed.length === 0) {
+      showToast('未解析到有效卡片', 'error');
+      return;
+    }
+
+    let added = 0;
+    for (const item of parsed) {
+      if (item.front.trim()) {
+        addCard(item.front, item.back);
+        added++;
+      }
+    }
+
+    showToast(`已批量添加 ${added} 张卡片`, 'success');
+    $('#batchText').value = '';
+    $('#batchPreview').classList.add('hidden');
+    renderAll();
+  });
+
+  // Card list interactions (event delegation)
+  $('#cardList').addEventListener('click', (e) => {
+    const actionEl = e.target.closest('[data-action]');
+    if (!actionEl) return;
+
+    const action = actionEl.dataset.action;
+    const id = actionEl.dataset.id || actionEl.closest('[data-card-id]')?.dataset.cardId;
+
+    if (action === 'select') {
+      selectCard(id);
+      if (!state.editingCardId) {
+        const card = state.cards.find(c => c.id === id);
+        if (card) {
+          // Deselect editing card restriction check
+          state.selectedCardId = id;
+          renderAll();
+        }
+      }
+    } else if (action === 'edit') {
+      const card = state.cards.find(c => c.id === id);
+      if (card) fillFormForEdit(card);
+    } else if (action === 'delete') {
+      showConfirm('确定要删除这张卡片吗？', () => {
+        removeCard(id);
+        renderAll();
+        showToast('卡片已删除', 'info');
+      });
+    }
+  });
+
+  // Also handle click on the card item itself (not just buttons)
+  $('#cardList').addEventListener('click', (e) => {
+    const cardEl = e.target.closest('[data-card-id]');
+    if (!cardEl) return;
+    // If click wasn't on a button, select the card
+    if (!e.target.closest('button')) {
+      const id = cardEl.dataset.cardId;
+      if (!state.editingCardId || state.editingCardId === id) {
+        state.selectedCardId = id;
+        renderAll();
+      }
+    }
+  });
+
+  // Clear buttons
+  $('#clearBtn').addEventListener('click', () => {
+    showConfirm(`确定要清空全部 ${state.cards.length} 张卡片吗？此操作不可恢复。`, () => {
+      clearAll();
+      renderAll();
+      showToast('已清空所有卡片', 'info');
+    });
+  });
+
+  $('#clearAllBtn2').addEventListener('click', () => {
+    showConfirm(`确定要清空全部 ${state.cards.length} 张卡片吗？此操作不可恢复。`, () => {
+      clearAll();
+      renderAll();
+      showToast('已清空所有卡片', 'info');
+    });
+  });
+
+  // Export button
+  $('#exportBtn').addEventListener('click', exportTXT);
+
+  // Keyboard shortcut: Ctrl+Enter to add card
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      if (state.mode === 'single' && !$('#singleForm').classList.contains('hidden')) {
+        $('#singleForm').dispatchEvent(new Event('submit'));
+      }
+    }
+    // Escape to cancel edit
+    if (e.key === 'Escape' && state.editingCardId) {
+      resetForm();
+    }
+  });
+}
+
+// ===== Init =====
+function init() {
+  loadState();
+  setupEvents();
+  renderAll();
+  if (state.cards.length > 0 && state.cards[state.cards.length - 1]) {
+    state.selectedCardId = state.cards[state.cards.length - 1].id;
+  }
+  renderPreview();
+  // Focus front input
+  $('#singleForm').front?.focus();
+}
+
+init();
+</script>
+
+</body>
+</html>

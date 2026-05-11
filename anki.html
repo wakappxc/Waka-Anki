@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anki Web - 间隔重复记忆</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['-apple-system','BlinkMacSystemFont','"Segoe UI"','"PingFang SC"','"Hiragino Sans GB"','"Microsoft YaHei"','"Helvetica Neue"','Helvetica','Arial','sans-serif'],
+      },
+    },
+  },
+}
+</script>
+<style>
+  .card-flip { perspective: 800px; }
+  .card-flip-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+  .card-flip.flipped .card-flip-inner { transform: rotateY(180deg); }
+  .card-front, .card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .card-back { transform: rotateY(180deg); }
+  .toast { animation: slideDown 0.3s ease; }
+  @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .modal-overlay { background: rgba(0,0,0,0.4); }
+  .progress-bar { transition: width 0.3s ease; }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-800">
+
+<!-- Toast -->
+<div id="toast" class="fixed top-4 right-4 z-50 hidden"></div>
+
+<!-- Header -->
+<header class="bg-white shadow-sm sticky top-0 z-30">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white text-lg">🃟</div>
+      <h1 class="text-lg font-bold text-gray-800">Anki Web</h1>
+    </div>
+    <nav class="flex gap-1 text-sm">
+      <a href="#dashboard" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-colors" data-route="dashboard">仪表盘</a>
+      <a href="#add" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-colors" data-route="add">添加</a>
+      <a href="#browse" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-colors" data-route="browse">浏览</a>
+      <a href="#stats" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-colors" data-route="stats">统计</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Main content -->
+<main id="app" class="max-w-6xl mx-auto p-4 sm:p-6"></main>
+
+<!-- Modal container -->
+<div id="modal" class="fixed inset-0 z-40 flex items-center justify-center hidden">
+  <div class="modal-overlay absolute inset-0" onclick="closeModal()"></div>
+  <div id="modalContent" class="bg-white rounded-2xl shadow-xl p-6 max-w-md mx-4 relative z-10 max-h-[85vh] overflow-y-auto"></div>
+</div>
+
+<!-- Confirm modal -->
+<div id="confirmModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+  <div class="modal-overlay absolute inset-0" onclick="closeConfirm()"></div>
+  <div class="bg-white rounded-2xl shadow-xl p-6 max-w-sm mx-4 relative z-10">
+    <p id="confirmMsg" class="text-gray-700 mb-5"></p>
+    <div class="flex gap-3 justify-end">
+      <button onclick="closeConfirm()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">取消</button>
+      <button id="confirmBtn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">确认</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/db.js"></script>
+<script src="js/scheduler.js"></script>
+<script>
+'use strict';
+
+// ===== Helpers =====
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+
+function genId() { return crypto.randomUUID?.() ?? Date.now().toString(36)+Math.random().toString(36).slice(2,11); }
+
+function escapeHTML(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+function showToast(msg, type='info') {
+  const el=$('#toast'), colors={success:'bg-green-500',error:'bg-red-500',info:'bg-gray-700'};
+  el.className=`toast fixed top-4 right-4 z-50 ${colors[type]} text-white px-4 py-2 rounded-lg shadow-lg text-sm`;
+  el.textContent=msg; el.classList.remove('hidden');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.add('hidden'),2500);
+}
+
+let confirmCb=null;
+function showConfirm(msg,cb){$('#confirmMsg').textContent=msg;$('#confirmModal').classList.remove('hidden');confirmCb=cb;$('#confirmBtn').onclick=()=>{closeConfirm();cb();};}
+function closeConfirm(){$('#confirmModal').classList.add('hidden');confirmCb=null;}
+
+function showModal(html){$('#modalContent').innerHTML=html;$('#modal').classList.remove('hidden');}
+function closeModal(){$('#modal').classList.add('hidden');}
+
+function downloadBlob(blob,filename){const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=filename;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);}
+
+function formatDate(ts){const d=new Date(ts);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function formatTime(ts){const d=new Date(ts);return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;}
+
+// ===== Navigation =====
+function navigate() {
+  const hash = location.hash || '#dashboard';
+  const route = hash.split('/')[0].replace('#','');
+  $$('.nav-link').forEach(l=>{l.classList.toggle('text-blue-600',l.dataset.route===route);l.classList.toggle('bg-blue-50',l.dataset.route===route);});
+  switch(route) {
+    case 'dashboard': renderDashboard(); break;
+    case 'deck': renderReview(hash); break;
+    case 'add': renderAdd(); break;
+    case 'browse': renderBrowse(); break;
+    case 'stats': renderStats(); break;
+    default: renderDashboard();
+  }
+}
+window.addEventListener('hashchange', navigate);
+
+// ===== Dashboard =====
+async function renderDashboard() {
+  const decks = await Deck.getAll();
+  let dueTotal=0, html='';
+  for (const d of decks) {
+    const counts = await Card.countByDeck(d.id);
+    dueTotal += counts.new + counts.learn + counts.review;
+    html += `
+      <div class="bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow cursor-pointer" onclick="location.hash='#deck/${d.id}'">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-medium text-gray-800">${escapeHTML(d.name)}</h3>
+            <p class="text-xs text-gray-400 mt-0.5">共 ${counts.total} 张卡片</p>
+          </div>
+          <div class="flex gap-2">
+            ${counts.new ? `<span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">新 ${counts.new}</span>` : ''}
+            ${counts.learn ? `<span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">学 ${counts.learn}</span>` : ''}
+            ${counts.review ? `<span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">复 ${counts.review}</span>` : ''}
+            ${!counts.new&&!counts.learn&&!counts.review ? `<span class="text-xs bg-gray-100 text-gray-400 px-2 py-1 rounded-full">完成</span>` : ''}
+          </div>
+        </div>
+        ${counts.new+counts.learn+counts.review>0 ? `<div class="mt-3 bg-gray-100 rounded-full h-1.5"><div class="progress-bar bg-blue-500 h-1.5 rounded-full" style="width:${Math.max(5,((counts.new+counts.learn+counts.review)/Math.max(counts.total,1))*100)}%"></div></div>` : ''}
+      </div>`;
+  }
+  if (decks.length===0) html=`<div class="text-center py-16 text-gray-400"><div class="text-5xl mb-3">📚</div><p class="text-sm">还没有卡组，点击下方按钮创建</p></div>`;
+
+  $('#app').innerHTML = `
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-xl font-bold text-gray-800">仪表盘</h2>
+      <button onclick="showNewDeckModal()" class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">+ 新建卡组</button>
+    </div>
+    ${dueTotal>0 ? `<div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-between">
+      <p class="text-sm text-blue-700 font-medium">今天有 <span class="font-bold">${dueTotal}</span> 张卡片待复习</p>
+      ${decks.length===1 ? `<button onclick="location.hash='#deck/${decks[0].id}'" class="px-4 py-1.5 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">开始学习</button>` : ''}
+    </div>` : (decks.length>0 ? `<div class="mb-4 p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-700 text-center font-medium">🎉 今天的任务全部完成！</div>` : '')}
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">${html}</div>`;
+}
+
+function showNewDeckModal() {
+  showModal(`
+    <h3 class="text-lg font-bold mb-4">新建卡组</h3>
+    <input id="newDeckName" placeholder="输入卡组名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4" onkeydown="if(event.key==='Enter')createDeck()">
+    <button onclick="createDeck()" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">创建</button>`);
+  setTimeout(()=>$('#newDeckName')?.focus(), 100);
+}
+async function createDeck() {
+  const name = $('#newDeckName').value.trim();
+  if (!name) { showToast('请输入卡组名称', 'error'); return; }
+  try { await Deck.create(name); closeModal(); showToast('卡组已创建', 'success'); renderDashboard(); }
+  catch(e) { showToast('创建失败: ' + e.message, 'error'); }
+}
+window.createDeck = createDeck;
+window.showNewDeckModal = showNewDeckModal;
+
+// ===== Review =====
+let reviewState = { cards: [], idx: 0, did: 0, showingBack: false, states: null };
+
+async function renderReview(hash) {
+  const did = parseInt(hash.split('/')[1]) || 1;
+  const cards = await Card.getDueCards(did);
+  if (cards.length === 0) {
+    const deck = await Deck.get(did);
+    $('#app').innerHTML = `
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">🎉</div>
+        <h2 class="text-xl font-bold text-gray-800 mb-2">${escapeHTML(deck?.name||'')} — 全部完成！</h2>
+        <p class="text-gray-400 mb-6">当前没有待复习的卡片</p>
+        <div class="flex gap-3 justify-center">
+          <button onclick="location.hash='#add'" class="px-5 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">添加卡片</button>
+          <button onclick="location.hash='#dashboard'" class="px-5 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">返回</button>
+        </div>
+      </div>`;
+    return;
+  }
+  // Sort: learning first, then new, then review
+  cards.sort((a,b)=> {
+    if (a.type===1&&b.type!==1) return -1;
+    if (b.type===1&&a.type!==1) return 1;
+    if (a.type===0&&b.type!==0) return -1;
+    if (b.type===0&&a.type!==0) return 1;
+    return 0;
+  });
+  reviewState = { cards, idx: 0, did, showingBack: false, states: null };
+  renderReviewCard();
+}
+
+function renderReviewCard() {
+  if (reviewState.idx >= reviewState.cards.length) {
+    renderReview(`#deck/${reviewState.did}`);
+    return;
+  }
+  const card = reviewState.cards[reviewState.idx];
+  const states = Scheduler.getStates(card);
+  reviewState.states = states;
+  reviewState.showingBack = false;
+
+  Note.get(card.nid).then(note => {
+    const front = note?.fields[0] || '(空)';
+    const back = note?.fields[1] || '(空)';
+    const deckName = ''; // Will be filled by deck name
+    Deck.get(card.did).then(d => {
+      const dueInfo = card.type === 0 ? '新卡片' :
+        card.type === 1 ? `学习中 · 还剩 ${card.left} 步` :
+        `复习 · 间隔 ${card.ivl} 天 · 难度 ${(card.factor/1000).toFixed(1)}x`;
+
+      $('#app').innerHTML = `
+        <div class="max-w-lg mx-auto">
+          <div class="text-center text-sm text-gray-400 mb-2">${escapeHTML(d?.name||'')} · ${dueInfo} · ${reviewState.idx+1}/${reviewState.cards.length}</div>
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="card-flip ${reviewState.showingBack?'flipped':''}" id="reviewCard" onclick="flipCard()">
+              <div class="card-flip-inner relative" style="min-height:300px">
+                <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 p-6 sm:p-8 flex flex-col justify-center items-center text-center">
+                  <p class="text-xs text-blue-400 mb-3 uppercase tracking-wide">问题</p>
+                  <p class="text-xl sm:text-2xl font-medium text-gray-800 whitespace-pre-wrap">${escapeHTML(front)}</p>
+                </div>
+                <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 p-6 sm:p-8 flex flex-col justify-center items-center text-center">
+                  <p class="text-xs text-green-400 mb-3 uppercase tracking-wide">答案</p>
+                  <p class="text-xl sm:text-2xl font-medium text-gray-800 whitespace-pre-wrap">${escapeHTML(back)}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-center mt-4">
+            <p class="text-xs text-gray-400">点击卡片翻转</p>
+          </div>
+          <div id="answerButtons" class="grid grid-cols-4 gap-2 mt-4 ${reviewState.showingBack?'':'hidden'}">
+            <button onclick="answerCard('again')" class="py-3 px-2 bg-red-500 text-white rounded-xl text-sm font-medium hover:bg-red-600 transition-colors">
+              忘记<div class="text-xs opacity-70">${Scheduler.formatInterval(states.again)}</div>
+            </button>
+            <button onclick="answerCard('hard')" class="py-3 px-2 bg-orange-400 text-white rounded-xl text-sm font-medium hover:bg-orange-500 transition-colors">
+              困难<div class="text-xs opacity-70">${Scheduler.formatInterval(states.hard)}</div>
+            </button>
+            <button onclick="answerCard('good')" class="py-3 px-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:bg-blue-600 transition-colors">
+              良好<div class="text-xs opacity-70">${Scheduler.formatInterval(states.good)}</div>
+            </button>
+            <button onclick="answerCard('easy')" class="py-3 px-2 bg-green-500 text-white rounded-xl text-sm font-medium hover:bg-green-600 transition-colors">
+              简单<div class="text-xs opacity-70">${Scheduler.formatInterval(states.easy)}</div>
+            </button>
+          </div>
+          <div class="flex justify-center mt-3 gap-3">
+            <button onclick="editCard(${card.id})" class="text-xs text-gray-400 hover:text-blue-500 transition-colors">编辑</button>
+            <button onclick="deleteCard(${card.id})" class="text-xs text-gray-400 hover:text-red-500 transition-colors">删除</button>
+            <button onclick="location.hash='#dashboard'" class="text-xs text-gray-400 hover:text-gray-600 transition-colors">退出</button>
+          </div>
+        </div>`;
+    });
+  });
+}
+
+window.flipCard = function() {
+  reviewState.showingBack = true;
+  const el = $('#reviewCard');
+  if (el) el.classList.toggle('flipped');
+  const btn = $('#answerButtons');
+  if (btn) btn.classList.remove('hidden');
+};
+
+window.answerCard = async function(rating) {
+  const card = reviewState.cards[reviewState.idx];
+  const states = reviewState.states;
+  const updated = Scheduler.applyRating(card, rating, states);
+  await Card.update(updated);
+  await Revlog.add(card.id, rating, 0, updated.ivl, updated.factor, updated.reps, updated.lapses);
+  reviewState.idx++;
+  renderReviewCard();
+};
+
+window.editCard = function(cid) {
+  Card.get(cid).then(card => {
+    Note.get(card.nid).then(note => {
+      showModal(`
+        <h3 class="text-lg font-bold mb-4">编辑卡片</h3>
+        <label class="block text-xs text-gray-500 mb-1">正面</label>
+        <textarea id="editFront" rows="2" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-3">${escapeHTML(note.fields[0]||'')}</textarea>
+        <label class="block text-xs text-gray-500 mb-1">背面</label>
+        <textarea id="editBack" rows="2" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-3">${escapeHTML(note.fields[1]||'')}</textarea>
+        <label class="block text-xs text-gray-500 mb-1">标签（空格分隔）</label>
+        <input id="editTags" value="${escapeHTML((note.tags||[]).join(' '))}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">
+        <div class="flex gap-2">
+          <button onclick="saveEdit(${card.nid})" class="flex-1 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">保存</button>
+          <button onclick="closeModal()" class="flex-1 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">取消</button>
+        </div>`);
+    });
+  });
+};
+window.saveEdit = async function(nid) {
+  const note = await Note.get(nid);
+  note.fields[0] = $('#editFront').value;
+  note.fields[1] = $('#editBack').value;
+  note.tags = $('#editTags').value.trim().split(/\s+/).filter(Boolean);
+  await Note.update(note);
+  closeModal();
+  showToast('卡片已更新', 'success');
+  if (location.hash.startsWith('#deck/')) renderReviewCard();
+  else if (location.hash.startsWith('#browse')) renderBrowse();
+};
+
+window.deleteCard = async function(cid) {
+  showConfirm('确定要删除这张卡片吗？', async () => {
+    const card = await Card.get(cid);
+    await Card.removeByNid(card.nid);
+    await Note.remove(card.nid);
+    reviewState.cards.splice(reviewState.idx, 1);
+    if (reviewState.idx >= reviewState.cards.length) {
+      renderReview(`#deck/${reviewState.did}`);
+    } else {
+      renderReviewCard();
+    }
+    showToast('卡片已删除', 'info');
+  });
+};
+
+// ===== Add Cards =====
+async function renderAdd() {
+  const decks = await Deck.getAll();
+  if (decks.length === 0) { await ensureDefaultDeck(); }
+  const d = await Deck.getAll();
+  const deckOpts = d.map(dk=>`<option value="${dk.id}">${escapeHTML(dk.name)}</option>`).join('');
+
+  $('#app').innerHTML = `
+    <h2 class="text-xl font-bold text-gray-800 mb-4">添加卡片</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+      <!-- Left: Form -->
+      <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-4 sm:p-5">
+        <div class="flex border-b border-gray-200 mb-4">
+          <button id="modeSingle" class="flex-1 py-2 text-sm font-medium border-b-2 border-blue-500 text-blue-600 transition-colors" onclick="switchAddMode('single')">单张制卡</button>
+          <button id="modeBatch" class="flex-1 py-2 text-sm font-medium border-b-2 border-transparent text-gray-400 transition-colors" onclick="switchAddMode('batch')">批量制卡</button>
+        </div>
+        <form id="singleForm" class="space-y-3" onsubmit="addSingleCard(event)">
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">正面 <span class="text-red-400">*</span></label>
+            <input type="text" name="front" required placeholder="输入问题或关键词" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">背面 <span class="text-red-400">*</span></label>
+            <input type="text" name="back" required placeholder="输入答案或释义" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">标签</label>
+              <input type="text" name="tags" placeholder="如：英语 单词" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-500 mb-1">卡组</label>
+              <select name="deck" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:border-blue-400">${deckOpts}</select>
+            </div>
+          </div>
+          <button type="submit" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">添加卡片</button>
+        </form>
+        <div id="batchForm" class="space-y-3 hidden">
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">粘贴内容</label>
+            <textarea id="batchText" rows="5" placeholder="每行一张卡片，用逗号、Tab 或 | 分隔正面和背面&#10;&#10;例如：&#10;你好,Hello&#10;苹果,Apple" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50 resize-none"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1">分隔符</label>
+            <select id="delimiter" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:border-blue-400" onchange="previewBatch()">
+              <option value="auto">自动检测</option><option value=",">逗号 (,)</option><option value="\t">Tab</option><option value="|">竖线 (|)</option><option value="none">每行=正面（背面为空）</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div><label class="block text-xs font-medium text-gray-500 mb-1">标签</label><input type="text" id="batchTags" placeholder="应用于所有卡片" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50"></div>
+            <div><label class="block text-xs font-medium text-gray-500 mb-1">卡组</label><select id="batchDeck" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50">${deckOpts}</select></div>
+          </div>
+          <div id="batchPreview" class="hidden">
+            <p class="text-xs font-medium text-gray-500 mb-2">解析预览（共 <span id="batchCount">0</span> 张）</p>
+            <div id="batchPreviewList" class="max-h-32 overflow-y-auto space-y-1 text-xs"></div>
+          </div>
+          <button onclick="addBatchCards()" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">批量生成卡片</button>
+        </div>
+      </div>
+      <!-- Center: Preview -->
+      <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-4 sm:p-5 flex flex-col items-center justify-center min-h-[280px]">
+        <p class="text-xs font-medium text-gray-400 mb-3 uppercase tracking-wide">卡片预览</p>
+        <div id="previewPlaceholder" class="text-center text-gray-300">
+          <div class="text-5xl mb-3">🃟</div>
+          <p class="text-sm">填写内容后查看预览</p>
+          <p class="text-xs text-gray-300 mt-1">点击卡片可翻转</p>
+        </div>
+        <div id="previewCard" class="card-flip w-full max-w-sm hidden" onclick="this.classList.toggle('flipped')">
+          <div class="card-flip-inner relative w-full" style="min-height:220px">
+            <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-xl p-5 flex flex-col justify-center items-center text-center">
+              <p class="text-xs text-blue-400 mb-2 uppercase tracking-wide">正面 · 问题</p>
+              <p id="previewFront" class="text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+            </div>
+            <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-xl p-5 flex flex-col justify-center items-center text-center">
+              <p class="text-xs text-green-400 mb-2 uppercase tracking-wide">背面 · 答案</p>
+              <p id="previewBack" class="text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: Recent cards -->
+      <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-4 sm:p-5">
+        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-3">最近添加</p>
+        <div id="recentCards" class="space-y-2 max-h-[400px] overflow-y-auto">
+          <p class="text-sm text-gray-300 text-center py-8">暂无卡片</p>
+        </div>
+      </div>
+    </div>`;
+
+  updatePreview();
+  setupPreviewListeners();
+  loadRecentCards();
+}
+
+window.switchAddMode = function(mode) {
+  $('#modeSingle').classList.toggle('border-blue-500',mode==='single');
+  $('#modeSingle').classList.toggle('text-blue-600',mode==='single');
+  $('#modeSingle').classList.toggle('border-transparent',mode!=='single');
+  $('#modeSingle').classList.toggle('text-gray-400',mode!=='single');
+  $('#modeBatch').classList.toggle('border-blue-500',mode==='batch');
+  $('#modeBatch').classList.toggle('text-blue-600',mode==='batch');
+  $('#modeBatch').classList.toggle('border-transparent',mode!=='batch');
+  $('#modeBatch').classList.toggle('text-gray-400',mode!=='batch');
+  $('#singleForm').classList.toggle('hidden',mode!=='single');
+  $('#batchForm').classList.toggle('hidden',mode!=='batch');
+};
+
+function setupPreviewListeners() {
+  const form = $('#singleForm');
+  if (!form) return;
+  ['front','back','tags'].forEach(name => {
+    form[name]?.addEventListener('input', updatePreview);
+  });
+}
+function updatePreview() {
+  const form = $('#singleForm');
+  if (!form) return;
+  const front = form.front?.value || '';
+  const back = form.back?.value || '';
+  if (!front && !back) {
+    $('#previewPlaceholder').classList.remove('hidden');
+    $('#previewCard').classList.add('hidden');
+    return;
+  }
+  $('#previewPlaceholder').classList.add('hidden');
+  $('#previewCard').classList.remove('hidden');
+  const flipEl = document.querySelector('.card-flip');
+  if (flipEl) flipEl.classList.remove('flipped');
+  const pf = $('#previewFront'), pb = $('#previewBack');
+  if (pf) pf.textContent = front || '(空)';
+  if (pb) pb.textContent = back || '(空)';
+}
+
+window.addSingleCard = async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const front = form.front.value.trim();
+  const back = form.back.value.trim();
+  if (!front || !back) { showToast('正面和背面为必填项', 'error'); return; }
+  const tags = form.tags.value.trim().split(/\s+/).filter(Boolean);
+  const did = parseInt(form.deck.value) || 1;
+  await createNote(front, back, tags, did);
+  form.reset();
+  form.front.focus();
+  updatePreview();
+  loadRecentCards();
+  showToast('卡片已添加', 'success');
+};
+
+async function createNote(front, back, tags, did) {
+  const nid = await Note.create([front, back], tags, 0);
+  await Card.create(nid, did, 0);
+  return nid;
+}
+
+async function loadRecentCards() {
+  const el = $('#recentCards');
+  if (!el) return;
+  const cards = await Card.getAll();
+  const recent = cards.slice(-10).reverse();
+  if (recent.length === 0) { el.innerHTML = '<p class="text-sm text-gray-300 text-center py-8">暂无卡片</p>'; return; }
+  let html = '';
+  for (const c of recent) {
+    const note = await Note.get(c.nid);
+    const deck = await Deck.get(c.did);
+    const f = (note?.fields[0]||'').substring(0, 40);
+    html += `<div class="flex items-center gap-2 py-1.5 border-b border-gray-50 text-sm">
+      <span class="text-gray-700 truncate flex-1">${escapeHTML(f)}</span>
+      <span class="text-xs text-gray-400 shrink-0">${escapeHTML(deck?.name||'')}</span>
+    </div>`;
+  }
+  el.innerHTML = html;
+}
+
+// Batch parsing
+function detectDelim(text) {
+  const lines = text.split('\n').filter(l=>l.trim()).slice(0,10);
+  if (!lines.length) return 'none';
+  const delims = [',','\t','|'];
+  let best = {d:'none',c:0};
+  for (const d of delims) {
+    let total = 0;
+    for (const l of lines) total += (l.match(new RegExp('\\'+d,'g'))||[]).length;
+    if (total>best.c) best={d,c:total};
+  }
+  return best.c>0 ? best.d : 'none';
+}
+
+window.previewBatch = function() {
+  const text = $('#batchText')?.value||'';
+  const delim = $('#delimiter')?.value||'auto';
+  if (!text.trim()) { $('#batchPreview')?.classList.add('hidden'); return; }
+  const d = delim==='auto' ? detectDelim(text) : delim;
+  const parsed = [];
+  for (const line of text.split('\n').filter(l=>l.trim())) {
+    const t = line.trim();
+    if (d==='none') parsed.push({f:t,b:''});
+    else if (d==='\t') { const p=t.split('\t'); parsed.push({f:p[0]?.trim()||'',b:p.slice(1).join('\t').trim()}); }
+    else parsed.push({f:t.split(d)[0]?.trim()||'',b:t.split(d).slice(1).join(d).trim()});
+  }
+  const pr = $('#batchPreview'), pl = $('#batchPreviewList'), bc = $('#batchCount');
+  if (!pr||!pl||!bc) return;
+  pr.classList.remove('hidden');
+  bc.textContent = parsed.length;
+  pl.innerHTML = parsed.slice(0,30).map((p,i)=>`<div class="flex gap-2 py-0.5"><span class="text-gray-400 w-5">${i+1}.</span><span class="text-gray-700 truncate flex-1">${escapeHTML(p.f)}</span><span class="text-gray-400">→</span><span class="text-gray-500 truncate flex-1">${escapeHTML(p.b||'(空)')}</span></div>`).join('');
+};
+
+window.addBatchCards = async function() {
+  const text = $('#batchText')?.value||'';
+  if (!text.trim()) { showToast('请粘贴内容后再生成','error'); return; }
+  const delim = $('#delimiter')?.value||'auto';
+  const tags = $('#batchTags')?.value.trim().split(/\s+/).filter(Boolean)||[];
+  const did = parseInt($('#batchDeck')?.value)||1;
+  const d = delim==='auto' ? detectDelim(text) : delim;
+  let added=0;
+  for (const line of text.split('\n').filter(l=>l.trim())) {
+    const t=line.trim();
+    let f='',b='';
+    if (d==='none') f=t;
+    else if (d==='\t') { const p=t.split('\t'); f=p[0]?.trim()||''; b=p.slice(1).join('\t').trim(); }
+    else { f=t.split(d)[0]?.trim()||''; b=t.split(d).slice(1).join(d).trim(); }
+    if (f.trim()) { await createNote(f,b,tags,did); added++; }
+  }
+  showToast(`已批量添加 ${added} 张卡片`,'success');
+  $('#batchText').value='';
+  $('#batchPreview').classList.add('hidden');
+  loadRecentCards();
+};
+
+// ===== Browse =====
+async function renderBrowse() {
+  const cards = await Card.getAll();
+  const decks = await Deck.getAll();
+  const deckMap = {}; decks.forEach(d=>deckMap[d.id]=d.name);
+
+  $('#app').innerHTML = `
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-xl font-bold text-gray-800">浏览卡片</h2>
+      <div class="flex gap-2">
+        <input id="browseSearch" placeholder="搜索..." class="px-3 py-2 border border-gray-200 rounded-lg text-sm w-48" oninput="browseSearch()">
+        <button onclick="exportCards()" class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">导出</button>
+        <button onclick="document.getElementById('importFile').click()" class="px-4 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors">导入</button>
+        <input type="file" id="importFile" accept=".txt,.csv,.tsv" class="hidden" onchange="handleImport(event)">
+      </div>
+    </div>
+    <div id="browseList" class="bg-white rounded-xl shadow-sm divide-y divide-gray-100"></div>`;
+
+  renderBrowseList(cards, deckMap);
+}
+
+async function renderBrowseList(cards, deckMap) {
+  const el = $('#browseList');
+  if (!el) return;
+  if (cards.length===0) {
+    el.innerHTML = '<div class="p-12 text-center text-gray-400 text-sm">暂无卡片</div>';
+    return;
+  }
+  let html = '';
+  for (const c of cards) {
+    const note = await Note.get(c.nid);
+    const f = escapeHTML((note?.fields[0]||'').substring(0,60));
+    const b = escapeHTML((note?.fields[1]||'').substring(0,60));
+    const tags = (note?.tags||[]).map(t=>`<span class="text-[10px] text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">${escapeHTML(t)}</span>`).join(' ');
+    const status = c.queue===2 ? `<span class="text-xs text-green-600">间隔${c.ivl}天</span>` :
+                   c.queue===1 ? `<span class="text-xs text-red-500">学习中</span>` :
+                   c.queue===0 ? `<span class="text-xs text-blue-500">新</span>` :
+                   `<span class="text-xs text-gray-400">暂停</span>`;
+    html += `<div class="flex items-center gap-3 p-3 hover:bg-gray-50 transition-colors">
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-medium text-gray-700 truncate">${f}</p>
+        <p class="text-xs text-gray-400 truncate">${b}</p>
+        <div class="flex gap-2 mt-1">${tags} ${status}</div>
+      </div>
+      <div class="flex gap-1 shrink-0">
+        <span class="text-xs text-gray-400">${escapeHTML(deckMap[c.did]||'')}</span>
+        <button onclick="browseEdit(${c.id})" class="text-gray-400 hover:text-blue-500 p-1 text-xs">编辑</button>
+        <button onclick="browseDelete(${c.id})" class="text-gray-400 hover:text-red-500 p-1 text-xs">删除</button>
+      </div>
+    </div>`;
+  }
+  el.innerHTML = html;
+}
+
+window.browseSearch = async function() {
+  const q = ($('#browseSearch')?.value||'').toLowerCase();
+  const cards = await Card.getAll();
+  const decks = await Deck.getAll();
+  const deckMap = {}; decks.forEach(d=>deckMap[d.id]=d.name);
+  if (!q) { renderBrowseList(cards, deckMap); return; }
+  const filtered = [];
+  for (const c of cards) {
+    const note = await Note.get(c.nid);
+    const f = (note?.fields[0]||'').toLowerCase();
+    const b = (note?.fields[1]||'').toLowerCase();
+    const tags = (note?.tags||[]).join(' ').toLowerCase();
+    if (f.includes(q)||b.includes(q)||tags.includes(q)) filtered.push(c);
+  }
+  renderBrowseList(filtered, deckMap);
+};
+
+window.browseEdit = function(cid) { /* reuse editCard from reviewer */ window.editCard(cid); };
+window.browseDelete = async function(cid) {
+  const card = await Card.get(cid);
+  await Card.removeByNid(card.nid);
+  await Note.remove(card.nid);
+  renderBrowse();
+};
+
+// ===== Export =====
+function escapeTXTField(field) {
+  const s = String(field ?? '');
+  if (/[\t\n\r"]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+
+window.exportCards = async function() {
+  const cards = await Card.getAll();
+  if (!cards.length) { showToast('没有可导出的卡片', 'error'); return; }
+  const lines = ['#separator:tab', '#html:true'];
+  for (const c of cards) {
+    const note = await Note.get(c.nid);
+    const fields = note?.fields||['',''];
+    lines.push([fields[0]||'', fields[1]||'', (note?.tags||[]).join(' ')].map(escapeTXTField).join('\t'));
+  }
+  const blob = new Blob([lines.join('\n')], { type: 'text/tab-separated-values;charset=utf-8;' });
+  downloadBlob(blob, 'anki-cards.txt');
+  showToast(`已导出 ${cards.length} 张卡片为 Anki 格式`, 'success');
+};
+
+// ===== Import =====
+function parseTXTLine(line) {
+  const fields = [];
+  let i = 0;
+  while (i < line.length) {
+    if (line[i] === '\t') { fields.push(''); i++; continue; }
+    if (line[i] === '"') {
+      let val = ''; i++; // skip opening quote
+      while (i < line.length) {
+        if (line[i] === '"') {
+          if (i + 1 < line.length && line[i + 1] === '"') {
+            val += '"'; i += 2; // escaped quote
+          } else {
+            i++; break; // closing quote
+          }
+        } else {
+          val += line[i]; i++;
+        }
+      }
+      fields.push(val);
+      if (i < line.length && line[i] === '\t') i++; // skip separator after closing quote
+    } else {
+      let val = '';
+      while (i < line.length && line[i] !== '\t') { val += line[i]; i++; }
+      fields.push(val);
+      if (i < line.length && line[i] === '\t') i++;
+    }
+  }
+  // Handle trailing empty field (line ends with tab)
+  if (line.endsWith('\t')) fields.push('');
+  return fields;
+}
+
+async function parseImportFile(text) {
+  const lines = text.split(/\r?\n/).filter(l => {
+    const t = l.trim();
+    return t && !t.startsWith('#');
+  });
+  const cards = [];
+  for (const line of lines) {
+    const fields = parseTXTLine(line);
+    if (fields.length >= 2 && fields[0].trim()) {
+      cards.push({
+        front: fields[0].trim(),
+        back: (fields[1] || '').trim(),
+        tags: fields.length >= 3 ? fields[2].trim().split(/[\s;；]+/).filter(Boolean) : [],
+      });
+    }
+  }
+  return cards;
+}
+
+window.handleImport = async function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const cards = await parseImportFile(text);
+    if (cards.length === 0) { showToast('未解析到有效卡片', 'error'); event.target.value = ''; return; }
+
+    const decks = await Deck.getAll();
+    if (decks.length === 0) await ensureDefaultDeck();
+    const d = await Deck.getAll();
+    const deckOpts = d.map(dk=>`<option value="${dk.id}">${escapeHTML(dk.name)}</option>`).join('');
+
+    showModal(`
+      <h3 class="text-lg font-bold mb-4">导入卡片</h3>
+      <p class="text-sm text-gray-500 mb-4">解析到 <span class="font-semibold text-gray-700">${cards.length}</span> 张卡片</p>
+      <div class="mb-4 max-h-40 overflow-y-auto border border-gray-100 rounded-lg">
+        ${cards.slice(0, 20).map((c,i)=>`<div class="flex gap-2 py-1.5 px-3 text-xs ${i%2?'bg-gray-50':''}"><span class="text-gray-400 w-5">${i+1}.</span><span class="text-gray-700 truncate flex-1">${escapeHTML(c.front)}</span><span class="text-gray-400">→</span><span class="text-gray-500 truncate flex-1">${escapeHTML(c.back||'(空)')}</span></div>`).join('')}
+        ${cards.length > 20 ? `<div class="text-center text-xs text-gray-400 py-1">…还有 ${cards.length - 20} 张</div>` : ''}
+      </div>
+      <label class="block text-xs font-medium text-gray-500 mb-1">导入到卡组</label>
+      <select id="importDeck" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">${deckOpts}</select>
+      <div class="flex gap-2">
+        <button onclick="doImport(${cards.length})" class="flex-1 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors">确认导入</button>
+        <button onclick="closeModal()" class="flex-1 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">取消</button>
+      </div>`);
+
+    window._importCards = cards;
+  } catch (e) {
+    showToast('文件读取失败: ' + (e.message || String(e)), 'error');
+  }
+  event.target.value = '';
+};
+
+window.doImport = async function() {
+  const cards = window._importCards;
+  if (!cards || !cards.length) return;
+  const did = parseInt($('#importDeck')?.value) || 1;
+  let added = 0;
+  for (const c of cards) {
+    try {
+      const nid = await Note.create([c.front, c.back], c.tags, 0);
+      await Card.create(nid, did, 0);
+      added++;
+    } catch(e) { /* skip invalid cards */ }
+  }
+  closeModal();
+  showToast(`已导入 ${added} 张卡片`, 'success');
+  if (location.hash.startsWith('#browse')) renderBrowse();
+  else if (location.hash.startsWith('#dashboard')) renderDashboard();
+  window._importCards = null;
+};
+
+// ===== Stats =====
+async function renderStats() {
+  const overview = await Stats.getOverview();
+  const cards = await Card.getAll();
+  const revlogs = await Revlog.getAll();
+
+  let totalReviews = revlogs.length;
+  let avgInterval = 0; let reviewCards = 0;
+  for (const c of cards) {
+    if (c.type===2) { avgInterval += c.ivl; reviewCards++; }
+  }
+  avgInterval = reviewCards > 0 ? Math.round(avgInterval / reviewCards) : 0;
+
+  // Last 7 days review count
+  const now = Date.now();
+  const dailyCounts = {};
+  for (let i=6;i>=0;i--) {
+    const d = Math.floor((now - i*86400000)/86400000);
+    dailyCounts[d] = 0;
+  }
+  for (const r of revlogs) {
+    const d = Math.floor(r.reviewTime/86400000);
+    if (dailyCounts[d] !== undefined) dailyCounts[d]++;
+  }
+  const maxDaily = Math.max(1, ...Object.values(dailyCounts));
+  const bars = Object.entries(dailyCounts).map(([day,cnt])=>{
+    const h = Math.round((cnt/maxDaily)*100);
+    const date = new Date(parseInt(day)*86400000);
+    const label = `${date.getMonth()+1}/${date.getDate()}`;
+    return `<div class="flex items-end gap-1"><div class="flex-1 bg-blue-200 rounded-t" style="height:${Math.max(2,h)}px"></div><span class="text-[10px] text-gray-400">${cnt}</span><span class="text-[10px] text-gray-300">${label}</span></div>`;
+  }).join('');
+
+  $('#app').innerHTML = `
+    <h2 class="text-xl font-bold text-gray-800 mb-4">统计</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+      <div class="bg-white rounded-xl shadow-sm p-4 text-center"><div class="text-2xl font-bold text-blue-500">${overview.decks}</div><div class="text-xs text-gray-400 mt-1">卡组</div></div>
+      <div class="bg-white rounded-xl shadow-sm p-4 text-center"><div class="text-2xl font-bold text-green-500">${overview.cards}</div><div class="text-xs text-gray-400 mt-1">卡片</div></div>
+      <div class="bg-white rounded-xl shadow-sm p-4 text-center"><div class="text-2xl font-bold text-orange-500">${overview.due}</div><div class="text-xs text-gray-400 mt-1">待复习</div></div>
+      <div class="bg-white rounded-xl shadow-sm p-4 text-center"><div class="text-2xl font-bold text-purple-500">${totalReviews}</div><div class="text-xs text-gray-400 mt-1">总复习数</div></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white rounded-xl shadow-sm p-5">
+        <h3 class="text-sm font-medium text-gray-700 mb-4">最近7天复习</h3>
+        <div class="flex items-end gap-1 h-24">${bars}</div>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-5">
+        <h3 class="text-sm font-medium text-gray-700 mb-4">概览</h3>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span class="text-gray-500">笔记数</span><span class="font-medium">${overview.notes}</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">卡片数</span><span class="font-medium">${overview.cards}</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">今日已复习</span><span class="font-medium">${overview.todayReviews}</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">平均间隔</span><span class="font-medium">${avgInterval} 天</span></div>
+          <div class="flex justify-between"><span class="text-gray-500">复习记录</span><span class="font-medium">${totalReviews}</span></div>
+        </div>
+      </div>
+    </div>`;
+};
+
+// ===== Keyboard shortcuts =====
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT') return;
+  if (!location.hash.startsWith('#deck/')) return;
+  if (reviewState.cards && reviewState.idx < reviewState.cards.length) {
+    if (!reviewState.showingBack && (e.key===' '||e.key==='Enter')) { e.preventDefault(); flipCard(); }
+    else if (reviewState.showingBack) {
+      if (e.key==='1') answerCard('again');
+      else if (e.key==='2') answerCard('hard');
+      else if (e.key==='3') answerCard('good');
+      else if (e.key==='4') answerCard('easy');
+    }
+  }
+});
+
+// ===== Init =====
+async function init() {
+  try {
+    if (typeof indexedDB === 'undefined') {
+      throw new Error('浏览器不支持 IndexedDB，请使用 Chrome/Edge/Firefox 最新版');
+    }
+    await ensureDefaultDeck();
+    navigate();
+  } catch (e) {
+    console.error('Init error:', e);
+    $('#app').innerHTML = `<div class="text-center py-16">
+      <div class="text-5xl mb-3">⚠️</div>
+      <p class="text-sm font-medium text-red-500">初始化失败</p>
+      <p class="text-xs text-gray-400 mt-1 max-w-md mx-auto">${escapeHTML(e.message || String(e))}</p>
+      <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">重试</button>
+    </div>`;
+  }
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+</body>
+</html>
