@@ -87,6 +87,14 @@ const Deck = {
       const r = tx('decks', 'readonly').count();
       r.onsuccess = () => resolve(r.result);
     });
+  },
+  async findByName(name) {
+    await openDB();
+    return new Promise((resolve, reject) => {
+      const r = tx('decks', 'readonly').index('name').get(name);
+      r.onsuccess = () => resolve(r.result);
+      r.onerror = () => reject(r.error);
+    });
   }
 };
 
@@ -319,6 +327,18 @@ const Stats = {
              due: dueCount, revlog: revlogCount, todayReviews };
   }
 };
+
+// Clear all data
+async function clearAllDB() {
+  await openDB();
+  const stores = ['decks', 'notes', 'cards', 'revlog'];
+  for (const name of stores) {
+    await new Promise((resolve) => {
+      const r = tx(name, 'readwrite').clear();
+      r.onsuccess = resolve;
+    });
+  }
+}
 
 // Initialize default deck
 async function ensureDefaultDeck() {
