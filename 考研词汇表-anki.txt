@@ -1,0 +1,6977 @@
+#separator:tab
+#html:true
+abandon	v.放弃		默认
+ability	n.能力;才能		默认
+able	adj.能够;有能力的		默认
+abnormal	adj.反常的，异常的		默认
+abolish	v.废除，取消		默认
+abound	v.大量存在;充满		默认
+about	adv.大约;四处;到处		默认
+above	prep.在…上面		默认
+abroad	adv.到国外;在国外		默认
+abrupt	adj.突然的，意外的		默认
+absence	n.缺席，不存在		默认
+absolute	adj.绝对的，完全的		默认
+absolutely	adv.完全地，绝对地		默认
+absorb	v.吸收;使全神贯注		默认
+abstract	adj.抽象的 n.摘要		默认
+absurd	adj.荒谬的，荒唐的		默认
+abundance	n.大量，丰富，充足		默认
+abundant	adj.大量的，丰富的		默认
+abuse	v./n.滥用;虐待		默认
+academic	adj.学院的;学术的		默认
+academy	n.学院，研究院		默认
+accelerate	v.加速，促进		默认
+accent	n.口音，音调		默认
+accept	v.接受，认可		默认
+acceptable	adj.可接受的		默认
+acceptance	n.接受，承认		默认
+access	n.接近;通道;入口		默认
+accessible	adj.易接近的，可进入的		默认
+accessory	n.附件，配件		默认
+accident	n.事故，意外		默认
+accommodate	v.容纳;提供住宿		默认
+accommodation	n.住处，膳宿		默认
+accompany	v.陪伴，伴随		默认
+accomplish	v.完成，实现		默认
+accomplishment	n.成就，成绩		默认
+accord	v.使一致;给予 n.一致;协议		默认
+accordance	n.一致，和谐		默认
+accordingly	adv.因此，所以		默认
+account	n.账目;叙述		默认
+accountant	n.会计		默认
+accumulate	v.积累，积聚		默认
+accuracy	n.精确，准确性		默认
+accurate	adj.精确的，准确的		默认
+accuse	v.指控，指责		默认
+accustomed	adj.习惯的，惯常的		默认
+ache	v./n.疼痛		默认
+achieve	v.达到，实现		默认
+achievement	n.成就，成绩		默认
+acid	n.酸		默认
+acknowledge	v.承认;告知收到		默认
+acquaint	v.使熟悉		默认
+acquaintance	n.认识，了解		默认
+acquire	v.获得，取得		默认
+acquisition	n.获得，取得		默认
+acre	n.英亩		默认
+across	prep.横过，穿过		默认
+act	v.行动;扮演 n.法令，条例		默认
+action	n.行动，动作		默认
+active	adj.积极的，主动的		默认
+activity	n.活动		默认
+actor	n.男演员		默认
+actress	n.女演员		默认
+actual	adj.实际的，现实的		默认
+actually	adv.实际上，事实上		默认
+acute	adj.敏锐的，剧烈的		默认
+adapt	v.使适应;改编		默认
+adaptation	n.适应，改编		默认
+add	v.加，增加		默认
+addition	n.加，加法		默认
+additional	adj.附加的，另外的		默认
+address	n.地址;演说		默认
+adequate	adj.足够的，适当的		默认
+adjust	v.调整，调节		默认
+adjustment	n.调整，调节		默认
+administer	v.管理，治理		默认
+administration	n.管理，行政		默认
+admirable	adj.令人钦佩的		默认
+admire	v.钦佩，羡慕		默认
+admission	n.准入，接纳		默认
+admit	v.承认，准许		默认
+adolescent	n.青少年 adj.青春期的		默认
+adopt	v.采用，采纳		默认
+adoption	n.采用，采纳		默认
+adult	n.成年人 adj.成年的		默认
+advance	v./n.前进;提高		默认
+advanced	adj.高级的;先进的		默认
+advantage	n.优点，优势		默认
+adventure	n.冒险;奇遇		默认
+adverb	n.副词		默认
+advertisement	n.广告		默认
+advice	n.建议，忠告		默认
+advisable	adj.明智的，可取的		默认
+advise	v.建议，劝告		默认
+aeroplane	n.飞机		默认
+affair	n.事情，事件;事务		默认
+affect	v.影响;感动		默认
+affection	n.喜爱，感情		默认
+afford	v.负担得起		默认
+afraid	adj.害怕的;担心的		默认
+after	prep.在...之后 adv.之后		默认
+afternoon	n.下午		默认
+afterward	adv.之后，后来		默认
+again	adv.再次，又		默认
+against	prep.反对;靠着		默认
+age	n.年龄;时代		默认
+agency	n.代理机构;代理处		默认
+agent	n.代理人;经纪人		默认
+ago	adv.以前		默认
+agree	v.同意;一致		默认
+agreement	n.同意;协定		默认
+agriculture	n.农业;农艺		默认
+ahead	adv.在前面		默认
+aid	n.帮助;援助 v.帮助		默认
+aim	n.目的;目标 v.瞄准		默认
+air	n.空气;气氛 v.通风		默认
+aircraft	n.飞机，飞行器		默认
+airline	n.航空公司		默认
+airport	n.机场		默认
+alarm	n.警报;闹钟 v.使惊恐		默认
+album	n.集邮本;相册		默认
+alcohol	n.酒精，含酒精的饮料		默认
+alive	adj.活着的;活跃的		默认
+all	adj.全部的 adv.全部地		默认
+allow	v.允许;给予		默认
+allowance	n.津贴，补助		默认
+almost	adv.几乎，差不多		默认
+alone	adj.单独的 adv.独自地		默认
+along	adv.沿着 prep.一起		默认
+alongside	adv./prep.沿着，并肩		默认
+already	adv.已经		默认
+also	adv.也，同样		默认
+alternative	n.可供选择的事物		默认
+although	conj.尽管，虽然		默认
+altitude	n.高度;海拔		默认
+altogether	adv.完全地		默认
+aluminum	n.铝		默认
+always	adv.总是，一直		默认
+ambassador	n.大使		默认
+ambiguous	adj.模糊不清的		默认
+ambition	n.雄心，抱负		默认
+ambulance	n.救护车		默认
+among	prep.在...之中		默认
+amount	n.数量;总额		默认
+ample	adj.足够的，宽敞的		默认
+amuse	v.娱乐;使发笑		默认
+amusement	n.娱乐		默认
+ancient	adj.古代的，古老的		默认
+and	conj.和，又		默认
+angle	n.角度;观点		默认
+anger	n.愤怒		默认
+angle	n.角度		默认
+angry	adj.生气的，愤怒的		默认
+animal	n.动物		默认
+ankle	n.踝，踝关节		默认
+announce	v.宣布，宣告		默认
+announcement	n.通告，布告		默认
+annoy	v.使烦恼;打搅		默认
+annual	adj.每年的 n.年刊		默认
+another	adj.另一个的		默认
+answer	n.回答;答案 v.回答		默认
+anticipate	v.预期，期待		默认
+anxiety	n.焦虑;渴望		默认
+anxious	adj.焦虑的;渴望的		默认
+any	adj.任何的 pron.任何		默认
+anybody	pron.任何人		默认
+anyhow	adv.无论如何		默认
+anyone	pron.任何人		默认
+anything	pron.任何事		默认
+anyway	adv.无论如何		默认
+anywhere	adv.任何地方		默认
+apart	adv.分离，分开		默认
+apartment	n.一套公寓房间		默认
+apologize	v.道歉		默认
+apology	n.道歉		默认
+apparatus	n.器械，仪器;器官		默认
+apparent	adj.显然的，表面上的		默认
+appeal	v./n.呼吁;吸引		默认
+appear	v.出现;似乎		默认
+appearance	n.出现;外貌		默认
+appendix	n.附录;阑尾		默认
+appetite	n.食欲;欲望		默认
+applaud	v.鼓掌		默认
+applause	n.鼓掌，喝彩		默认
+apply	v.申请;应用		默认
+appoint	v.任命;约定		默认
+appointment	n.任命;约定		默认
+appreciate	v.欣赏;感激		默认
+appreciation	n.欣赏;感激		默认
+approach	v.接近 n.途径		默认
+appropriate	adj.适当的;合适的		默认
+approval	n.赞成;批准		默认
+approve	v.赞成;批准		默认
+approximately	adv.大约，近似		默认
+arbitrary	adj.任意的;武断的		默认
+architecture	n.建筑学;建筑式样		默认
+area	n.面积;地区		默认
+argue	v.争论，争辩		默认
+argument	n.争论，辩论		默认
+arise	v.出现;由...引起		默认
+arithmetic	n.算术		默认
+arm	n.手臂;武器 v.武装		默认
+armed	adj.武装的		默认
+army	n.军队		默认
+around	adv.在周围;大约		默认
+arouse	v.唤醒;激起		默认
+arrange	v.安排;排列		默认
+arrangement	n.安排;排列		默认
+array	n.大批;排列		默认
+arrest	v.逮捕;阻止		默认
+arrival	n.到达;到来		默认
+arrive	v.到达;达到		默认
+arrow	n.箭;箭头		默认
+art	n.艺术;美术		默认
+article	n.文章;物品		默认
+artificial	adj.人造的;假的		默认
+artist	n.艺术家;画家		默认
+artistic	adj.艺术的;艺术家的		默认
+as	adv.像...一样 prep.作为		默认
+ascertain	v.确定;查明		默认
+ashamed	adj.羞愧的;惭愧的		默认
+ashore	adv.上岸;到岸		默认
+aside	adv.在旁边;此外		默认
+ask	v.问;要求		默认
+asleep	adj.睡着的		默认
+aspect	n.方面;面貌		默认
+assemble	v.集合;装配		默认
+assembly	n.集合;装配		默认
+assess	v.对...进行评估		默认
+assessment	n.评估;评价		默认
+assign	v.分配;指派		默认
+assignment	n.分配;任务		默认
+assist	v.帮助;协助		默认
+assistance	n.帮助;援助		默认
+assistant	n.助手;助教		默认
+associate	v.联想;联合		默认
+association	n.协会;联合		默认
+assume	v.假定;承担		默认
+assumption	n.假定;承担		默认
+assure	v.保证;使确信		默认
+astonish	v.使惊讶;使吃惊		默认
+astronomy	n.天文学		默认
+athlete	n.运动员		默认
+athletic	adj.运动的;竞技的		默认
+atom	n.原子		默认
+atomic	adj.原子的		默认
+attach	v.附加;依恋		默认
+attachment	n.附加;依恋		默认
+attack	v./n.攻击;抨击		默认
+attempt	v.尝试 n.企图		默认
+attend	v.出席;照顾		默认
+attendance	n.出席;参加		默认
+attention	n.注意;关心		默认
+attitude	n.态度;看法		默认
+attorney	n.律师		默认
+attract	v.吸引;引起		默认
+attraction	n.吸引;吸引力		默认
+attractive	adj.吸引人的		默认
+audience	n.观众;听众		默认
+author	n.作者;作家		默认
+authority	n.权威;官方		默认
+auto	n.汽车		默认
+autumn	n.秋天，秋季		默认
+available	adj.可用的;有空的		默认
+avenue	n.林荫道;途径		默认
+average	n.平均数 adj.平均的		默认
+avoid	v.避免;避开		默认
+await	v.等候;期待		默认
+awake	adj.醒着的 v.唤醒		默认
+award	n.奖 v.授予		默认
+aware	adj.意识到的;知道的		默认
+away	adv.离开;远离		默认
+awful	adj.可怕的;糟糕的		默认
+awkward	adj.尴尬的;笨拙的		默认
+axe	n.斧子		默认
+axis	n.轴;轴线		默认
+bachelor	n.单身汉;学士		默认
+back	adv.回原处;向后 n.背		默认
+background	n.背景;出身		默认
+backward	adv.向后地 adj.发展迟缓的		默认
+bacon	n.咸肉;腊肉		默认
+bacterium	n.细菌		默认
+bad	adj.坏的;低劣的		默认
+badly	adv.非常;坏		默认
+badminton	n.羽毛球		默认
+bag	n.袋;包		默认
+baggage	n.行李		默认
+bake	v.烤，烘;烧硬		默认
+balance	n.天平;平衡 v.权衡		默认
+balcony	n.阳台;包厢		默认
+ball	n.球;舞会		默认
+balloon	n.气球;飞船		默认
+ballot	n.投票;抽签 v.投票		默认
+bamboo	n.竹		默认
+ban	n.禁令 v.禁止;取缔		默认
+banana	n.香蕉		默认
+band	n.乐队;带;帮		默认
+bandage	n.绷带 v.用绷带包扎		默认
+bang	n.巨响;猛击		默认
+bank	n.银行;岸		默认
+banner	n.旗帜;横幅		默认
+bar	n.条;酒吧;条形		默认
+barbecue	n.烤肉;烤肉架		默认
+barber	n.理发师		默认
+bare	adj.赤裸的;无遮蔽的		默认
+bargain	n.便宜货 v.讨价还价		默认
+bark	n.树皮;狗叫 v.叫		默认
+barn	n.谷仓;畜棚		默认
+barrel	n.桶;枪管		默认
+barren	adj.贫瘠的;不育的		默认
+barrier	n.障碍;屏障		默认
+base	n.基础;基地 v.基于		默认
+baseball	n.棒球		默认
+basement	n.地下室;地窖		默认
+basic	adj.基本的;基础的		默认
+basically	adv.基本上		默认
+basin	n.盆;流域		默认
+basis	n.基础;根据		默认
+basket	n.篮子		默认
+basketball	n.篮球		默认
+bat	n.球拍;短棍;蝙蝠		默认
+bath	n.洗澡;浴室		默认
+bathe	v.洗澡;弄湿		默认
+bathroom	n.浴室;盥洗室		默认
+battery	n.电池;排炮		默认
+battle	n.战斗;战役 v.战斗		默认
+bay	n.海湾;狗吠声		默认
+be	v.是;成为		默认
+beach	n.海滩;沙滩		默认
+beam	n.梁;笑容 v.发光		默认
+bean	n.豆;豆科植物		默认
+bear	n.熊 v.忍受;支撑		默认
+beard	n.胡须		默认
+bearing	n.支承;忍受		默认
+beat	v.打;打败 n.节拍		默认
+beautiful	adj.美丽的;出色的		默认
+beauty	n.美;美人		默认
+because	conj.因为		默认
+become	v.变成;适合		默认
+bed	n.床;圃		默认
+bee	n.蜜蜂		默认
+beef	n.牛肉		默认
+beer	n.啤酒		默认
+before	prep.在...之前 adv.以前		默认
+beg	v.乞求;恳求		默认
+begin	v.开始		默认
+beginning	n.开始;开端		默认
+behalf	n.代表某人		默认
+behave	v.表现;（使）守规矩		默认
+behavior	n.行为;举止		默认
+behind	prep.在...后面 adv.在后面		默认
+being	n.存在;生物		默认
+belief	n.信任;信念		默认
+believe	v.相信;认为		默认
+bell	n.钟;铃		默认
+belong	v.属于;附属		默认
+beloved	adj.亲爱的 n.爱人		默认
+below	prep.在...下面 adv.在下面		默认
+belt	n.带;腰带;地带		默认
+bench	n.长凳;工作台		默认
+bend	v.弯曲;屈服 n.弯曲		默认
+beneath	prep.在...下方		默认
+benefit	n.利益;恩惠 v.有益于		默认
+beside	prep.在...旁边		默认
+besides	adv.此外;而且		默认
+best	adj.最好的 n.最好		默认
+bet	v.赌;打赌 n.赌注		默认
+betray	v.背叛;泄露		默认
+better	adj.较好的 adv.更好地		默认
+between	prep.在...之间		默认
+beyond	prep.在...的那边		默认
+bias	n.偏见;偏袒		默认
+bicycle	n.自行车;脚踏车		默认
+bid	v.出价;投标 n.出价		默认
+big	adj.大的		默认
+bike	n.自行车		默认
+bind	v.捆绑;装订		默认
+biology	n.生物学		默认
+bird	n.鸟;禽		默认
+birth	n.出生;出身		默认
+birthday	n.生日		默认
+biscuit	n.饼干		默认
+bit	n.一点;少量		默认
+bite	v.咬;剌痛 n.咬;一口		默认
+bitter	adj.痛苦的;严寒的		默认
+black	adj.黑色的 n.黑色		默认
+blackboard	n.黑板		默认
+blade	n.刀刃;叶片		默认
+blame	v.责备;归咎于		默认
+blank	adj.空白的 n.空白		默认
+blanket	n.毯子;羊毛毯		默认
+blast	n.爆炸;一阵风 v.爆炸		默认
+blaze	n.火焰;光辉 v.燃烧		默认
+bleed	v.出血;流血		默认
+blend	v.混和;调配		默认
+bless	v.祝福;保佑		默认
+blind	adj.瞎的;盲目的		默认
+block	n.街区;块 v.阻塞		默认
+blood	n.血;血液		默认
+bloom	n.花;开花 v.开花		默认
+blow	v.吹;爆炸 n.打击		默认
+blue	adj.蓝色的 n.蓝色		默认
+board	n.木板;委员会		默认
+boast	v.自夸;夸耀		默认
+boat	n.船;小船		默认
+body	n.身体;主体		默认
+boil	v.沸腾;汽化 n.沸腾		默认
+bomb	n.炸弹 v.轰炸		默认
+bond	n.债券;结合 v.结合		默认
+bone	n.骨头;骨骼		默认
+bonus	n.奖金;红利		默认
+book	n.书;本子 v.预定		默认
+boom	n.繁荣;低沉的声音 v.急速发展		默认
+boost	v.促进;增加 n.推动		默认
+boot	n.靴;靴子		默认
+booth	n.货摊;公用电话亭		默认
+border	n.边界;国界		默认
+bore	v.使厌烦;钻孔		默认
+born	adj.出生的;天生的		默认
+borrow	v.借;借用		默认
+bosom	n.胸;胸怀		默认
+boss	n.老板;领班		默认
+both	adj.两个...(都) pron.两者		默认
+bother	v.烦扰;打扰		默认
+bottle	n.瓶子;一瓶的容量		默认
+bottom	n.底部;底		默认
+bounce	v.弹跳;弹起		默认
+bound	adj.有义务的;受约束的		默认
+boundary	n.分界线;界限		默认
+bow	v.鞠躬;弯腰 n.弓		默认
+bowl	n.碗;一碗的容量		默认
+box	n.盒子;箱子		默认
+boy	n.男孩;小伙子		默认
+brain	n.大脑;头脑		默认
+brake	v.刹车;减速 n.刹车		默认
+branch	n.树枝;分部		默认
+brand	n.商标;牌子 v.打烙印		默认
+brass	n.黄铜;铜器		默认
+brave	adj.勇敢的;华丽的		默认
+bread	n.面包		默认
+break	v.打破;中断 n.休息		默认
+breakfast	n.早餐		默认
+breast	n.胸;乳房		默认
+breath	n.呼吸;气息		默认
+breathe	v.呼吸		默认
+breed	v.繁殖;饲养 n.品种		默认
+breeze	n.微风;和风		默认
+brick	n.砖;砖块		默认
+bride	n.新娘		默认
+bridge	n.桥;桥牌		默认
+brief	adj.简短的 v.简短介绍		默认
+bright	adj.明亮的;聪明的		默认
+brilliant	adj.光辉的;杰出的		默认
+brim	n.边缘;帽沿		默认
+bring	v.拿来;带来		默认
+brisk	adj.活泼的;清新的		默认
+broaden	v.放宽;变宽		默认
+broadly	adv.宽广地;概括地		默认
+broadcast	v./n.广播;播放		默认
+broken	adj.破碎的;坏掉的		默认
+bronze	n.青铜;青铜色		默认
+brook	n.小溪;小河		默认
+broom	n.扫帚		默认
+brother	n.兄弟;同胞		默认
+brow	n.眉毛;额		默认
+brown	n./adj.棕色（的）		默认
+brush	n.刷子;画笔 v.刷;擦过		默认
+bubble	n.气泡;泡沫 v.起泡		默认
+bucket	n.水桶;吊桶		默认
+bud	n.芽;花蕾		默认
+budget	n.预算;开支		默认
+buffalo	n.水牛;布法罗		默认
+build	v.建造;建设		默认
+builder	n.建筑者;建造师		默认
+building	n.建筑;建筑物		默认
+bulb	n.电灯泡;球状物		默认
+bulk	n.体积;大批		默认
+bull	n.公牛;雄的		默认
+bullet	n.子弹;弹丸		默认
+bunch	n.一串;一束		默认
+bundle	n.捆;包袱 v.收集		默认
+burden	n.负担;责任		默认
+bureau	n.局;司;处		默认
+burn	v.燃烧;烧毁		默认
+burning	adj.燃烧的;热烈的		默认
+burst	v.爆炸;突然破裂		默认
+bury	v.埋葬;埋藏		默认
+bus	n.公共汽车;总线		默认
+bush	n.灌木;灌木丛		默认
+business	n.商业;事务		默认
+busy	adj.忙的;繁忙的		默认
+but	conj.但是 prep.除了		默认
+butcher	n.屠夫;肉店		默认
+butter	n.黄油;奶油		默认
+butterfly	n.蝴蝶		默认
+button	n.纽扣;按钮 v.扣紧		默认
+buy	v.买;购买		默认
+buzz	v.发嗡嗡声;嗡嗡叫		默认
+cabbage	n.卷心菜;白菜		默认
+cabin	n.小屋;船舱		默认
+cabinet	n.橱柜;内阁		默认
+cable	n.电缆;电报 v.打电报		默认
+cache	n.缓存;隐藏的贮藏所		默认
+cactus	n.仙人掌		默认
+cadre	n.干部;骨架		默认
+cage	n.笼子		默认
+caress	n./v.爱抚;轻抚		默认
+cargo	n.（船、飞机等的）货物		默认
+carol	n.颂歌;欢乐的歌		默认
+carpet	n.地毯		默认
+carriage	n.四轮马车;运输		默认
+carrier	n.搬运人;带菌者		默认
+carrot	n.胡萝卜		默认
+cart	n.二轮运货马车		默认
+cartoon	n.卡通;动画片		默认
+carve	v.雕刻;切		默认
+case	n.情况;病例		默认
+cash	n.现金 v.兑现		默认
+cashier	n.出纳员		默认
+casino	n.赌场		默认
+cast	v.投掷;铸造		默认
+castle	n.城堡;象棋中的车		默认
+casual	adj.偶然的;非正式的		默认
+casualty	n.伤亡人员;事故		默认
+cat	n.猫		默认
+catalog	n.目录		默认
+catastrophe	n.灾难;灾祸		默认
+catch	v.捕捉;赶上		默认
+category	n.种类;范畴		默认
+cater	v.迎合;满足		默认
+cathedral	n.大教堂		默认
+Catholic	adj.天主教的 n.天主教徒		默认
+cattle	n.牛;牲畜		默认
+cause	n.原因;事业 v.引起		默认
+caution	n.小心;警告		默认
+cautious	adj.谨慎的		默认
+cave	n.洞穴		默认
+cease	v.停止;结束		默认
+ceiling	n.天花板;上限		默认
+celebrate	v.庆祝;颂扬		默认
+celebration	n.庆祝;庆典		默认
+celebrity	n.名人;名望		默认
+cell	n.细胞;电池;牢房		默认
+cellar	n.地下室;酒窖		默认
+cement	n.水泥;胶合剂		默认
+cemetery	n.墓地		默认
+censor	n.检查员 v.审查		默认
+census	n.人口普查		默认
+cent	n.百;分		默认
+centigrade	n./adj.摄氏温度计（的）		默认
+central	adj.中央的;主要的		默认
+centre	n.中心 v.集中		默认
+century	n.世纪;百年		默认
+ceremony	n.典礼;仪式		默认
+certain	adj.确定的;某		默认
+certainly	adv.一定;当然		默认
+certainty	n.确定;肯定		默认
+certificate	n.证书;证件		默认
+certify	v.证明;证实		默认
+chain	n.链;一连串		默认
+chair	n.椅子;主席		默认
+chairman	n.主席		默认
+chalk	n.粉笔		默认
+challenge	n.挑战;挑战书		默认
+chamber	n.房间;腔		默认
+champion	n.冠军;拥护者		默认
+chance	n.机会;可能性		默认
+chancellor	n.总理;校长		默认
+change	n.变化;零钱 v.改变		默认
+channel	n.频道;海峡		默认
+chaos	n.混乱;混沌		默认
+chap	n./v.使劈开;鞭打		默认
+chapter	n.章;回		默认
+character	n.性格;字符		默认
+characteristic	adj.特有的 n.特性		默认
+characterize	v.描述;成为...的特征		默认
+charge	n.费用;控告 v.充电;指控		默认
+charity	n.慈善;施舍		默认
+charm	n.魅力;魔法		默认
+chart	n.图表;海图		默认
+charter	n.宪章;特许证		默认
+chase	v.追逐;追捕		默认
+chat	v.聊天;闲谈		默认
+cheap	adj.便宜的;低劣的		默认
+cheat	v.欺骗;作弊		默认
+check	n.检查;支票 v.检查;托运		默认
+cheek	n.脸颊;面颊		默认
+cheer	v.欢呼;鼓舞		默认
+cheese	n.奶酪		默认
+chef	n.厨师;大厨		默认
+chemical	adj.化学的 n.化学品		默认
+chemist	n.化学家;药剂师		默认
+chemistry	n.化学		默认
+cheque	n.支票		默认
+cherry	n.樱桃;樱桃树		默认
+chess	n.国际象棋		默认
+chest	n.胸部;箱子		默认
+chicken	n.鸡;鸡肉		默认
+chief	adj.主要的 n.首领		默认
+child	n.儿童;孩子		默认
+childhood	n.童年;幼年		默认
+chimney	n.烟囱;烟筒		默认
+chin	n.下巴		默认
+china	n.瓷器;中国		默认
+chocolate	n.巧克力		默认
+choice	n.选择;选择权		默认
+choir	n.唱诗班;合唱团		默认
+choke	v.窒息;阻塞		默认
+choose	v.选择;挑选		默认
+chop	v.砍;切细		默认
+chord	n.弦;和弦		默认
+chorus	n.合唱;合唱曲		默认
+Christ	n.基督;耶稣		默认
+Christian	n.基督徒 adj.基督教的		默认
+Christmas	n.圣诞节		默认
+chronic	adj.慢性的;长期的		默认
+church	n.教堂;教会		默认
+cigarette	n.香烟;纸烟		默认
+cinema	n.电影院;电影		默认
+circle	n.圆;周期 v.环绕		默认
+circulate	v.循环;流通		默认
+circumference	n.圆周;周长		默认
+circumstance	n.环境;情况		默认
+citizen	n.公民;居民		默认
+city	n.城市;都市		默认
+civil	adj.公民的;民间的		默认
+civilization	n.文明;教化		默认
+civilize	v.使文明;教育		默认
+claim	v.声称;要求 n.索赔		默认
+clap	v.拍手;鼓掌		默认
+clarify	v.澄清;阐明		默认
+clarity	n.清晰;明确		默认
+clash	n.冲突;撞击声		默认
+clasp	n.扣子;紧握		默认
+class	n.阶级;班级		默认
+classic	adj.经典的 n.经典著作		默认
+classical	adj.古典的;经典的		默认
+classification	n.分类;分级		默认
+classify	v.分类;归类		默认
+classroom	n.教室		默认
+claw	n.爪;钳子		默认
+clay	n.粘土;泥土		默认
+clean	adj.清洁的 v.打扫		默认
+clear	adj.清晰的 v.清除		默认
+clearance	n.清除;批准		默认
+clergy	n.牧师;神职人员		默认
+clerk	n.职员;店员		默认
+clever	adj.聪明的;机敏的		默认
+click	v.点击 n.点击声		默认
+client	n.客户;顾客		默认
+climate	n.气候;风气		默认
+climax	n.高潮;顶点		默认
+climb	v.攀登;爬升		默认
+clinic	n.诊所;门诊部		默认
+clinical	adj.临床的		默认
+clip	n.夹子;回形针		默认
+clock	n.钟;时钟		默认
+clockwise	adj./adv.顺时针方向（的）		默认
+clone	n.克隆;复制品		默认
+close	adj.亲密的;近的 v.关闭		默认
+closed	adj.关闭的;有限的		默认
+closet	n.壁橱;小房间		默认
+cloth	n.布;衣料		默认
+clothes	n.衣服;服装		默认
+clothing	n.衣物;服装		默认
+cloud	n.云;云朵		默认
+cloudy	adj.多云的;模糊的		默认
+club	n.俱乐部;球棒		默认
+clue	n.线索;提示		默认
+clumsy	adj.笨拙的;愚笨的		默认
+cluster	n.串;丛 v.群聚		默认
+clutch	v.抓住;握紧		默认
+coach	n.教练;长途汽车		默认
+coal	n.煤;煤块		默认
+coast	n.海岸;海滨		默认
+coastal	adj.海岸的;沿海的		默认
+coat	n.外套;涂层		默认
+cocaine	n.可卡因		默认
+cock	n.公鸡;雄鸡		默认
+code	n.代码;编码 v.编码		默认
+coffee	n.咖啡;咖啡豆		默认
+coffin	n.棺材;柩		默认
+coil	n.线圈 v.卷		默认
+coin	n.硬币;货币		默认
+coincide	v.巧合;一致		默认
+coincidence	n.巧合;巧事		默认
+cold	adj.冷的 n.寒冷		默认
+coleslaw	n.凉拌卷心菜丝		默认
+collapse	v.倒塌;崩溃		默认
+collar	n.衣领;颈圈		默认
+colleague	n.同事;同僚		默认
+collect	v.收集;聚集		默认
+collection	n.收集;收藏		默认
+collective	adj.集体的;共同的		默认
+college	n.学院;大学		默认
+collision	n.碰撞;冲突		默认
+colonel	n.陆军上校		默认
+colonial	adj.殖民地的;殖民的		默认
+colony	n.殖民地;群体		默认
+color	n.颜色 v.给...着色		默认
+column	n.柱;列		默认
+comb	n.梳子 v.梳头		默认
+combat	n.战斗 v.战斗		默认
+combination	n.结合;组合		默认
+combine	v.结合;联合		默认
+come	v.来;成为		默认
+comedy	n.喜剧;喜剧性		默认
+comfort	n.安慰;舒适 v.安慰		默认
+comfortable	adj.舒适的;安逸的		默认
+comic	adj.喜剧的;有趣的		默认
+command	n.命令;指挥 v.命令		默认
+commander	n.司令官;指挥者		默认
+comment	n.评论;注释 v.评论		默认
+commerce	n.商业;贸易		默认
+commercial	adj.商业的;商品的		默认
+commission	n.委员会;佣金		默认
+commit	v.犯（错误）;承诺		默认
+commitment	n.承诺;承担		默认
+committee	n.委员会;全体委员		默认
+common	adj.普通的;共同的		默认
+commonwealth	n.联邦;共和国		默认
+communicate	v.交流;传达		默认
+communication	n.交流;通信		默认
+community	n.社区;共同体		默认
+commute	v.通勤;往返		默认
+compact	adj.紧凑的 n.协定		默认
+companion	n.同伴;伴侣		默认
+company	n.公司;陪伴		默认
+comparable	adj.可比较的;类似的		默认
+comparative	adj.比较的;相对的		默认
+compare	v.比较;比喻		默认
+comparison	n.比较;比喻		默认
+compass	n.罗盘;指南针		默认
+compassion	n.同情;怜悯		默认
+compatible	adj.兼容的;适合的		默认
+compel	v.强迫;迫使		默认
+compensate	v.补偿;赔偿		默认
+compensation	n.补偿;报酬		默认
+compete	v.竞争;对抗		默认
+competence	n.能力;胜任		默认
+competition	n.竞争;比赛		默认
+competitive	adj.竞争的;有竞争力的		默认
+competitor	n.竞争者;对手		默认
+compile	v.编译;编纂		默认
+complain	v.抱怨;投诉		默认
+complaint	n.抱怨;控诉		默认
+complete	adj.完整的 v.完成		默认
+completion	n.完成;结束		默认
+complex	adj.复杂的;复合的		默认
+complexity	n.复杂;复杂性		默认
+compliance	n.遵从;服从		默认
+complicate	v.使复杂;使难解		默认
+complicated	adj.复杂的;难解的		默认
+component	n.组成部分;组件		默认
+compose	v.组成;创作		默认
+composer	n.作曲家;作家		默认
+composition	n.作品;成分		默认
+compound	n.复合物;化合物		默认
+comprehend	v.理解;领会		默认
+comprehension	n.理解;领悟		默认
+comprehensive	adj.全面的;广泛的		默认
+compress	v.压缩;紧迫		默认
+comprise	v.包含;构成		默认
+compromise	n.妥协 v.妥协		默认
+compute	v.计算;估算		默认
+computer	n.计算机;电脑		默认
+comrade	n.同志;同伴		默认
+conceal	v.隐藏;隐瞒		默认
+concentrate	v.集中;聚集		默认
+concentration	n.集中;浓度		默认
+concept	n.概念;观念		默认
+conception	n.概念;构想		默认
+concern	n.关心;关注 v.涉及		默认
+concerned	adj.有关的;关注的		默认
+concert	n.音乐会;一致		默认
+concession	n.让步;特许权		默认
+conciliation	n.和解;调解		默认
+conclude	v.结束;推断		默认
+conclusion	n.结论;结束		默认
+concrete	adj.具体的 n.混凝土		默认
+condemn	v.谴责;判刑		默认
+condense	v.压缩;使简洁		默认
+condition	n.条件;状况		默认
+conduct	n.行为 v.指挥		默认
+conductor	n.指挥;导体		默认
+conference	n.会议;协商		默认
+confess	v.承认;忏悔		默认
+confidence	n.信心;信任		默认
+confident	adj.自信的;确信的		默认
+configuration	n.结构;配置		默认
+confine	v.限制;禁闭		默认
+confined	adj.有限的;狭窄的		默认
+confirmation	n.确认;证实		默认
+confirmatory	adj.证实的;确认的		默认
+conflict	n.冲突;争执		默认
+confuse	v.混淆;使困惑		默认
+confusion	n.混淆;迷惑		默认
+congratulate	v.祝贺;恭喜		默认
+congratulation	n.祝贺;恭喜		默认
+congress	n.国会;代表大会		默认
+conjunction	n.结合;连词		默认
+connect	v.连接;联系		默认
+connection	n.连接;关系		默认
+conquer	v.征服;克服		默认
+conquest	n.征服;征服地		默认
+conscience	n.良心;道德心		默认
+conscious	adj.意识到的;神志清醒的		默认
+consciousness	n.意识;知觉		默认
+consecutive	adj.连续的;连贯的		默认
+consensus	n.一致;共识		默认
+consent	n.同意;准许		默认
+consequence	n.结果;后果		默认
+consequent	adj.随之发生的;必然的		默认
+consequently	adv.因此;所以		默认
+conservation	n.保存;保护		默认
+conservative	adj.保守的 n.保守派		默认
+conservatory	n.温室;音乐学院		默认
+consider	v.考虑;认为		默认
+considerable	adj.相当大的;重要的		默认
+considerate	adj.体贴的;考虑周到的		默认
+consideration	n.考虑;体贴		默认
+consist	v.由...组成;在于		默认
+consistent	adj.一致的;连贯的		默认
+console	n.控制台;操纵板		默认
+consolidate	v.巩固;合并		默认
+consonant	n.辅音;辅音字母		默认
+conspicuous	adj.显著的;显眼的		默认
+conspiracy	n.阴谋;密谋		默认
+constant	adj.不变的;恒定的		默认
+constellation	n.星座;星群		默认
+constitution	n.宪法;体质		默认
+constitutional	adj.宪法的;体质的		默认
+constrain	v.强迫;限制		默认
+constraint	n.强迫;限制		默认
+construct	v.建造;构造		默认
+construction	n.建造;建筑物		默认
+consul	n.领事		默认
+consulate	n.领事馆		默认
+consult	v.咨询;商量		默认
+consultant	n.顾问;咨询者		默认
+consume	v.消耗;消费		默认
+consumer	n.消费者		默认
+consumption	n.消耗;消费		默认
+contact	n.接触;联系 v.接触		默认
+contain	v.包含;容纳		默认
+container	n.容器;集装箱		默认
+contaminate	v.污染;弄脏		默认
+contamination	n.污染;玷污		默认
+contemplate	v.沉思;注视		默认
+contemplation	n.沉思;注视		默认
+contemporary	adj.当代的;同时代的		默认
+contempt	n.轻视;蔑视		默认
+contend	v.竞争;主张		默认
+content	n.内容;满足 adj.满足的		默认
+contention	n.争论;争夺		默认
+contest	n.竞赛;争论		默认
+context	n.上下文;环境		默认
+continent	n.大陆;洲		默认
+continental	adj.大陆的;大陆性的		默认
+continual	adj.不断的;频繁的		默认
+continue	v.继续;连续		默认
+continuity	n.连续;连贯性		默认
+continuous	adj.连续的;持续的		默认
+contract	n.合同 v.收缩		默认
+contradict	v.反驳;相矛盾		默认
+contradiction	n.反驳;矛盾		默认
+contrary	adj.相反的 n.相反		默认
+contrast	n.对比;对照 v.对比		默认
+contribute	v.贡献;投稿		默认
+contribution	n.贡献;捐款		默认
+control	n.控制;管制 v.控制		默认
+controversial	adj.引起争议的;有争议的		默认
+controversy	n.争论;论战		默认
+convenience	n.便利;方便		默认
+convenient	adj.方便的;近便的		默认
+convention	n.大会;惯例		默认
+conventional	adj.惯例的;普通的		默认
+conversation	n.谈话;会话		默认
+convert	v.转换;改变		默认
+convey	v.传达;运输		默认
+convict	v.定罪 n.囚犯		默认
+conviction	n.定罪;坚信		默认
+convince	v.使确信;说服		默认
+convinced	adj.确信的;信服的		默认
+convincing	adj.令人信服的		默认
+conviction	n.定罪;坚信		默认
+cook	v.烹饪;煮		默认
+cookie	n.饼干		默认
+cool	adj.凉爽的;冷静的		默认
+cope	v.处理;对付		默认
+copier	n.复印机;复制机		默认
+copper	n.铜;铜币		默认
+copy	n.副本;摹仿 v.复制		默认
+copying	n.复制;复印		默认
+copyright	n.版权;著作权		默认
+coral	n.珊瑚;珊瑚虫		默认
+cord	n.绳;索		默认
+cordial	adj.诚恳的;热忱的		默认
+core	n.核心;果心		默认
+corn	n.玉米;谷类		默认
+corner	n.角;角落		默认
+corporation	n.公司;法人		默认
+corps	n.军团;兵种		默认
+corpse	n.尸体;尸首		默认
+correct	adj.正确的 v.改正		默认
+correction	n.改正;纠正		默认
+correspond	v.通信;符合		默认
+correspondence	n.通信;符合		默认
+correspondent	n.记者;通讯员		默认
+corresponding	adj.相应的;通信的		默认
+corridor	n.走廊;过道		默认
+corrupt	adj.腐败的 v.贿赂		默认
+corruption	n.腐败;贪污		默认
+cosmic	adj.宇宙的;广大无边的		默认
+cost	n.费用;成本 v.花费		默认
+costly	adj.昂贵的;价值高的		默认
+costume	n.服装;剧装		默认
+cosy	adj.舒适的;安逸的		默认
+cottage	n.小屋;村舍		默认
+cotton	n.棉花;棉布		默认
+couch	n.睡椅;长沙发		默认
+cough	n./v.咳嗽		默认
+could	modal v.可以;可能		默认
+council	n.委员会;会议		默认
+counsel	n.忠告;律师 v.忠告		默认
+count	v.数数;计算		默认
+countess	n.女伯爵		默认
+counter	n.柜台;计数器		默认
+counterfeit	adj.假冒的 v.伪造		默认
+country	n.国家;农村		默认
+countryside	n.乡下;农村		默认
+county	n.郡;县		默认
+coup	n.政变;意外之举		默认
+couple	n.对;夫妇 v.结合		默认
+coupon	n.票券;赠券		默认
+courage	n.勇气;胆量		默认
+course	n.课程;过程		默认
+court	n.法院;球场		默认
+cousin	n.堂兄弟姐妹		默认
+cove	n.小湾;小港		默认
+cover	v.覆盖;包括 n.封面		默认
+coverage	n.覆盖;保险		默认
+cow	n.母牛;奶牛		默认
+coward	n.懦夫;胆小鬼		默认
+crab	n.螃蟹;蟹肉		默认
+crack	n.裂缝;爆裂声		默认
+crackdown	n.镇压;打击		默认
+craft	n.工艺;飞船		默认
+cram	v.填塞;塞满		默认
+crash	n.碰撞;坠毁 v.碰撞		默认
+crater	n.火山口;弹坑		默认
+crawl	v.爬行;蠕动		默认
+crazy	adj.疯狂的;荒唐的		默认
+cream	n.奶油;乳脂		默认
+create	v.创造;造成		默认
+creation	n.创造;创作物		默认
+creative	adj.创造的;创造性的		默认
+creator	n.创造者;创立者		默认
+creature	n.生物;动物		默认
+credit	n.信用;信任		默认
+creek	n.小溪;小湾		默认
+crew	n.船员;全体工作人员		默认
+cricket	n.板球;蟋蟀		默认
+crime	n.罪行;犯罪		默认
+criminal	n.罪犯 adj.犯罪的		默认
+crisis	n.危机;危险期		默认
+crisp	adj.脆的;新鲜的		默认
+criterion	n.标准;准则		默认
+critic	n.批评家;评论家		默认
+critical	adj.批评的;危险的		默认
+criticism	n.批评;评论		默认
+criticize	v.批评;评论		默认
+crop	n.作物;产量		默认
+cross	n.十字形物 v.交叉		默认
+crossing	n.交叉;十字路口		默认
+crow	n.乌鸦;鸡冠		默认
+crowd	n.群众;一群人		默认
+crowded	adj.拥挤的;塞满的		默认
+crown	n.王冠;花冠		默认
+crucial	adj.决定性的;重要的		默认
+crude	adj.粗糙的;未加工的		默认
+cruel	adj.残忍的;残酷的		默认
+cruise	n.巡航;巡游		默认
+crumble	v.粉碎;崩溃		默认
+crush	v.压碎;拥挤		默认
+crust	n.外壳;地壳		默认
+cry	n.叫喊;哭声 v.哭		默认
+crystal	n.水晶;晶体		默认
+cube	n.立方体;立方		默认
+cubic	adj.立方的;立方体的		默认
+cuisine	n.烹饪;菜肴		默认
+cultivate	v.培养;耕作		默认
+cultural	adj.文化的;教养的		默认
+culture	n.文化;教养		默认
+cup	n.杯子;一杯的容量		默认
+cupboard	n.碗柜;食橱		默认
+curb	n.路边;抑制 v.抑制		默认
+cure	v.治疗;治愈		默认
+curious	adj.好奇的;稀奇的		默认
+curl	n.卷曲;卷发 v.卷曲		默认
+currency	n.货币;通货		默认
+current	adj.当前的 n.电流		默认
+curse	n.诅咒;咒骂 v.诅咒		默认
+curtain	n.帘;窗帘		默认
+curve	n.曲线;弯曲 v.弯曲		默认
+cushion	n.垫子;坐垫		默认
+custody	n.保管;监护		默认
+custom	n.习惯;风俗		默认
+customary	adj.习惯的;通常的		默认
+customer	n.顾客;主顾		默认
+cut	v.切;削减 n.切口		默认
+cute	adj.可爱的;聪明的		默认
+cycle	n.自行车;周期 v.循环		默认
+cylinder	n.圆筒;圆柱体		默认
+daily	adj.每日的 n.日报		默认
+dam	n.水坝;堰堤		默认
+damage	n./v.损害;损伤		默认
+damp	adj.潮湿的 n.潮湿		默认
+dance	n.舞;舞蹈 v.跳舞		默认
+danger	n.危险;风险		默认
+dangerous	adj.危险的;不安全的		默认
+dare	modal v.敢;敢于		默认
+dark	adj.黑暗的;深色的		默认
+darkness	n.黑暗;无知		默认
+dash	v.猛冲;急奔		默认
+data	n.数据;资料		默认
+database	n.数据库		默认
+date	n.日期;约会 v.约会		默认
+daughter	n.女儿		默认
+dawn	n.黎明;开端 v.破晓		默认
+day	n.白天;日子		默认
+daylight	n.白天;日光		默认
+dead	adj.死的;无生命的		默认
+deadline	n.最终期限		默认
+deadly	adj.致命的;非常的		默认
+deaf	adj.聋的;不愿听的		默认
+deal	n.交易;待遇 v.处理		默认
+dealer	n.商人;分销商		默认
+dear	adj.亲爱的;昂贵的		默认
+death	n.死;死亡		默认
+debate	n.辩论;争论 v.辩论		默认
+debt	n.债务;欠债		默认
+debtor	n.债务人		默认
+decade	n.十年;十年期		默认
+decay	v./n.衰退;衰减		默认
+deceit	n.欺骗;欺诈		默认
+deceive	v.欺骗;蒙蔽		默认
+December	n.十二月		默认
+decent	adj.适宜的;体面的		默认
+decide	v.决定;下决心		默认
+decimal	adj.小数的;十进制的		默认
+decision	n.决定;决心		默认
+decisive	adj.决定性的;果断的		默认
+deck	n.甲板;牌组		默认
+declare	v.声明;断言		默认
+decline	v.下降;拒绝 n.衰退		默认
+decorate	v.装饰;装潢		默认
+decoration	n.装饰;装饰品		默认
+decrease	v.减少;降低		默认
+dedicate	v.奉献;致力		默认
+deed	n.行为;事迹		默认
+deem	v.认为;视为		默认
+deep	adj.深的 adv.深地		默认
+deepen	v.深化;加深		默认
+deer	n.鹿		默认
+default	n.违约;缺席		默认
+defeat	n.失败 v.击败		默认
+defect	n.缺点;缺陷 v.叛变		默认
+defective	adj.有缺陷的;不完美的		默认
+defend	v.防守;保卫		默认
+defendant	n.被告		默认
+defense	n.防御;辩护		默认
+defensive	adj.防御的;自卫的		默认
+deficit	n.赤字;不足额		默认
+define	v.定义;使明确		默认
+definite	adj.明确的;一定的		默认
+definition	n.定义;清晰度		默认
+definitely	adv.一定地;肯定地		默认
+defy	v.违抗;藐视		默认
+degree	n.度;程度;学位		默认
+delay	n./v.延迟;延期		默认
+delete	v.删除;擦掉		默认
+delegation	n.代表团;授权		默认
+delete	v.删除;擦掉		默认
+delegation	n.代表团;授权		默认
+delicate	adj.精美的;脆弱的		默认
+delight	n.高兴 v.使高兴		默认
+delighted	adj.高兴的;快乐的		默认
+deliver	v.交付;发表		默认
+delivery	n.交付;分娩		默认
+demand	n.要求;需求 v.要求		默认
+democracy	n.民主;民主政治		默认
+democratic	adj.民主的;民主政治的		默认
+demonstrate	v.演示;证明		默认
+demonstration	n.证明;表		默认
+denote	v.表示;指示		默认
+denounce	v.谴责;告发		默认
+dense	adj.密集的;浓厚的		默认
+density	n.密度;浓度		默认
+dentist	n.牙科医生		默认
+deny	v.否认;拒绝		默认
+depart	v.离开;出发		默认
+department	n.部;部门		默认
+departure	n.离开;出发		默认
+depend	v.依赖;依靠		默认
+dependent	adj.依赖的 n.受抚养者		默认
+depict	v.描述;描绘		默认
+deportation	n.驱逐出境		默认
+deposit	n.存款;押金 v.存放		默认
+deposition	n.沉积;作证		默认
+deprive	v.剥夺;使丧失		默认
+depth	n.深度;深奥		默认
+deputy	n.副手;代表		默认
+derive	v.得到;源于		默认
+descend	v.下降;下去		默认
+descendant	n.后代;后裔		默认
+descent	n.下降;血统		默认
+describe	v.描述;描绘		默认
+description	n.描述;形容		默认
+desert	n.沙漠 v.遗弃		默认
+deserve	v.应受;值得		默认
+design	n.设计;图案 v.设计		默认
+designer	n.设计师;策划者		默认
+desirable	adj.值得要的;可取的		默认
+desire	v.愿望;要求 n.愿望		默认
+desk	n.桌子;办公桌		默认
+desolate	adj.荒凉的;孤独的		默认
+despair	n.绝望;失望 v.绝望		默认
+desperate	adj.绝望的;拼命的		默认
+despise	v.鄙视;轻视		默认
+despite	prep.尽管;不管		默认
+dessert	n.甜点;甜食		默认
+destination	n.目的地;终点		默认
+destiny	n.命运;天数		默认
+destroy	v.破坏;消灭		默认
+destruction	n.破坏;毁灭		默认
+destructive	adj.破坏性的;毁灭的		默认
+detach	v.分离;分开		默认
+detail	n.细节;详情 v.详述		默认
+detailed	adj.详细的;精细的		默认
+detain	v.拘留;留住		默认
+detect	v.侦查;发现		默认
+detection	n.侦查;发觉		默认
+determine	v.决定;确定		默认
+determined	adj.坚决的;果断的		默认
+determination	n.决心;决定		默认
+deviate	v.偏离;违背		默认
+device	n.装置;设备		默认
+devil	n.魔鬼;家伙		默认
+devise	v.设计;发明		默认
+devote	v.奉献;致力		默认
+devoted	adj.投入的;热爱的		默认
+devotion	n.献身;忠诚		默认
+dew	n.露水;甘露		默认
+diabetes	n.糖尿病		默认
+diagnosis	n.诊断;判断		默认
+diagram	n.图表;图解		默认
+dial	n.拨号盘 v.拨号		默认
+dialect	n.方言;土语		默认
+dialogue	n.对话;对白		默认
+diameter	n.直径		默认
+diamond	n.钻石;菱形		默认
+diary	n.日记;日记簿		默认
+dictate	v.口述;命令		默认
+dictation	n.听写;口述		默认
+dictionary	n.字典;词典		默认
+die	v.死亡;灭亡		默认
+diet	n.饮食;节食		默认
+differ	v.差异;不同		默认
+difference	n.差异;不同		默认
+different	adj.不同的;差异的		默认
+differently	adv.不同地;差异地		默认
+difficult	adj.困难的;艰难的		默认
+difficulty	n.困难;难题		默认
+dig	v.挖;掘		默认
+digest	v.消化 n.文摘		默认
+digital	adj.数字的;数码的		默认
+dignity	n.尊严;尊贵		默认
+dilemma	n.困境;进退两难		默认
+dimension	n.尺寸;维		默认
+diminish	v.减少;降低		默认
+dine	v.吃饭;用餐		默认
+dinner	n.晚餐;宴会		默认
+dioxide	n.二氧化物		默认
+dip	v.浸;蘸		默认
+diploma	n.毕业文凭;文凭		默认
+diplomat	n.外交官;外交家		默认
+diplomatic	adj.外交的;有策略的		默认
+direct	adj.直接的 v.指挥		默认
+direction	n.方向;指导		默认
+directly	adv.直接地;立即		默认
+director	n.导演;主任		默认
+directory	n.姓名地址录;目录		默认
+dirt	n.污垢;泥土		默认
+dirty	adj.脏的;下流的		默认
+disable	v.使无能;使残废		默认
+disadvantage	n.不利条件;弱点		默认
+disagree	v.不同意;不一致		默认
+disagreement	n.不一致;争论		默认
+disappear	v.消失;失踪		默认
+disappoint	v.使失望;使破灭		默认
+disappointed	adj.失望的;受挫折的		默认
+disappointing	adj.令人失望的		默认
+disappointment	n.失望;沮丧		默认
+disaster	n.灾难;灾祸		默认
+disastrous	adj.灾难性的;悲惨的		默认
+discard	v.丢弃;抛弃		默认
+discharge	v.释放;排出 n.放电		默认
+disciplinary	adj.纪律的;训练的		默认
+discipline	n.纪律;训练		默认
+disclose	v.揭露;暴露		默认
+discourse	n.演讲;论述 v.讲道		默认
+discourteous	adj.不礼貌的;无礼的		默认
+discover	v.发现;暴露		默认
+discovery	n.发现;发觉		默认
+discreet	adj.谨慎的;小心的		默认
+discrepancy	n.差异;矛盾		默认
+discrete	adj.离散的;分立的		默认
+discretion	n.谨慎;选择		默认
+discrimination	n.歧视;辨别力		默认
+discuss	v.讨论;论述		默认
+discussion	n.讨论;论述		默认
+disease	n.疾病;病害		默认
+disgust	n.厌恶;憎恶 v.厌恶		默认
+disgusted	adj.厌恶的;憎恶的		默认
+dish	n.盘;菜肴		默认
+dishearten	v.使沮丧;使失去勇气		默认
+dishonest	adj.不诚实的;欺诈的		默认
+dishonor	n.不光彩;丢脸 v.丢脸		默认
+dislike	v./n.不喜欢;厌恶		默认
+dismay	n.惊慌;失望 v.使惊慌		默认
+dismiss	v.解散;开除		默认
+disorder	n.混乱;失调		默认
+display	v./n.陈列;显示		默认
+displease	v.使不愉快;使生气		默认
+disposal	n.处理;安排		默认
+dispose	v.安排;处理		默认
+disposition	n.安排;倾向		默认
+dispute	n.争论;争端 v.争论		默认
+disregard	v./n.漠视;忽略		默认
+disrupt	v.使混乱;打乱		默认
+disruption	n.混乱;中断		默认
+dissatisfaction	n.不满;不满意		默认
+dissatisfy	v.使不满;使失望		默认
+dissolve	v.溶解;解散		默认
+distance	n.距离;远处		默认
+distant	adj.远的;疏远的		默认
+distinct	adj.明显的;不同的		默认
+distinction	n.区别;卓越		默认
+distinguish	v.区分;辨别		默认
+distinguished	adj.卓越的;著名的		默认
+distort	v.扭曲;曲解		默认
+distortion	n.扭曲;变形		默认
+distract	v.使分心;打扰		默认
+distraction	n.分心;娱乐		默认
+distribute	v.分配;分发		默认
+distribution	n.分配;分发		默认
+district	n.区域;行政区		默认
+disturb	v.打扰;扰乱		默认
+disturbance	n.打扰;扰乱		默认
+ditch	n.沟;沟渠		默认
+dive	v.跳水;潜水		默认
+diver	n.潜水员;跳水者		默认
+diverge	v.分歧;分开		默认
+divergence	n.分歧;差异		默认
+diverse	adj.不同的;多样的		默认
+diversify	v.多样化;变化		默认
+diversion	n.转移;改道		默认
+divert	v.转移;娱乐		默认
+divide	v.分割;分歧		默认
+dividend	n.红利;股息		默认
+divine	adj.神的;绝妙的		默认
+division	n.分割;除法		默认
+divorce	n.离婚;分离 v.离婚		默认
+divorcee	n.离婚者		默认
+do	v.做;干		默认
+document	n.文件;证件		默认
+dog	n.狗;狗项圈		默认
+dollar	n.美元;元		默认
+domestic	adj.国内的;家庭的		默认
+dominance	n.优势;统治		默认
+dominant	adj.统治的;显著的		默认
+dominate	v.统治;支配		默认
+donate	v.捐赠;赠送		默认
+donation	n.捐赠;捐款		默认
+donor	n.捐赠者;赠与者		默认
+door	n.门;入口		默认
+dorm	n.宿舍;睡眠		默认
+dormant	adj.休眠的;静止的		默认
+dose	n.剂量;一剂		默认
+dot	n.点;小点 v.打点		默认
+double	adj.双的 n.两个		默认
+doubt	n./v.怀疑;疑虑		默认
+doubtful	adj.怀疑的;可疑的		默认
+doubtless	adv.无疑的;必定的		默认
+down	adv.向下		默认
+down	adv.向下;沿着		默认
+downstairs	adv.在楼下;往楼下		默认
+downtown	adv.在市区;往市区		默认
+dozen	n.一打;十二个		默认
+draft	n.草稿;汇票 v.起草		默认
+drag	v.拖;拉		默认
+dragon	n.龙;凶暴的人		默认
+drain	v.排去;放水 n.排水		默认
+drama	n.戏剧;戏剧性事件		默认
+dramatic	adj.戏剧的;戏剧性的		默认
+drastic	adj.激烈的;猛烈的		默认
+draw	v.画;拉		默认
+drawback	n.缺点;不利条件		默认
+drawer	n.抽屉		默认
+drawing	n.绘画;绘图		默认
+dream	n.梦;梦想 v.做梦		默认
+dress	n.服装 v.穿衣		默认
+drift	v.漂流;飘浮		默认
+drill	v.钻孔;训练 n.钻;训练		默认
+drink	v.喝;饮 n.饮料		默认
+drip	v.滴下;漏水 n.滴		默认
+drive	v.开车;驱动 n.驱动		默认
+driver	n.司机;驾驶员		默认
+drop	n.滴;下降 v.掉落		默认
+drought	n.干旱;旱灾		默认
+drown	v.淹没;溺死		默认
+drug	n.药;毒品		默认
+drum	n.鼓;桶		默认
+drunk	adj.醉的;陶醉的		默认
+dry	adj.干的;枯燥的 v.干		默认
+duck	n.鸭;鸭肉 v.躲避		默认
+due	adj.预期的;应支付的		默认
+dull	adj.枯燥的;不鲜明的		默认
+dumb	adj.哑的;无言的		默认
+dump	v.倾倒;倾卸		默认
+duplicate	n.副本 v.复制		默认
+durable	adj.耐用的;持久的		默认
+duration	n.持续;期间		默认
+dusk	n.黄昏;薄暮		默认
+dust	n.灰尘;尘土 v.掸灰		默认
+duty	n.责任;税		默认
+dwarf	n.矮子;矮星 v.使显得矮小		默认
+dwell	v.居住;细想		默认
+dweller	n.居民;居住者		默认
+dwelling	n.住宅;寓所		默认
+dying	adj.垂死的;临终的		默认
+dynamic	adj.动态的;有活力的		默认
+dynasty	n.王朝;朝代		默认
+each	adj.每一的 pron.每个		默认
+eager	adj.渴望的;热切的		默认
+eagle	n.鹰		默认
+ear	n.耳朵;听力		默认
+early	adj.早的 adv.早地		默认
+earn	v.赚得;赢得		默认
+earnest	adj.认真的;热心的		默认
+earnings	n.收入;收益		默认
+earth	n.地球;土地		默认
+earthenware	n.陶器		默认
+earthquake	n.地震		默认
+ease	n.容易;舒适 v.减轻		默认
+east	n.东;东方 adj.东方的		默认
+eastern	adj.东方的;东部的		默认
+easy	adj.容易的;舒适的		默认
+eat	v.吃;吃饭		默认
+eccentric	adj.古怪的;异乎寻常的		默认
+echo	n.回声;反响 v.发回声		默认
+eclipse	n.日蚀;月蚀		默认
+economic	adj.经济的;合算的		默认
+economical	adj.经济的;节约的		默认
+economics	n.经济学		默认
+economy	n.经济;节约		默认
+edge	n.边缘;刀口 v.使锐利		默认
+edible	adj.可食的;适宜食用的		默认
+edit	v.编辑;校订		默认
+edition	n.版;版本		默认
+editor	n.编辑;编者		默认
+educate	v.教育;培养		默认
+educated	adj.受过教育的;有教养的		默认
+education	n.教育;培养		默认
+educational	adj.教育的;有教育意义的		默认
+effect	n.效果;作用		默认
+effective	adj.有效的;实在的		默认
+effectively	adv.有效地;实际上		默认
+effects	n.个人财物;影响		默认
+efficiency	n.效率;效能		默认
+efficient	adj.高效的;能干的		默认
+effort	n.努力;尝试		默认
+effortless	adj.不费力的;不紧张的		默认
+ego	n.自我;自尊心		默认
+either	adj.任一的 adv.也		默认
+elaborate	v.详细说明 adj.详细的		默认
+elaborately	adv.精细地;复杂地		默认
+elaboration	n.详细说明;精心制作		默认
+elapse	v.流逝;过去		默认
+elastic	adj.弹性的 n.松紧带		默认
+elbow	n.肘;弯管		默认
+elder	adj.年龄较大的 n.长者		默认
+elderly	adj.较老的;老年的		默认
+elect	v.选举;选择		默认
+election	n.选举;选择权		默认
+electric	adj.电的;电动的		默认
+electrical	adj.电的;电器的		默认
+electricity	n.电;电能		默认
+electron	n.电子		默认
+electronic	adj.电子的		默认
+electronics	n.电子学		默认
+elegant	adj.优雅的;优美的		默认
+element	n.元素;成分		默认
+elementary	adj.基本的;初级的		默认
+elephant	n.象;大象		默认
+elevator	n.电梯;升降机		默认
+eleven	num.十一		默认
+eligible	adj.合格的;有资格的		默认
+eliminate	v.消除;排除		默认
+elite	n.精华;中坚分子		默认
+else	adv.别的;其他的		默认
+elsewhere	adv.在别处;向别处		默认
+e-mail	n.电子邮件		默认
+emanate	v.发出;散发		默认
+emancipate	v.解放;释放		默认
+emancipation	n.解放;释放		默认
+embankment	n.路堤;堤岸		默认
+embargo	n.禁运;禁令		默认
+embark	v.着手;登船		默认
+embarrass	v.使尴尬;使为难		默认
+embarrassment	n.尴尬;窘迫		默认
+embed	v.嵌入;深植		默认
+embody	v.体现;包含		默认
+embrace	v.拥抱;包含		默认
+emerge	v.出现;露头		默认
+emergency	n.紧急情况;紧急状态		默认
+emigrate	v.移民;移居		默认
+emigration	n.移民;移居		默认
+emission	n.发射;散发		默认
+emit	v.发出;散发		默认
+emperor	n.皇帝		默认
+emphasis	n.重点;强调		默认
+emphasize	v.强调;着重		默认
+empire	n.帝国;帝王统治的国家		默认
+empirical	adj.经验主义的;以观察或实验为基础的		默认
+employ	v.雇用;使用		默认
+employee	n.雇工;雇员		默认
+employer	n.雇主		默认
+employment	n.雇用;使用		默认
+empty	adj.空的 v.倒空		默认
+enable	v.使能够;使成为可能		默认
+enact	v.制定;扮演		默认
+enclosure	n.围住;围栏		默认
+encounter	v./n.遭遇;遇到		默认
+encourage	v.鼓励;激励		默认
+encouragement	n.鼓励;激励		默认
+encouraging	adj.鼓励的;激励的		默认
+end	n.末端;结束 v.结束		默认
+endanger	v.危及;危害		默认
+endeavor	n.努力;尽力 v.尽力		默认
+ending	n.结束;结尾		默认
+endless	adj.无止境的;无限的		默认
+endorse	v.背书;赞同		默认
+endorsement	n.背书;赞同		默认
+endure	v.忍受;持久		默认
+enemies	n.敌人;仇敌		默认
+enemy	n.敌人;仇敌		默认
+energetic	adj.精力旺盛的;积极的		默认
+energy	n.能量;精力		默认
+enforce	v.实施;强制		默认
+engage	v.雇;忙于		默认
+engaged	adj.忙碌的;订婚的		默认
+engagement	n.订婚;约定		默认
+engine	n.引擎;发动机		默认
+engineer	n.工程师;设计者		默认
+engineering	n.工程;工程学		默认
+enhance	v.提高;增加		默认
+enjoy	v.欣赏;享受		默认
+enjoyable	adj.愉快的;有趣的		默认
+enjoyment	n.享受;欣赏		默认
+enlarge	v.扩大;放大		默认
+enlargement	n.扩大;放大		默认
+enlighten	v.启发;启蒙		默认
+enormous	adj.巨大的;庞大的		默认
+enough	adj.足够的 adv.足够地		默认
+enquire	v.询问;调查		默认
+enrollment	n.登记;注册		默认
+ensure	v.保证;确保		默认
+entail	v.使成为必需;遗传		默认
+enter	v.进入;参加		默认
+enterprise	n.企业;事业心		默认
+entertainment	n.娱乐;款待		默认
+enthusiasm	n.热情;热心		默认
+enthusiastic	adj.热情的;热心的		默认
+entire	adj.整个的;全部的		默认
+entitle	v.给...权利;给...称号		默认
+entity	n.实体;存在		默认
+entrance	n.入口;进入		默认
+entrepreneur	n.企业家;中间商		默认
+entry	n.进入;入口		默认
+envelope	n.信封;封套		默认
+environment	n.环境;外界		默认
+environmental	adj.环境的		默认
+environmental	adj.环境的;有关环境的		默认
+envisage	v.正视;想象		默认
+enzyme	n.酶		默认
+epidemic	n.流行病;传染病		默认
+episode	n.事件;插曲		默认
+epoch	n.纪元;时期		默认
+equal	adj.相等的;平等的 n.同等的人 v.等于		默认
+equality	n.平等;同等		默认
+equation	n.方程式;等式		默认
+equator	n.赤道		默认
+equip	v.装备;配备		默认
+equipment	n.装备;设备		默认
+equivalent	adj.相等的 n.等价物		默认
+era	n.时代;纪元		默认
+erase	v.擦掉;抹去		默认
+erode	v.腐蚀;侵蚀		默认
+erosion	n.腐蚀;侵蚀		默认
+erroneous	adj.错误的;不正确的		默认
+error	n.错误;误差		默认
+erupt	v.爆发;喷发		默认
+escalate	v.使升级;扩大		默认
+escape	v.逃跑;逸出 n.逃跑		默认
+especially	adv.特别;尤其		默认
+essay	n.文章;散文		默认
+essence	n.本质;实质		默认
+essential	adj.必要的;本质的		默认
+essentially	adv.本质上;基本上		默认
+establish	v.建立;设立		默认
+establishment	n.建立;公司		默认
+estate	n.财产;庄园		默认
+esteem	n.尊重;敬重 v.尊敬		默认
+estimate	n.估计 v.估计		默认
+eternal	adj.永恒的;永世的		默认
+ethics	n.伦理学;道德标准		默认
+ethnic	adj.种族的;民族的		默认
+evidence	n.证据;迹象		默认
+evident	adj.明显的;明白的		默认
+evidently	adv.显然;明显地		默认
+evil	adj.邪恶的 n.邪恶;坏事		默认
+evolution	n.演变;进化		默认
+evolve	v.发展;进化		默认
+exact	adj.精确的;确切的		默认
+exactly	adv.恰好;精确地		默认
+exaggerate	v.夸大;夸张		默认
+exam	n.考试;测试		默认
+examination	n.检查;考试		默认
+examine	v.检查;考试		默认
+example	n.例子;榜样		默认
+exceed	v.超过;超越		默认
+exceedingly	adv.非常;极其		默认
+excel	v.擅长;胜过		默认
+excellence	n.优秀;卓越		默认
+excellent	adj.优秀的;卓越的		默认
+except	prep.除...之外		默认
+exception	n.例外;异议		默认
+exceptional	adj.异常的;例外的		默认
+excess	n.超过;过量 adj.过量的		默认
+excessive	adj.过多的;过分的		默认
+exchange	n./v.交换;交流		默认
+excite	v.使兴奋;激发		默认
+excited	adj.兴奋的;激动的		默认
+excitement	n.兴奋;刺激		默认
+exciting	adj.令人兴奋的		默认
+exclaim	v.呼喊;惊叫		默认
+exclude	v.排除;排斥		默认
+exclusion	n.排除;排斥		默认
+exclusive	adj.独有的;排他的		默认
+exclusively	adv.专门地;独占地		默认
+excursion	n.远足;短途旅行		默认
+excuse	n.借口 v.原谅		默认
+execute	v.执行;处决		默认
+execution	n.实行;执行		默认
+executive	n.行政官;经理 adj.行政的		默认
+exemplify	v.是...的典型		默认
+exempt	adj.免除的 v.免除		默认
+exemption	n.免除;豁免		默认
+exercise	n.练习;运动 v.练习		默认
+exert	v.运用;施加		默认
+exhale	v.呼气;发出		默认
+exhaust	v.使筋疲力尽 n.排气		默认
+exhibition	n.展览;展览会		默认
+exile	n.流放;被流放者		默认
+exist	v.存在;生存		默认
+existence	n.存在;生存		默认
+exit	n.出口;退出 v.退出		默认
+exotic	adj.异国的;外来的		默认
+expand	v.扩大;扩张		默认
+expansion	n.扩大;扩张		默认
+expect	v.预料;预期		默认
+expectation	n.预期;期望		默认
+expected	adj.预期的;预料的		默认
+expedition	n.远征;探险队		默认
+expeditious	adj.迅速的;敏捷的		默认
+expel	v.驱逐;开除		默认
+expenditure	n.支出;消费		默认
+expense	n.损失;代价		默认
+expenses	n.开支;花费		默认
+expensive	adj.昂贵的		默认
+experience	n.经验;经历 v.经历		默认
+experiment	n.实验 v.尝试		默认
+experimental	adj.实验的;尝试的		默认
+expert	n.专家;行家 adj.熟练的		默认
+expertise	n.专家知识;专门技能		默认
+expiration	n.期满;呼气		默认
+expire	v.期满;终止		默认
+explain	v.解释;说明		默认
+explanation	n.解释;说明		默认
+explicit	adj.明确的;直率的		默认
+explode	v.爆炸;爆发		默认
+exploit	v.开发;剥削		默认
+exploration	n.探索;探测		默认
+explore	v.探索;探测		默认
+explosion	n.爆炸;爆发		默认
+explosive	adj.爆炸的 n.爆炸物		默认
+export	n.输出;出口 v.输出		默认
+exporter	n.出口商		默认
+expose	v.暴露;曝光		默认
+exposition	n.展览会;解释		默认
+exposure	n.暴露;曝光		默认
+express	v.表达;快递 adj.特快的		默认
+expression	n.表达;表情		默认
+extend	v.延长;扩展		默认
+extension	n.延长;扩展		默认
+extensive	adj.广泛的;广阔的		默认
+extent	n.程度;范围		默认
+exterior	n.外部;外表 adj.外部的		默认
+external	adj.外部的;外面的		默认
+extinct	adj.灭绝的;熄灭的		默认
+extinction	n.灭绝;消失		默认
+extra	adj.额外的 adv.额外		默认
+extract	v.提取;提炼 n.提取物		默认
+extraction	n.提取;提炼		默认
+extraordinary	adj.非凡的;特别的		默认
+extreme	adj.极端的 n.极端		默认
+eye	n.眼睛;眼光		默认
+eyebrow	n.眉毛		默认
+eyesight	n.视力;视觉		默认
+fabric	n.织物;布		默认
+fabricate	v.制造;伪造		默认
+fabrication	n.制造;伪造		默认
+fabulous	adj.难以置信的;传说中的		默认
+face	n.脸;表面 v.面对		默认
+face-to-face	adj.面对面的 adv.面对面地		默认
+facility	n.设备;容易		默认
+fact	n.事实;实际		默认
+factor	n.因素;要素		默认
+factory	n.工厂;制造厂		默认
+faculty	n.能力;系;全体教员		默认
+fade	v.褪色;凋谢		默认
+fail	v.失败;不及格		默认
+failure	n.失败;失败的人		默认
+faint	adj.微弱的;不清楚的		默认
+fair	adj.公平的;白皙的		默认
+fairly	adv.公平地;相当地		默认
+fairy	n.小仙女;小精灵		默认
+faith	n.信任;信仰		默认
+faithful	adj.忠实的;如实的		默认
+faithfully	adv.忠实地;如实地		默认
+fake	n.假货;赝品 adj.假的		默认
+fall	v.落下;跌倒 n.秋天		默认
+fallen	adj.倒下的;堕落的		默认
+fame	n.名声;名望		默认
+familiar	adj.熟悉的;亲近的		默认
+family	n.家庭;家族		默认
+famine	n.饥荒;饥饿		默认
+famous	adj.著名的;出名的		默认
+fan	n.扇子;风扇;狂热爱好者		默认
+fancy	n.爱好;幻想 v.幻想		默认
+fantastic	adj.奇异的;极好的		默认
+far	adj.远的 adv.远地		默认
+fare	n.费用;进展		默认
+farm	n.农场;农庄		默认
+farmer	n.农民		默认
+fascinate	v.使着迷;使神魂颠倒		默认
+fashion	n.流行式样;风尚		默认
+fashionable	adj.流行的;时髦的		默认
+fast	adj.快的 adv.快地		默认
+fasten	v.扎牢;扣紧		默认
+fat	n.脂肪;肥肉 adj.胖的		默认
+fatal	adj.致命的;重大的		默认
+fate	n.命运;天数		默认
+father	n.父亲;神父		默认
+fatigue	n.疲劳;劳累		默认
+fault	n.错误;缺点		默认
+faulty	adj.有错误的;不完美的		默认
+favor	n.恩惠;喜爱 v.赞成		默认
+favorable	adj.有利的;赞成的		默认
+favorite	adj.特别受喜爱的 n.最喜爱的人或物		默认
+favorably	adv.顺利地;有利地		默认
+fawn	n.未满周岁的小鹿 v.奉承		默认
+fax	n.传真 v.传真		默认
+fear	n.害怕;恐惧 v.害怕		默认
+fearful	adj.可怕的;害怕的		默认
+feasible	adj.可行的;可能的		默认
+feast	n.宴会;节日		默认
+feat	n.功绩;壮举		默认
+feather	n.羽毛;翎毛		默认
+feature	n.特征;特色 v.以...为特色		默认
+February	n.二月		默认
+federal	adj.联邦的;联盟的		默认
+federation	n.联盟;联合		默认
+fee	n.费;赏金		默认
+feed	v.喂;喂养		默认
+feedback	n.反馈;反响		默认
+feel	v.感觉;认为		默认
+feeling	n.感情;感觉		默认
+fellow	n.男子;同伴		默认
+fellowship	n.友情;奖学金		默认
+female	adj.女性的;雌性的 n.女性		默认
+feminine	adj.女性的;女子的		默认
+fence	n.栅栏;围栏		默认
+fertile	adj.肥沃的;多产的		默认
+fertilizer	n.肥料		默认
+festival	n.节日;音乐节		默认
+fetch	v.取来;带来		默认
+fever	n.发烧;狂热		默认
+few	adj.不多的;少数的		默认
+fewer	adj.较少的		默认
+fiber	n.纤维;纤维质		默认
+fiction	n.小说;虚构		默认
+field	n.田地;领域		默认
+fierce	adj.猛烈的;凶猛的		默认
+fight	v./n.打斗;争论		默认
+figure	n.数字;人物 v.计算;出现		默认
+file	n.文件;档案 v.归档		默认
+fill	v.填满;充满		默认
+film	n.电影;胶卷 v.拍摄		默认
+filter	n.过滤器;滤纸 v.过滤		默认
+final	adj.最终的;决定性的 n.决赛		默认
+finally	adv.最后;终于		默认
+finance	n.财政;金融 v.资助		默认
+financial	adj.财政的;金融的		默认
+find	v.找到;发现		默认
+finding	n.发现;调查结果		默认
+fine	adj.细的;美好的 n.罚款		默认
+finger	n.手指;指针		默认
+finish	v.完成;结束 n.结束		默认
+finite	adj.有限的;限定的		默认
+fire	n.火;火灾 v.开火;解雇		默认
+fireman	n.消防员		默认
+firm	adj.坚定的 n.商行;公司		默认
+firmly	adv.牢牢地;坚定地		默认
+first	adj.第一的 adv.首先 n.第一		默认
+fish	n.鱼;鱼肉 v.钓鱼		默认
+fisherman	n.渔夫;捕鱼人		默认
+fist	n.拳;拳头		默认
+fit	adj.合适的 v.适合;安装		默认
+fitness	n.健康;适合		默认
+fix	v.固定;修理		默认
+fixed	adj.固定的;不变的		默认
+fixture	n.固定装置;设备		默认
+flag	n.旗;标志 v.衰退;枯萎		默认
+flame	n.火焰;光辉		默认
+flap	n.垂下物;振翼		默认
+flare	n.闪光;火焰 v.闪光		默认
+flash	n.闪光 v.闪;反射		默认
+flat	adj.平坦的 n.一套房间		默认
+flatten	v.使平坦;压平		默认
+flavor	n.味;风味		默认
+fleet	n.舰队;一群		默认
+flesh	n.肉;肉体		默认
+flexibility	n.灵活性;柔韧性		默认
+flexible	adj.灵活的;可弯曲的		默认
+flick	n.轻打 v.轻弹;轻击		默认
+flight	n.飞行;航班		默认
+fling	v.扔;抛		默认
+float	v.浮动;漂浮		默认
+flock	n.羊群;鸟群		默认
+flood	n.洪水 v.淹没		默认
+floor	n.地板;楼层		默认
+flour	n.面粉;粉状物质		默认
+flow	v.流动;流淌		默认
+flower	n.花;开花		默认
+flu	n.流感		默认
+fluctuate	v.波动;变化		默认
+fluent	adj.流利的;流畅的		默认
+fluid	n.流体;液体 adj.流动的		默认
+flush	v.冲洗 n.脸红		默认
+flutter	v./n.振翼;飘动		默认
+fly	n.苍蝇 v.飞;飞行		默认
+focus	v./n.集中;焦点		默认
+fog	n.雾;雾状物		默认
+fold	v.折叠;合抱		默认
+folder	n.文件夹;纸夹		默认
+folk	n.人们;家属		默认
+follow	v.跟随;遵循		默认
+following	adj.接着的 n.追随者		默认
+fond	adj.喜爱的;温柔的		默认
+food	n.食物;食品		默认
+fool	n.傻瓜 v.欺骗		默认
+foolish	adj.愚蠢的;荒谬的		默认
+foot	n.足;英尺		默认
+football	n.足球;橄榄球		默认
+footstep	n.脚步;足迹		默认
+for	prep.为了;因为 conj.因为		默认
+forbid	v.禁止;不许		默认
+force	n.力量 v.强迫		默认
+forecast	v./n.预测;预报		默认
+forehead	n.前额;头的前部分		默认
+foreign	adj.外国的;外来的		默认
+foreigner	n.外国人		默认
+forest	n.森林;森林地带		默认
+forever	adv.永远;长久地		默认
+forge	v.锻造;伪造		默认
+forget	v.忘记;遗忘		默认
+forgive	v.原谅;宽恕		默认
+fork	n.叉;餐叉		默认
+form	n.形式 v.形成		默认
+formal	adj.正式的;形式上的		默认
+format	n.格式 v.格式化		默认
+formation	n.形成;构造		默认
+former	adj.以前的 n.前者		默认
+formula	n.公式;规则		默认
+formulate	v.制定;规划		默认
+fort	n.要塞;堡垒		默认
+fortnight	n.两星期;十四天		默认
+fortunate	adj.幸运的;吉祥的		默认
+fortunately	adv.幸运地;幸亏		默认
+fortune	n.财产;运气		默认
+forty	num.四十		默认
+forum	n.论坛;讨论会		默认
+forward	adv.向前 v.转递		默认
+fossil	n.化石;僵化的事物		默认
+foster	v.促进;培养		默认
+foul	adj.肮脏的;邪恶的		默认
+found	v.创立;建立		默认
+foundation	n.基础;基金会		默认
+fountain	n.喷泉;源泉		默认
+four	num.四		默认
+fourteen	num.十四		默认
+fourth	num.第四		默认
+fox	n.狐狸;狡猾的人		默认
+fraction	n.分数;部分		默认
+fracture	n.骨折 v.破裂		默认
+fragile	adj.易碎的;脆弱的		默认
+fragment	n.碎片;片段		默认
+fragrance	n.香味;芬芳		默认
+frame	n.框架;体格 v.给...镶框		默认
+framework	n.构架;框架		默认
+franchise	n.特权;公民权		默认
+frank	adj.坦率的;直率的		默认
+frankly	adv.坦率地;真诚地		默认
+fraud	n.欺诈;骗子		默认
+free	adj.自由的 v.释放		默认
+freedom	n.自由;自主		默认
+freely	adv.自由地;慷慨地		默认
+freeze	v.结冰;冷冻		默认
+freezing	adj.冻结的;冷冻的		默认
+freight	n.货物;货运		默认
+frequency	n.频率;频繁		默认
+frequent	adj.频繁的 v.常往		默认
+frequently	adv.频繁地;经常		默认
+fresh	adj.新鲜的;无经验的		默认
+friction	n.摩擦;摩擦力		默认
+fridge	n.电冰箱		默认
+friend	n.朋友;友人		默认
+friendly	adj.友好的;友谊的		默认
+friendship	n.友情;友谊		默认
+frighten	v.使惊恐;吓唬		默认
+frightened	adj.受惊的;害怕的		默认
+frightening	adj.令人恐惧的		默认
+frog	n.青蛙		默认
+from	prep.从;来自		默认
+front	adj.前面的 n.前面		默认
+frontier	n.前沿;边境		默认
+frost	n.霜;霜冻		默认
+frown	v.皱眉;蹙额		默认
+fruit	n.水果;果实		默认
+fruitful	adj.多产的;有成果的		默认
+frustrate	v.挫败;使沮丧		默认
+frustration	n.挫折;挫败		默认
+fuel	n.燃料 v.供燃料		默认
+fulfill	v.履行;满足		默认
+fulfillment	n.履行;满足		默认
+full	adj.满的;完全的		默认
+fully	adv.完全地;充分地		默认
+fume	n.烟雾;气味 v.冒烟		默认
+fun	n.乐趣;娱乐		默认
+function	n.功能;职务 v.运行		默认
+functional	adj.功能的;实用的		默认
+fund	n.基金;资金 v.投资		默认
+fundamental	adj.基本的;重要的		默认
+fundamentally	adv.根本上;基本上		默认
+funeral	n.葬礼;出殡		默认
+funny	adj.有趣的;滑稽的		默认
+fur	n.软毛;毛皮		默认
+furious	adj.狂怒的;狂暴的		默认
+furnace	n.炉子;熔炉		默认
+furnish	v.供应;装备		默认
+furniture	n.家具;装置		默认
+further	adv.更远地 adj.更远的		默认
+furthermore	adv.而且;此外		默认
+fuse	n.保险丝 v.熔化		默认
+fusion	n.熔合;结合		默认
+futile	adj.无效的;无用的		默认
+future	n.将来;前途		默认
+fuzzy	adj.模糊的;不清楚的		默认
+gadget	n.小工具;小机械		默认
+gain	v.获得;增加 n.增加;利润		默认
+gal	n.女孩;少女		默认
+galaxy	n.银河;星系;一群杰出的人		默认
+gale	n.强风;狂风		默认
+gallon	n.加仑		默认
+gallop	v./n.奔驰;飞驰		默认
+gamble	v.赌博;冒险 n.赌博		默认
+game	n.游戏;比赛		默认
+gang	n.一帮;一群		默认
+gap	n.缺口;差距		默认
+garage	n.车库;汽车修理厂		默认
+garbage	n.垃圾;废物		默认
+garden	n.花园;园林		默认
+garlic	n.大蒜		默认
+garment	n.衣服;服装		默认
+gas	n.煤气;气体		默认
+gaseous	adj.气体的;气态的		默认
+gasoline	n.汽油		默认
+gasp	v.喘气;气喘		默认
+gate	n.大门;闸门		默认
+gather	v.收集;聚集		默认
+gathering	n.聚集;集会		默认
+gauge	n.标准;测量仪 v.测量		默认
+gaunt	adj.憔悴的;荒凉的		默认
+gaze	v./n.凝视;注视		默认
+gear	n.齿轮;工具 v.调整		默认
+gender	n.性别;种类		默认
+gene	n.基因;因子		默认
+general	adj.一般的 n.将军		默认
+generalize	v.概括;推广		默认
+generally	adv.一般地;通常地		默认
+generate	v.产生;生成		默认
+generation	n.一代;产生		默认
+generator	n.发电机;发电机		默认
+generous	adj.慷慨的;丰富的		默认
+genius	n.天才;天赋		默认
+genre	n.类型;种类		默认
+genteel	adj.有教养的;优雅的		默认
+gently	adv.温和地;文雅地		默认
+genuine	adj.真正的;真诚的		默认
+geography	n.地理学;地形		默认
+geometry	n.几何学		默认
+germ	n.微生物;细菌		默认
+gesture	n.姿势;手势 v.作手势		默认
+get	v.得到;变得		默认
+ghost	n.鬼魂;幽灵		默认
+giant	n.巨人;巨物		默认
+gift	n.礼物;天赋 v.赠送		默认
+gifted	adj.有天赋的;有才华的		默认
+giggle	v./n.咯咯笑		默认
+ginger	n.姜;姜黄色		默认
+girl	n.女孩;女儿		默认
+give	v.给;提供		默认
+glad	adj.高兴的;乐意的		默认
+glance	v.看一眼;扫视		默认
+glare	v.怒视;眩光 n.眩光;耀眼		默认
+glass	n.玻璃;玻璃杯		默认
+glimpse	n.一瞥 v.瞥见		默认
+gloomy	adj.阴暗的;忧郁的		默认
+glorious	adj.光荣的;壮丽的		默认
+glory	n.光荣;壮丽		默认
+gloss	n.光泽;注释		默认
+glossy	adj.发光的;光滑的		默认
+glove	n.手套		默认
+glow	n.炽热;脸红 v.发热		默认
+glue	n.胶 v.粘合		默认
+go	v.去;进行 n.尝试		默认
+goal	n.目标;得分		默认
+goat	n.山羊;山羊皮		默认
+god	n.上帝;神		默认
+gold	n.黄金;金色 adj.金制的		默认
+golden	adj.金色的;极好的		默认
+golf	n.高尔夫球		默认
+good	adj.好的 n.好处		默认
+goodbye	interj.再见		默认
+goodness	n.善良;美德		默认
+goods	n.商品;货物		默认
+goose	n.鹅;鹅肉		默认
+govern	v.管理;支配		默认
+government	n.政府;治理		默认
+governor	n.州长;主管		默认
+gown	n.长袍;礼服		默认
+grab	v./n.攫取;抓取		默认
+grace	n.优美;宽限		默认
+graceful	adj.优美的;优雅的		默认
+gracious	adj.仁慈的;优美的		默认
+grade	n.等级 v.分级		默认
+gradient	n.梯度;斜率		默认
+gradual	adj.逐渐的;逐步的		默认
+graduate	v.毕业 n.毕业生		默认
+graft	v.嫁接;移植		默认
+grain	n.谷物;颗粒		默认
+gram	n.克		默认
+grammar	n.语法;语法学		默认
+grammatical	adj.语法的		默认
+grand	adj.宏伟的;重大的		默认
+grandfather	n.祖父;外祖父		默认
+grandmother	n.祖母;外祖母		默认
+grant	v.授予 n.授予物		默认
+grasp	v.抓住;掌握		默认
+grass	n.草;草地		默认
+grateful	adj.感激的;感谢的		默认
+gratitude	n.感激;感谢		默认
+grave	n.坟墓;死亡 adj.严重的		默认
+gravity	n.重力;严肃		默认
+graze	v.放牧;擦伤		默认
+grease	n.油脂;润滑油		默认
+great	adj.伟大的;重要的		默认
+green	adj.绿色的;生的 n.绿色		默认
+greenhouse	n.温室;花房		默认
+greet	v.问候;招呼		默认
+greeting	n.问候;招呼		默认
+grey	n./adj.灰色（的）		默认
+grid	n.网格;栅格		默认
+grief	n.悲痛;悲伤		默认
+grieve	v.使悲伤;悲伤		默认
+grill	n.烤架;格栅 v.烤		默认
+grim	adj.冷酷的;严峻的		默认
+grin	n.露齿笑 v.露齿笑		默认
+grind	v.磨碎;磨快		默认
+grip	v./n.紧握;掌握		默认
+grit	n.沙粒;勇气		默认
+groan	n.呻吟声 v.呻吟		默认
+grocer	n.杂货商		默认
+grocery	n.杂货店;食品		默认
+gross	adj.总的;粗野的		默认
+ground	n.地面;理由		默认
+group	n.组;团体 v.成群		默认
+grow	v.生长;种植		默认
+growth	n.生长;增长		默认
+grumble	v.抱怨;嘟囔		默认
+guarantee	n.保证 v.保证		默认
+guard	n.警卫;守卫 v.守卫		默认
+guess	v.猜测;推测		默认
+guest	n.客人;旅客		默认
+guide	n.向导;指南 v.引导		默认
+guideline	n.指导原则;方针		默认
+guilt	n.罪行;内疚		默认
+guilty	adj.内疚的;有罪的		默认
+guitar	n.吉他;六弦琴		默认
+gun	n.枪;炮		默认
+gym	n.体育馆;健身房		默认
+gymnasium	n.体育馆;健身房		默认
+habit	n.习惯;习性		默认
+habitat	n.栖息地;生长地		默认
+hair	n.头发;毛发		默认
+half	n./adj.一半（的）		默认
+hall	n.大厅;过道		默认
+halt	n.停止;休息 v.停止		默认
+ham	n.火腿;猪后腿肉		默认
+hamburger	n.汉堡包		默认
+hammer	n.锤子 v.锤击		默认
+hamper	v.妨碍;阻碍		默认
+hand	n.手;指针 v.传递		默认
+handful	n.一把;少数		默认
+handicap	n.障碍;不利条件 v.妨碍		默认
+handle	n.把手;柄 v.处理		默认
+handsome	adj.英俊的;可观的		默认
+handwriting	n.书法;笔迹		默认
+handy	adj.便利的; handy		默认
+hang	v.悬挂;绞死		默认
+happen	v.发生;碰巧		默认
+happiness	n.幸福;快乐		默认
+happy	adj.快乐的;幸福的		默认
+harassment	n.骚扰;烦恼		默认
+harbor	n.港口;避难所 v.庇护		默认
+hard	adj.硬的;困难的 adv.努力地		默认
+hardly	adv.几乎不;仅仅		默认
+hardship	n.困苦;苦难		默认
+hardware	n.硬件;五金器具		默认
+harm	n.伤害;损害 v.损害		默认
+harmful	adj.有害的;伤害的		默认
+harmony	n.和谐;一致		默认
+harsh	adj.严厉的;粗糙的		默认
+harvest	n.收获;产量 v.收割		默认
+haste	n.匆忙;急忙 v.匆忙		默认
+hasten	v.加速;赶快		默认
+hat	n.帽子		默认
+hatch	n.孵化;舱口 v.孵蛋;策划		默认
+hate	v.恨;憎恨		默认
+hatred	n.憎恨;敌意		默认
+haul	v.拖拉;拖运		默认
+haunt	v.常去;萦绕		默认
+have	v.有;让		默认
+hawk	n.鹰;鹰派成员		默认
+hay	n.干草		默认
+hazard	n.危险;冒险 v.冒险		默认
+hazardous	adj.危险的;冒险的		默认
+head	n.头;领导 v.朝向		默认
+headache	n.头痛		默认
+heading	n.标题;方向		默认
+headline	n.大标题;头条新闻		默认
+headquarters	n.总部;司令部		默认
+heal	v.治愈;愈合		默认
+health	n.健康;卫生		默认
+healthy	adj.健康的;健壮的		默认
+heap	n.堆;大量 v.堆		默认
+hear	v.听见;听说		默认
+hearing	n.听力;审讯		默认
+heart	n.心;中心		默认
+heat	n.热;热度 v.加热		默认
+heating	n.加热;供暖		默认
+heaven	n.天堂;天空		默认
+heavily	adv.沉重地;大量地		默认
+heavy	adj.重的;繁重的		默认
+hedge	n.树篱;障碍物		默认
+heel	n.脚后跟;鞋跟		默认
+height	n.高度;高度		默认
+heighten	v.提高;增加		默认
+heir	n.继承人;继承人		默认
+helicopter	n.直升飞机		默认
+hell	n.地狱;苦境		默认
+hello	interj.喂;你好		默认
+helmet	n.头盔;帽状物		默认
+help	v.帮助;援助 n.帮助		默认
+helpful	adj.有帮助的;有益的		默认
+hemisphere	n.半球		默认
+hen	n.母鸡		默认
+hence	adv.因此;从此		默认
+henceforth	adv.今后;从此		默认
+her	pron.她的;她的		默认
+herb	n.草药;药草		默认
+herd	n.兽群;牧群 v.放牧		默认
+here	adv.这里;在这里		默认
+heritage	n.遗产;传统		默认
+hero	n.英雄;男主角		默认
+heroic	adj.英雄的;英勇的		默认
+heroine	n.女英雄;女主角		默认
+hers	pron.她的		默认
+herself	pron.她自己		默认
+hesitate	v.犹豫;踌躇		默认
+hey	interj.嗨;喂		默认
+hi	interj.嗨		默认
+hide	v.隐藏;隐瞒 n.皮革		默认
+hierarchy	n.等级制度;统治集团		默认
+high	adj.高的 adv.高地		默认
+highly	adv.高度地;非常		默认
+highway	n.公路;大路		默认
+hike	v.徒步旅行;增加		默认
+hill	n.小山;丘陵		默认
+him	pron.他		默认
+himself	pron.他自己		默认
+hint	n.暗示;提示 v.暗示		默认
+hip	n.臀部;屋脊		默认
+hire	v.雇佣;租用		默认
+his	pron.他的		默认
+historian	n.历史学家		默认
+historic	adj.历史上的;有历史意义的		默认
+historical	adj.历史的;有关历史的		默认
+history	n.历史;历史学		默认
+hit	v.打;打击 n.击中		默认
+hitherto	adv.到目前为止;迄今		默认
+hoax	n.骗局;恶作剧		默认
+hobby	n.爱好;嗜好		默认
+hockey	n.曲棍球;冰上曲棍球		默认
+hold	v.拿;保持		默认
+holder	n.持有者;容器		默认
+hole	n.洞;孔		默认
+holiday	n.假日;节日		默认
+hollow	adj.空的;空洞的		默认
+holy	adj.神圣的;圣洁的		默认
+home	n.家;家乡 adv.回家		默认
+homeless	adj.无家的;无栖身之所的		默认
+homework	n.家庭作业;预习		默认
+homo	sapiens 智人		默认
+hone	n.磨刀石 v.磨锐		默认
+honey	n.蜜;蜂蜜		默认
+honor	n.荣誉;尊敬 v.尊敬		默认
+honorable	adj.荣誉的;值得尊敬的		默认
+hood	n.头巾;罩		默认
+hook	n.钩;挂钩 v.钩住		默认
+hope	n.希望 v.希望		默认
+hopeful	adj.有希望的;有前途的		默认
+hopefully	adv.有希望地;乐观地		默认
+hopeless	adj.绝望的;无希望的		默认
+horizon	n.地平线;视野		默认
+horizontal	adj.水平的;横向的		默认
+hormone	n.激素;荷尔蒙		默认
+horn	n.角;号角		默认
+horror	n.恐怖;战栗		默认
+horse	n.马;马科动物		默认
+horsepower	n.马力		默认
+hospital	n.医院		默认
+hospitality	n.好客;款待		默认
+host	n.主人;主持人 v.主持		默认
+hostage	n.人质;抵押品		默认
+hostile	adj.敌对的;不友好的		默认
+hot	adj.热的;热情的		默认
+hotel	n.旅馆;酒店		默认
+hound	n.猎狗;卑鄙的人		默认
+hour	n.小时;时间		默认
+house	n.房子;家庭		默认
+household	n.家庭;一家人 adj.家庭的		默认
+housewife	n.家庭主妇		默认
+housing	n.住房;住房供给		默认
+hovel	n.茅屋;小屋		默认
+hover	v.盘旋;徘徊		默认
+how	adv.如何;怎样		默认
+however	adv.然而;无论如何		默认
+huddle	v.挤成一堆;蜷缩		默认
+hug	v./n.拥抱;紧抱		默认
+huge	adj.巨大的;庞大的		默认
+huh	interj.哼;哈		默认
+human	adj.人的;人类的 n.人		默认
+humane	adj.人道的;仁慈的		默认
+humanity	n.人类;人性		默认
+humble	adj.谦逊的;低下的		默认
+humid	adj.潮湿的;湿润的		默认
+humidity	n.湿度;湿气		默认
+humiliate	v.使羞辱;使丢脸		默认
+humor	n.幽默;心情 v.迎合		默认
+hundred	num.一百		默认
+hunger	n.饿;渴望 v.渴望		默认
+hungry	adj.饿的;渴望的		默认
+hunt	v.打猎;搜寻		默认
+hunter	n.猎人;猎犬		默认
+hurricane	n.飓风;狂风		默认
+hurry	v.匆忙;赶紧 n.急忙		默认
+hurt	v.伤害;受伤		默认
+husband	n.丈夫		默认
+husbandry	n.农艺;耕作		默认
+hush	v.使...安静;肃静		默认
+hut	n.小屋;棚屋		默认
+hygiene	n.卫生;卫生学		默认
+hypothesis	n.假设;前提		默认
+hypothetical	adj.假设的;假定的		默认
+hysteria	n.歇斯底里;狂热		默认
+I	pron.我		默认
+ice	n.冰;冰淇淋		默认
+icon	n.图标;偶像		默认
+idea	n.思想;想法		默认
+ideal	adj.理想的;完美的 n.理想		默认
+idealism	n.唯心主义;理想主义		默认
+idealist	n.理想主义者		默认
+ideally	adv.理想地;最好地		默认
+identical	adj.相同的;一致的		默认
+identification	n.识别;身份证明		默认
+identify	v.识别;认同		默认
+identity	n.身份;特性		默认
+ideological	adj.思想的;意识形态的		默认
+ideology	n.意识形态;思想体系		默认
+idiom	n.成语;习语		默认
+idiot	n.白痴;笨蛋		默认
+idle	adj.闲置的;懒散的 v.虚度		默认
+idleness	n.懒惰;闲置		默认
+ignore	v.忽视;不顾		默认
+ignorance	n.无知;不知		默认
+ignorant	adj.无知的;愚昧的		默认
+ignore	v.忽视;不顾		默认
+ill	adj.坏的;生病的 adv.坏地		默认
+illegal	adj.非法的;违法的		默认
+illiterate	adj.文盲的;未受教育的		默认
+illness	n.病;疾病		默认
+illuminate	v.照亮;照明		默认
+illusion	n.幻觉;错觉		默认
+illustrate	v.说明;阐明		默认
+illustration	n.例证;插图		默认
+image	n.形象;图像 v.想象		默认
+imaginary	adj.想象的;虚构的		默认
+imagination	n.想象;想象力		默认
+imaginative	adj.想象的;有创造力的		默认
+imagine	v.想象;设想		默认
+imitate	v.模仿;仿效		默认
+imitation	n.模仿;仿制品		默认
+immediate	adj.立即的;直接的		默认
+immediately	adv.立即;直接地		默认
+immense	adj.巨大的;广大的		默认
+immerse	v.沉浸;使深陷		默认
+immigrant	n.移民;侨民		默认
+immigrate	v.移民;迁入		默认
+immigration	n.移民;移民局		默认
+immune	adj.免疫的;不受影响的		默认
+impact	n.冲击;影响 v.冲击		默认
+impair	v.损害;削弱		默认
+impart	v.传授;告知		默认
+impartial	adj.公正的;无偏见的		默认
+impartiality	n.公正;公平		默认
+impassioned	adj.热情的;激昂的		默认
+impatient	adj.不耐烦的;急躁的		默认
+implement	v.执行;实施 n.工具		默认
+implementation	n.实施;执行		默认
+implication	n.含义;暗示		默认
+implicit	adj.含蓄的;不直接表达的		默认
+implies	v.暗示;意味着		默认
+imply	v.暗示;意味		默认
+import	n.进口;重要性 v.进口		默认
+importance	n.重要性;重要		默认
+important	adj.重要的;重大的		默认
+impose	v.强加;征税		默认
+impossible	adj.不可能的;难以忍受的		默认
+impress	v.给...深刻印象		默认
+impression	n.印象;印记		默认
+impressive	adj.给人深刻印象的		默认
+improve	v.改善;提高		默认
+improvement	n.改善;提高		默认
+impulse	n.冲动;推动力		默认
+in	prep.在...里 adv.进入		默认
+inch	n.英寸		默认
+incidence	n.发生;影响		默认
+incident	n.事件;事变		默认
+incidentally	adv.顺便提一句;偶然地		默认
+incline	v.使倾斜;倾向于 n.斜坡		默认
+include	v.包括;包含		默认
+including	prep.包括;包含		默认
+income	n.收入;收益		默认
+incorporate	v.结合;合并		默认
+increase	n.增加;增长 v.增加		默认
+increasingly	adv.越来越多地;渐增地		默认
+incredible	adj.难以置信的;极好的		默认
+incredibly	adv.难以置信地;极端地		默认
+incur	v.招致;遭受		默认
+indeed	adv.的确;实在		默认
+indefinitely	adv.无限期地;不明确地		默认
+indifferent	adj.漠不关心的;中立的		默认
+indignant	adj.愤慨的;义愤的		默认
+indignation	n.愤慨;义愤		默认
+indirect	adj.间接的;迂回的		默认
+individual	adj.个别的;独特的 n.个人		默认
+indoor	adj.室内的;室内使用的		默认
+indoors	adv.在室内		默认
+induce	v.诱导;引起		默认
+induction	n.就职;归纳		默认
+industrial	adj.工业的;产业的		默认
+industry	n.工业;行业		默认
+inefficient	adj.无效率的;低能的		默认
+inevitable	adj.不可避免的;必然的		默认
+inevitably	adv.不可避免地;必然地		默认
+inexpensive	adj.不昂贵的;便宜的		默认
+infant	n.婴儿;幼儿		默认
+infect	v.传染;感染		默认
+infection	n.感染;传染病		默认
+infectious	adj.传染的;有感染力的		默认
+infer	v.推断;推论		默认
+inference	n.推断;推论		默认
+inferior	adj.劣等的;下级的		默认
+inferiority	n.低等;自卑感		默认
+infinite	adj.无限的;无穷的		默认
+infinitely	adv.无限地;极大地		默认
+inflation	n.通货膨胀;膨胀		默认
+influence	n.影响;势力 v.影响		默认
+influential	adj.有影响的;有权势的		默认
+inform	v.通知;告知		默认
+information	n.信息;情报		默认
+informed	adj.有知识的;了解情况的		默认
+informer	n.告密者;通报者		默认
+infraction	n.违反;犯规		默认
+infrastructure	n.基础设施;基础结构		默认
+infringe	v.侵犯;违反		默认
+infringement	n.侵犯;侵害		默认
+ingenious	adj.精巧的;有发明天才的		默认
+ingredient	n.成分;原料		默认
+inhabitant	n.居民;居住者		默认
+inhale	v.吸入;吸气		默认
+inherent	adj.固有的;天生的		默认
+inherit	v.继承;遗传得		默认
+inheritance	n.继承;遗传		默认
+initial	adj.最初的;词首的		默认
+initially	adv.最初;起先		默认
+initiate	v.开始;发起		默认
+initiative	n.主动;主动权		默认
+injection	n.注射;注射剂		默认
+injunction	n.命令;禁令		默认
+injure	v.伤害;损害		默认
+injury	n.伤害;损伤		默认
+inmate	n.同住者;居民		默认
+innocent	adj.无辜的;无害的		默认
+innocence	n.清白;无害		默认
+innovation	n.创新;改革		默认
+innovative	adj.创新的;革新的		默认
+innumerable	adj.无数的;数不清的		默认
+input	n.输入;投入		默认
+inquire	v.询问;调查		默认
+inquiry	n.询问;调查		默认
+insects	n.昆虫;虫子		默认
+insert	v.插入;嵌入		默认
+insertion	n.插入;嵌入		默认
+inside	adv.在里面 n.内部		默认
+insider	n.内部的人;内部消息		默认
+insight	n.洞察力;洞悉		默认
+insist	v.坚持;坚决认为		默认
+inspect	v.检查;视察		默认
+inspection	n.检查;视察		默认
+inspector	n.检查员;巡视员		默认
+inspiration	n.灵感;鼓舞		默认
+inspire	v.鼓舞;激励		默认
+install	v.安装;任命		默认
+installation	n.安装;装置		默认
+installment	n.安装;分期付款		默认
+instance	n.实例;情况		默认
+instant	adj.立即的 n.瞬间		默认
+instantaneous	adj.瞬间的;即刻的		默认
+instead	adv.代替;反而		默认
+instinct	n.本能;直觉		默认
+institute	n.学院;研究所 v.建立		默认
+institution	n.机构;建立		默认
+institutional	adj.机构的;慈善机构的		默认
+instruct	v.指导;通知		默认
+instruction	n.指令;教育		默认
+instructor	n.教师;指导者		默认
+instrument	n.工具;乐器		默认
+instrumental	adj.仪器的;有帮助的		默认
+insufficient	adj.不充分的;不足的		默认
+insult	v.侮辱;冒犯		默认
+insurance	n.保险;保险费		默认
+insure	v.保险;确保		默认
+intact	adj.完整的;未受损伤的		默认
+integrate	v.整合;使成整体		默认
+integrated	adj.整合的;集成的		默认
+integration	n.整合;一体化		默认
+integrity	n.正直;完整		默认
+intellectual	adj.智力的;理性的 n.知识分子		默认
+intelligence	n.智力;理解力		默认
+intelligent	adj.聪明的;智能的		默认
+intelligible	adj.可理解的;明了的		默认
+intend	v.想要;打算		默认
+intention	n.意图;目的		默认
+interact	v.互相作用;交流		默认
+interaction	n.相互作用;互动		默认
+intercourse	n.交流;性交		默认
+interest	n.兴趣;利益		默认
+interested	adj.感兴趣的;有利益的		默认
+interesting	adj.有趣的;引人入胜的		默认
+interface	n.界面;接合点		默认
+interfere	v.干涉;干预		默认
+interference	n.干涉;干扰		默认
+interim	adj.临时的;中间的		默认
+interior	adj.内部的 n.内部		默认
+intermediate	adj.中间的;中级的		默认
+intermediates	n.中间产物;中间商		默认
+intermittent	adj.间歇的;断断续续的		默认
+internal	adj.内部的;内在的		默认
+international	adj.国际的;世界的		默认
+internationally	adv.国际地;世界性地		默认
+interpersonal	adj.人与人之间的;人际的		默认
+interpret	v.解释;翻译		默认
+interpretation	n.解释;口译		默认
+interpreter	n.解释者;口译者		默认
+interrupt	v.中断;打扰		默认
+interruption	n.中断;干扰		默认
+intersect	v.横截;相交		默认
+intersection	n.横截;交叉		默认
+interval	n.间隔;间歇		默认
+intervene	v.干涉;介入		默认
+intervention	n.干涉;介入		默认
+interview	n./v.面试;面谈		默认
+intimate	adj.亲密的;个人的		默认
+into	prep.到...里;进入		默认
+intricate	adj.复杂的;错综的		默认
+intriguing	adj.引起兴趣的;迷人的		默认
+intrinsic	adj.固有的;内在的		默认
+introduce	v.介绍;引入		默认
+introduction	n.介绍;引入		默认
+intrude	v.闯入;强挤进去		默认
+intuition	n.直觉;直觉力		默认
+intuitive	adj.直觉的;直观的		默认
+invade	v.侵入;侵略		默认
+invasion	n.侵入;侵略		默认
+invent	v.发明;捏造		默认
+invention	n.发明;发明物		默认
+inventive	adj.发明的;有创造力的		默认
+inventory	n.存货;清单		默认
+inverse	adj.相反的;倒转的		默认
+inversely	adv.相反地;倒转地		默认
+inversion	n.倒置;逆转		默认
+invest	v.投资;投入		默认
+investigate	v.调查;研究		默认
+investigation	n.调查;研究		默认
+investigator	n.调查员;研究员		默认
+investment	n.投资;投资额		默认
+invisible	adj.看不见的;无形的		默认
+invitation	n.邀请;邀请书		默认
+invite	v.邀请;招致		默认
+invoice	n.发票;发货单		默认
+involvement	n.参与;涉及		默认
+involve	v.包含;牵涉		默认
+inward	adj.向内的;内部的 adv.向内		默认
+iodine	n.碘		默认
+ion	n.离子		默认
+iris	n.虹膜;鸢尾花		默认
+iron	n.铁;熨斗 v.熨烫		默认
+ironic	adj.讽刺的;反讽的		默认
+irony	n.讽刺;反讽		默认
+irradiation	n.照射;辐射		默认
+irrational	adj.无理性的;不合理的		默认
+irregular	adj.不规则的;不整齐的		默认
+irrelevant	adj.不相关的;不切题的		默认
+irrespective	adj.不考虑的;不顾的		默认
+irrigate	v.灌溉;冲洗		默认
+irrigation	n.灌溉;灌溉工程		默认
+island	n.岛;岛屿		默认
+isolate	v.隔离;孤立		默认
+isolated	adj.隔离的;孤立的		默认
+isolation	n.隔离;孤立		默认
+issue	n.问题 v.发行;发布		默认
+it	pron.它		默认
+item	n.项目;条款		默认
+ivory	n.象牙;牙白色		默认
+jab	v.戳;刺 n.刺;戳		默认
+jack	n.千斤顶;男人		默认
+jacket	n.夹克;短上衣		默认
+jail	n.监狱;监禁		默认
+jam	n.果酱;拥挤 v.挤;卡住		默认
+January	n.一月		默认
+jar	n.罐子;广口瓶 v.震动;冲突		默认
+jargon	n.行话;术语		默认
+jaw	n.下巴;颌		默认
+jazz	n.爵士乐;爵士舞		默认
+jealous	adj.妒忌的;猜疑的		默认
+jeans	n.牛仔裤		默认
+jeep	n.吉普车		默认
+jelly	n.果冻;胶状物		默认
+jewel	n.宝石;宝石饰物		默认
+jewelry	n.珠宝;珠宝业		默认
+job	n.工作;任务		默认
+jog	v.慢跑;轻推		默认
+join	v.连接;加入		默认
+joint	adj.联合的;共同的 n.关节		默认
+joke	n.笑话;玩笑 v.说笑话		默认
+jolly	adj.欢乐的;愉快的		默认
+journal	n.日记;杂志		默认
+journalism	n.新闻业;报业		默认
+journalist	n.新闻记者;新闻工作者		默认
+journey	n.旅行;行程		默认
+joy	n.欢乐;喜悦		默认
+joyful	adj.欢乐的;令人愉快的		默认
+judge	v.判断;审判 n.法官		默认
+judgment	n.判断;判决		默认
+judicial	adj.司法的;法庭的		默认
+juice	n.汁;液;果汁		默认
+July	n.七月		默认
+jump	v.跳;跳跃 n.跳跃		默认
+June	n.六月		默认
+jungle	n.丛林;密林		默认
+junior	adj.年少的 n.年少者		默认
+jurisdiction	n.司法权;审判权		默认
+jury	n.陪审团;评判团		默认
+justice	n.正义;公正		默认
+justification	n.辩护;正当理由		默认
+justify	v.证明...正当;为...辩护		默认
+juvenile	adj.少年的;似少年的 n.少年		默认
+keen	adj.热心的;激烈的		默认
+keep	v.保持;保留		默认
+kettle	n.水壶;罐		默认
+key	n.钥匙;关键 adj.主要的		默认
+keyboard	n.键盘		默认
+kick	v.踢 n.踢		默认
+kid	n.小孩;山羊 v.开玩笑		默认
+kidnap	v.绑架;诱拐		默认
+kidney	n.肾;腰子		默认
+kill	v.杀死;消磨		默认
+killer	n.杀手;杀人犯		默认
+killing	n.杀戮;谋杀		默认
+kilogram	n.千克;公斤		默认
+kilometer	n.公里;千米		默认
+kind	adj.善良的 n.种类		默认
+kindergarten	n.幼儿园		默认
+kindness	n.仁慈;善良		默认
+king	n.国王;君主		默认
+kingdom	n.王国;领域		默认
+kiss	n./v.吻;轻触		默认
+kitchen	n.厨房;灶间		默认
+knee	n.膝;膝盖		默认
+kneel	v.跪下;跪着		默认
+knife	n.小刀;匕首		默认
+knight	n.骑士;爵士		默认
+knock	v.敲;打		默认
+knot	n.结;节 v.打结		默认
+know	v.知道;认识		默认
+knowledge	n.知识;了解		默认
+label	n.标签;标记 v.贴标签		默认
+labor	n.劳动;工作		默认
+laboratory	n.实验室;研究室		默认
+laborer	n.劳动者;工人		默认
+lack	n.缺乏;不足 v.缺乏		默认
+lacking	adj.缺乏的;不足的		默认
+ladder	n.梯子;阶梯		默认
+lady	n.女士;夫人		默认
+lag	v.落后;滞后 n.落后		默认
+lake	n.湖;湖泊		默认
+lamp	n.灯;油灯		默认
+land	n.土地;国土 v.登陆		默认
+landing	n.登陆;着陆		默认
+landlord	n.地主;房东		默认
+lane	n.小路;巷		默认
+language	n.语言;表达能力		默认
+lap	n.膝;一圈 v.重叠		默认
+laptop	n.笔记本电脑		默认
+large	adj.大的;巨大的		默认
+largely	adv.大部分;主要地		默认
+laser	n.激光		默认
+last	adj.最后的 v.持续		默认
+lasting	adj.持久的;持久的		默认
+late	adj.迟的 adv.迟地		默认
+lately	adv.最近;不久前		默认
+latent	adj.潜在的;潜伏的		默认
+later	adv.后来 adj.后来的		默认
+latest	adj.最新的;最近的		默认
+latter	adj.后者的 n.后者		默认
+laugh	v.笑;嘲笑 n.笑		默认
+laughter	n.笑;笑声		默认
+launch	v.发动;发射		默认
+laundry	n.洗衣;洗衣房		默认
+lava	n.熔岩;岩浆		默认
+law	n.法律;定律		默认
+lawful	adj.合法的;法律的		默认
+lawyer	n.律师;法律顾问		默认
+lay	v.放;产卵 adj.世俗的		默认
+layer	n.层;层次		默认
+layoff	n.解雇;失业		默认
+lazy	adj.懒惰的;懒散的		默认
+lead	v.领导;导致 n.铅		默认
+leader	n.领袖;领导者		默认
+leadership	n.领导;领导能力		默认
+leading	adj.领导的;最主要的		默认
+leaf	n.叶子;一页		默认
+league	n.联盟;联合会		默认
+leak	v.漏;泄露 n.漏洞		默认
+lean	v.倾斜;倚 adj.瘦的		默认
+leap	v.跳跃;剧增 n.跳跃		默认
+learn	v.学习;得知		默认
+learned	adj.有学问的;学术的		默认
+learning	n.学习;学问		默认
+lease	n.租约;租赁 v.出租		默认
+least	adj.最小的 adv.最少		默认
+leather	n.皮革;皮革制品		默认
+leave	v.离开;留下 n.许可		默认
+lecture	n.演讲;讲课 v.演讲		默认
+left	adj.左边的 n.左;左边		默认
+leg	n.腿;腿部		默认
+legacy	n.遗产;遗留物		默认
+legal	adj.法律的;合法的		默认
+legend	n.传说;传奇		默认
+legislation	n.立法;法规		默认
+legislative	adj.立法的;有立法权的		默认
+legislator	n.立法者;议员		默认
+legislature	n.立法机关;立法机构		默认
+legitimate	adj.合法的;正当的		默认
+leisure	n.空闲;闲暇		默认
+lemon	n.柠檬;柠檬树		默认
+lend	v.借出;提供		默认
+length	n.长度;距离		默认
+lengthy	adj.长的;漫长的		默认
+lens	n.透镜;镜头		默认
+less	adj./adv.较少的（地） n.较少		默认
+lessen	v.减少;减轻		默认
+lesson	n.课;教训		默认
+let	v.让;允许		默认
+letter	n.信;字母		默认
+level	n.水平 adj.水平的		默认
+lever	n.杠杆;操纵杆		默认
+levy	v./n.征税;征兵		默认
+lewd	adj.淫荡的;好色的		默认
+liability	n.责任;债务		默认
+liable	adj.有责任的;易...的		默认
+liberal	adj.自由的;慷慨的		默认
+liberate	v.解放;释放		默认
+liberation	n.解放;释放		默认
+liberty	n.自由;释放		默认
+liberty	n.自由;释放		默认
+librarian	n.图书管理员;图书馆馆长		默认
+library	n.图书馆;藏书		默认
+license	n.许可证;执照 v.许可		默认
+lichen	n.青苔;苔藓		默认
+lick	v.舔;卷过		默认
+lid	n.盖子;眼睑		默认
+lie	v.躺;说谎 n.谎言		默认
+life	n.生命;生活		默认
+lifeboat	n.生命救生艇		默认
+lifetime	n.一生;寿命		默认
+lift	v.举起;提升 n.电梯		默认
+light	n.光;灯 v.点燃		默认
+lightning	n.闪电		默认
+like	v.喜欢 prep.像;如同		默认
+likelihood	n.可能性;可能		默认
+likely	adj.可能的 adv.可能地		默认
+likewise	adv.同样地;也		默认
+limb	n.肢;树枝		默认
+limit	n.限制 v.限制		默认
+limitation	n.限制;限度		默认
+limited	adj.有限的;受限的		默认
+line	n.线;排 v.排队		默认
+linear	adj.线的;直线的		默认
+linen	n.亚麻布;亚麻制品		默认
+liner	n.班机;班船		默认
+linguistic	adj.语言的;语言学的		默认
+link	v.连接 n.环节;链环		默认
+lion	n.狮子;勇猛的人		默认
+lip	n.嘴唇;唇缘		默认
+liquid	n.液体 adj.液体的		默认
+liquor	n.酒;烈性酒		默认
+list	n.列表 v.列出		默认
+listen	v.听;倾听		默认
+literacy	n.识字;有文化		默认
+literal	adj.文字的;字面的		默认
+literally	adv.照字面地;确实地		默认
+literature	n.文学;文献		默认
+litre	n.升;公升		默认
+litter	n.垃圾;杂乱 v.乱扔		默认
+little	adj.小的 adv.很少地		默认
+little	n.小;少许		默认
+live	v.居住 adj.活的		默认
+livestock	n.家畜;牲畜		默认
+living	adj.活的 n.生计		默认
+living	room 客厅		默认
+load	n.负载 v.装载		默认
+loan	n.贷款;借款		默认
+lobby	n.大厅;休息室		默认
+local	adj.地方的;当地的		默认
+locality	n.地点;位置		默认
+locate	v.位于;定位		默认
+location	n.位置;场所		默认
+lock	n.锁 v.锁上		默认
+locker	n.锁柜;更衣室		默认
+log	n.原木;日志 v.记录		默认
+logic	n.逻辑;逻辑学		默认
+logical	adj.逻辑的;合理的		默认
+logistics	n.物流;后勤		默认
+loose	adj.松的;宽松的		默认
+loosen	v.放松;松开		默认
+lord	n.领主;上帝		默认
+lorry	n.卡车;运货汽车		默认
+lose	v.丢失;失败		默认
+loss	n.损失;失败		默认
+lot	n.许多;批量		默认
+lots	adv.很;非常		默认
+loud	adj.大声的;响亮的		默认
+loudly	adv.大声地;响亮地		默认
+love	n.爱;热爱 v.爱		默认
+lovely	adj.美好的;可爱的		默认
+lover	n.爱好者;情人		默认
+low	adj.低的;矮的 adv.低地		默认
+lower	adj.较低的 v.降低		默认
+loyal	adj.忠诚的;忠心的		默认
+loyalty	n.忠诚;忠心		默认
+lubricate	v.润滑;涂油		默认
+lubrication	n.润滑;润滑油		默认
+lump	n.块;肿块 v.形成块		默认
+lunch	n.午餐;午饭		默认
+lung	n.肺;肺部		默认
+machine	n.机器;机械		默认
+machinery	n.机械;机器		默认
+mad	adj.发疯的;狂热的		默认
+madame	n.夫人;女士		默认
+mademoiselle	n.女士;小姐（法语）		默认
+magazine	n.杂志;期刊		默认
+magic	n.魔法;巫术		默认
+magistrate	n.地方官;法官		默认
+magnet	n.磁铁;磁体		默认
+magnetic	adj.磁的;有吸引力的		默认
+magnificent	adj.壮丽的;宏伟的		默认
+magnitude	n.重要性;大小		默认
+maid	n.女仆;少女		默认
+mail	n.邮件 v.邮寄		默认
+main	adj.主要的 adv.主要地		默认
+mainland	n.大陆;本土		默认
+maintain	v.维持;维修		默认
+maintenance	n.维护;保持		默认
+major	adj.较大的 n.专业 v.专修		默认
+majority	n.多数;大多数		默认
+make	v.制造;使得		默认
+male	adj.男性的 n.男性		默认
+male	nurse 男护士		默认
+malfunction	n.故障;障碍		默认
+malice	n.恶意;蓄意		默认
+malicious	adj.恶意的;恶毒的		默认
+mammal	n.哺乳动物		默认
+man	n.人;男人		默认
+manage	v.管理;设法		默认
+management	n.管理;经营		默认
+manager	n.经理;管理者		默认
+managing	adj.管理的;经营的		默认
+manipulate	v.操纵;操作		默认
+manipulation	n.操纵;操作		默认
+mankind	n.人类		默认
+manner	n.方式;礼貌		默认
+manual	adj.手的 n.手册		默认
+manufacture	v./n.制造;加工		默认
+manufacturer	n.制造商;制造厂		默认
+many	adj.许多的 pron.许多		默认
+map	n.地图;图		默认
+marble	n.大理石;弹珠		默认
+march	n.行进 v.行进		默认
+margin	n.边缘;利润		默认
+marginal	adj.边缘的;微小的		默认
+marine	adj.海的;海生的		默认
+mariner	n.海员;水手		默认
+marital	adj.婚姻的;夫妻的		默认
+maritime	adj.海的;海事的		默认
+mark	n.标记 v.标记		默认
+marked	adj.显著的;有记号的		默认
+market	n.市场;行情 v.销售		默认
+marriage	n.婚姻;结婚		默认
+married	adj.已婚的;婚姻的		默认
+marrow	n.骨髓;精髓		默认
+marry	v.结婚;娶		默认
+mask	n.面具;口罩 v.掩饰		默认
+mass	n.团;群众 adj.大量的		默认
+massive	adj.大规模的;巨大的		默认
+master	n.主人;硕士 v.掌握		默认
+masterpiece	n.杰作;名著		默认
+mat	n.垫子;垫物		默认
+match	n.比赛 v.相配		默认
+mate	n.伙伴;配偶 v.配对		默认
+material	n.材料 adj.物质的		默认
+mathematical	adj.数学的;精确的		默认
+mathematics	n.数学;数学运算		默认
+matter	n.事情;物质 v.要紧		默认
+mature	adj.成熟的 v.成熟		默认
+maximum	adj.最高的 n.最大值		默认
+may	modal v.可以;可能		默认
+maybe	adv.可能;大概		默认
+mayor	n.市长		默认
+me	pron.我		默认
+meal	n.餐;膳食		默认
+mean	v.意味着 adj.吝啬的		默认
+meaning	n.意义;含义		默认
+means	n.方法;手段		默认
+meantime	n.其间;同时		默认
+meanwhile	adv.同时;其间		默认
+measure	n.测量 v.测量		默认
+measurement	n.测量;尺寸		默认
+meat	n.肉;肌肉		默认
+mechanic	n.技工;机械		默认
+mechanical	adj.机械的;力学的		默认
+mechanism	n.机械装置;机制		默认
+medal	n.奖章;勋章		默认
+medical	adj.医学的;医疗的		默认
+medication	n.药物;药物治疗		默认
+medicine	n.药;医学		默认
+medieval	adj.中古的;中古时代的		默认
+mediocre	adj.平庸的;普通的		默认
+meditate	v.冥想;沉思		默认
+meditation	n.冥想;沉思		默认
+medium	n.媒体 adj.中等的		默认
+meet	v.遇见;满足		默认
+meeting	n.会议;会面		默认
+melancholy	n.忧郁;悲哀		默认
+melody	n.旋律;曲调		默认
+melon	n.瓜;甜瓜		默认
+melt	v.融化;熔化		默认
+member	n.成员;会员		默认
+membership	n.会员身份;会员资格		默认
+membrane	n.膜;薄膜		默认
+memo	n.备忘录;便签		默认
+memorise	v.记忆;记住		默认
+memory	n.记忆;记忆力		默认
+menace	n.威胁 v.威胁		默认
+mend	v.修理;缝补		默认
+mental	adj.精神的;脑力的		默认
+mention	v.提及;说起		默认
+menu	n.菜单;菜谱		默认
+merchandise	n.商品;货物		默认
+merchant	n.商人;零售商		默认
+merciful	adj.仁慈的;宽大的		默认
+mercy	n.仁慈;宽恕		默认
+merge	v.合并;融合		默认
+merger	n.合并;并购		默认
+merit	n.优点;价值		默认
+meritorious	adj.有功的;值得赞赏的		默认
+merry	adj.欢乐的;愉快的		默认
+mess	n.混乱;困境		默认
+message	n.消息;信息		默认
+messenger	n.使者;信使		默认
+metal	n.金属;金属制品		默认
+meteorology	n.气象学;气象		默认
+meter	n.米;计量器		默认
+method	n.方法;条理		默认
+methodology	n.方法论;方法学		默认
+meticulous	adj.细心的;小心翼翼的		默认
+metric	adj.公制的;米制的		默认
+microbiology	n.微生物学		默认
+microscope	n.显微镜		默认
+microscopic	adj.显微镜的;微观的		默认
+mid	adj.中间的 adv.在中间		默认
+midday	n.中午;正午		默认
+middle	n.中间 adj.中间的		默认
+midnight	n.午夜;子夜		默认
+midst	n.在中间;当中		默认
+might	modal v.可以;可能		默认
+mighty	adj.强的;有力的		默认
+mild	adj.温和的;轻微的		默认
+mile	n.英里		默认
+military	adj.军事的;军用的		默认
+milk	n.牛奶 v.挤奶		默认
+mill	n.磨坊;工厂		默认
+millennium	n.千年;千禧年		默认
+million	num.百万		默认
+millionaire	n.百万富翁		默认
+mind	n.思想 v.介意		默认
+mine	pron.我的 n.矿		默认
+mineral	n.矿物 adj.矿物的		默认
+mingle	v.混合;交往		默认
+miniature	adj.微型的 n.缩影		默认
+minimize	v.最小化;贬低		默认
+minimum	adj.最小的 n.最小值		默认
+minister	n.部长;牧师		默认
+ministry	n.部门;部长职位		默认
+mineral	n.矿物;矿石		默认
+mink	n.貂;貂皮		默认
+minor	adj.较小的;次要的		默认
+minority	n.少数;少数民族		默认
+minus	adj.负的 prep.减去		默认
+minute	n.分钟;瞬间 adj.微小的		默认
+miracle	n.奇迹;非凡的事		默认
+mirror	n.镜子;反映		默认
+mischief	n.恶作剧;伤害		默认
+miserable	adj.痛苦的;悲惨的		默认
+misery	n.痛苦;悲惨		默认
+mislead	v.误导;带错		默认
+miss	v.想念;错过		默认
+missile	n.导弹;火箭		默认
+missing	adj.失踪的;缺少的		默认
+mission	n.使命;任务		默认
+missionary	adj.传教的 n.传教士		默认
+mist	n.雾;薄雾		默认
+mistake	n.错误 v.弄错		默认
+mistaken	adj.错误的;弄错的		默认
+misunderstand	v.误解;误会		默认
+misunderstanding	n.误解;误会		默认
+mix	v.混合;混淆		默认
+mixed	adj.混合的;杂种的		默认
+mixture	n.混合;混合物		默认
+moan	n.呻吟声 v.呻吟		默认
+mobile	adj.可移动的 n.移动电话		默认
+mobility	n.可动性;流动性		默认
+mock	adj.仿制的;模拟的		默认
+mode	n.方式;模式		默认
+model	n.模型;典型 v.模拟		默认
+moderate	adj.温和的 v.节制		默认
+modern	adj.现代的;新式的		默认
+modest	adj.谦虚的;适度的		默认
+modify	v.修改;改变		默认
+module	n.模块;模数		默认
+moist	adj.潮湿的;湿润的		默认
+moisture	n.潮湿;湿气		默认
+mold	n.模具;霉菌 v.形成		默认
+molecule	n.分子		默认
+molecular	adj.分子的		默认
+molecule	n.分子		默认
+molten	adj.熔化的;熔融的		默认
+moment	n.时刻;瞬间		默认
+momentous	adj.重大的;重要的		默认
+momentum	n.势头;动量		默认
+monarch	n.君主;帝王		默认
+monetary	adj.货币的		默认
+money	n.钱;货币		默认
+monitor	n.监视器 v.监视		默认
+monk	n.修道士;僧侣		默认
+monkey	n.猴子		默认
+monopoly	n.垄断;专利权		默认
+monotonous	adj.单调的;无变化的		默认
+monster	n.怪物;巨兽		默认
+monthly	adj.每月的 adv.每月		默认
+monument	n.纪念碑;古迹		默认
+mood	n.心情;情绪		默认
+moon	n.月亮;月光		默认
+moral	adj.道德的 n.道德		默认
+morale	n.士气;斗志		默认
+morality	n.道德;德行		默认
+more	adj.更多的 adv.更多地		默认
+moreover	adv.而且;此外		默认
+morning	n.早晨;上午		默认
+mortal	adj.终有一死的;致命的		默认
+mortgage	n.抵押 v.抵押		默认
+mosquito	n.蚊子		默认
+most	adj.大部分的 adv.最		默认
+mostly	adv.大部分;主要地		默认
+motel	n.汽车旅馆		默认
+mother	n.母亲;妈妈		默认
+motion	n.运动;动作		默认
+motivate	v.激励;激发		默认
+motivation	n.动机;激励		默认
+motive	n.动机;目的		默认
+motor	n.发动机;汽车		默认
+mould	n.模具;土霉菌 v.塑造		默认
+mount	n.坐骑 v.爬上;安装		默认
+mountain	n.山;山脉		默认
+mountainous	adj.多山的;巨大的		默认
+mourn	v.哀悼;忧伤		默认
+mourning	n.哀悼;悲伤		默认
+mouse	n.老鼠;鼠标		默认
+mouth	n.口;嘴巴		默认
+move	v.移动;搬家		默认
+movement	n.移动;运动		默认
+movie	n.电影;影片		默认
+much	adj.许多的 adv.非常		默认
+mud	n.泥;泥浆		默认
+muddy	adj.泥泞的 v.使泥泞		默认
+mug	n.大杯;咖啡杯		默认
+multiple	adj.多重的;多样的		默认
+multiply	v.乘;繁殖		默认
+mum	n.妈妈;沉默		默认
+mumble	v.喃喃而语;口齿不清地说		默认
+mummy	n.木乃伊;干瘪的尸体		默认
+murder	n.谋杀 v.谋杀		默认
+murderer	n.凶手;谋杀犯		默认
+murmur	v.低语;低声抱怨 n.低语		默认
+muscle	n.肌肉;力量		默认
+muscular	adj.肌肉的;强健的		默认
+museum	n.博物馆;展览馆		默认
+mushroom	n.蘑菇;伞菌		默认
+music	n.音乐;乐曲		默认
+musical	adj.音乐的;和谐的		默认
+musician	n.音乐家;作曲家		默认
+must	modal v.必须;一定		默认
+mutual	adj.相互的;共同的		默认
+mutter	v.轻声低语;抱怨		默认
+my	pron.我的		默认
+myself	pron.我自己		默认
+mystery	n.神秘;神秘的事物		默认
+mystical	adj.神秘的;难以理解的		默认
+myth	n.神话;虚构的故事		默认
+nail	n.钉子;指甲 v.钉		默认
+naive	adj.天真的;纯朴的		默认
+naked	adj.裸体的;无遮盖的		默认
+name	n.名字;名称 v.命名		默认
+naming	n.命名		默认
+nap	n.小睡;打盹		默认
+napkin	n.餐巾;尿布		默认
+narrative	n.叙述;故事		默认
+narrow	adj.狭窄的 v.变窄		默认
+nasty	adj.肮脏的;下流的		默认
+nation	n.国家;民族		默认
+national	adj.国家的;民族的		默认
+nationality	n.国籍;民族		默认
+native	adj.本土的 n.本地人		默认
+natural	adj.自然的;天生的		默认
+nature	n.自然;本性		默认
+naval	adj.海军的;军舰的		默认
+navigation	n.航行;航海		默认
+navigator	n.航海家;领航员		默认
+navy	n.海军;舰队		默认
+near	adj.近的 adv.近地 prep.靠近		默认
+nearby	adj.附近的 adv.在附近		默认
+nearly	adv.几乎;将近		默认
+neat	adj.整洁的;灵巧的		默认
+necessary	adj.必要的;必然的		默认
+necessitate	v.使成为必要		默认
+necessity	n.必要性;需要		默认
+neck	n.颈;脖子		默认
+necklace	n.项链;项圈		默认
+need	n.需要 v.需要		默认
+needle	n.针;指针		默认
+needless	adj.不必要的;无用的		默认
+needy	adj.贫穷的;贫困的		默认
+neglect	v.忽视;忽略 n.疏忽		默认
+negligible	adj.可以忽略的;微不足道的		默认
+negotiate	v.谈判;商议		默认
+negotiation	n.谈判;协商		默认
+negro	n.黑人 adj.黑色的		默认
+neighbor	n.邻居;邻国		默认
+neighborhood	n.邻区;邻近		默认
+neither	adj.两者都不的 conj.两者都不		默认
+nephew	n.侄子;外甥		默认
+nerve	n.神经;勇气		默认
+nervous	adj.神经的;紧张的		默认
+nest	n.巢;窝 v.筑巢		默认
+net	adj.净的 n.网		默认
+network	n.网络;网状物		默认
+neutral	adj.中立的;中性的		默认
+never	adv.从不;永不		默认
+nevertheless	adv.然而;尽管如此		默认
+new	adj.新的;新鲜的		默认
+newly	adv.最近;新近		默认
+news	n.新闻;消息		默认
+newspaper	n.报纸		默认
+next	adj.最近的;接下来的		默认
+nice	adj.令人愉快的;好的		默认
+niche	n.壁龛;合适的职业		默认
+nickel	n.镍;五分硬币		默认
+nickname	n.绰号;浑名		默认
+night	n.夜;夜间		默认
+nightmare	n.恶梦;可怕的事情		默认
+nil	n.无;零		默认
+no	adv.不 adj.没有的		默认
+noble	adj.高贵的;贵族的 n.贵族		默认
+nobody	pron.没有人 n.小人物		默认
+nod	v.点头;打盹		默认
+noise	n.噪音;喧闹声		默认
+noisy	adj.嘈杂的;喧闹的		默认
+nominal	adj.名义上的;有名无实的		默认
+nominate	v.提名;推荐		默认
+nomination	n.提名;任命		默认
+nonexistent	adj.不存在的;非现存的		默认
+nonsense	n.胡说;废话		默认
+noodle	n.面条;笨蛋		默认
+normal	adj.正常的;标准的		默认
+normally	adv.正常地;通常地		默认
+north	n.北方 adj.北的		默认
+northeast	n.东北 adv.在东北		默认
+northwest	n.西北 adv.在西北		默认
+nose	n.鼻子;嗅觉 v.嗅		默认
+not	adv.不		默认
+note	n.笔记;便条 v.记下		默认
+notebook	n.笔记本;练习簿		默认
+nothing	n.无;没有什么		默认
+notice	n.通知;注意 v.注意		默认
+notification	n.通知;通告		默认
+notify	v.通知;告知		默认
+notion	n.概念;意图		默认
+notorious	adj.臭名昭著的;著名的		默认
+notwithstanding	prep./adv.尽管;不论		默认
+noun	n.名词;名字		默认
+novel	adj.新奇的 n.小说		默认
+novelist	n.小说家		默认
+november	n.十一月		默认
+now	adv.现在;目前		默认
+nowadays	adv.现今;时下		默认
+nowhere	adv.无处;哪里都不		默认
+nuclear	adj.原子核的;核心的		默认
+nucleus	n.核心;原子核		默认
+nuisance	n.讨厌的东西;麻烦事		默认
+number	n.数字;号码 v.编号		默认
+numerous	adj.众多的;许多的		默认
+nurse	n.护士 v.护理;哺育		默认
+nursery	n.托儿所;苗圃		默认
+nurture	n./v.养育;培育		默认
+nut	n.坚果;螺母		默认
+nutrition	n.营养;营养学		默认
+oak	n.橡树;橡木		默认
+oar	n.桨;橹		默认
+oasis	n.绿洲;休息场所		默认
+oath	n.誓言;宣誓		默认
+obedience	n.服从;顺从		默认
+obedient	adj.服从的;顺从的		默认
+obeisance	n.鞠躬;尊敬		默认
+obese	adj.肥胖的		默认
+obey	v.服从;遵守		默认
+object	n.物体;目标 v.反对		默认
+objection	n.反对;异议		默认
+objective	adj.客观的 n.目标		默认
+obligation	n.责任;义务		默认
+oblige	v.迫使;赐给		默认
+obscure	adj.模糊的 v.隐藏		默认
+observation	n.观察;评论		默认
+observe	v.观察;注意到		默认
+observer	n.观察者;观察员		默认
+obsess	v.使着迷;困扰		默认
+obsession	n.着迷;固执		默认
+obsolete	adj.过时的;废弃的		默认
+obstacle	n.障碍;干扰		默认
+obstruct	v.阻塞;阻挡		默认
+obstruction	n.障碍;妨碍		默认
+obtain	v.获得;得到		默认
+obvious	adj.明显的;显而易见的		默认
+occasion	n.场合;时机		默认
+occasional	adj.偶尔的;临时的		默认
+occupation	n.职业;占领		默认
+occupy	v.占领;占据		默认
+occur	v.发生;出现		默认
+occurrence	n.发生;出现		默认
+ocean	n.海洋;大量		默认
+o'clock	adv.点钟（用于时间）		默认
+October	n.十月		默认
+odd	adj.奇数的;奇怪的		默认
+odds	n.不同;可能性		默认
+odor	n.气味;香味		默认
+of	prep....的;关于		默认
+off	adv.离开 prep.从		默认
+offend	v.冒犯;得罪		默认
+offense	n.进攻;冒犯		默认
+offer	v.提供;出价 n.提议		默认
+offering	n.提供;祭品		默认
+office	n.办公室;职务		默认
+officer	n.官员;军官		默认
+official	adj.官方的;正式的		默认
+offset	v.抵消;补偿		默认
+offspring	n.后代;子女		默认
+often	adv.经常;常常		默认
+oil	n.油;石油 v.给...加润滑油		默认
+ointment	n.药膏;油膏		默认
+okay	adj.好的 adv.行		默认
+old	adj.老的;旧的		默认
+olive	n.橄榄;橄榄树		默认
+olympic	adj.奥林匹克的		默认
+omit	v.省略;遗漏		默认
+on	adv.在上 prep.在...之上		默认
+once	adv.一次;曾经		默认
+one	num.一;一个		默认
+oneself	pron.自己;自身		默认
+onion	n.洋葱;洋葱头		默认
+online	adj.在线的 adv.在线地		默认
+only	adj.唯一的 adv.只		默认
+onto	prep.到...上		默认
+onus	n.责任;负担		默认
+onward	adv.向前;前进		默认
+open	adj.开着的 v.打开		默认
+opener	n.开罐刀;开瓶器		默认
+opening	n.开始;空缺		默认
+opera	n.歌剧;歌剧艺术		默认
+operate	v.操作;动手术		默认
+operation	n.操作;手术		默认
+operational	adj.操作的;运作的		默认
+operator	n.操作员;接线员		默认
+opinion	n.意见;看法		默认
+opponent	n.敌手;对手		默认
+opportunity	n.机会;时机		默认
+oppose	v.反对;对抗		默认
+opposite	adj.对面的 n.对立面		默认
+opposition	n.反对;敌对		默认
+option	n.选择;选择权		默认
+optional	adj.可选择的;随意的		默认
+opulent	adj.富裕的;丰富的		默认
+or	conj.或;就是		默认
+oracle	n.神谕;预言者		默认
+oral	adj.口头的;口的		默认
+orange	n.橙子;橙色 adj.橙色的		默认
+oration	n.演讲;讲话		默认
+orchestra	n.管弦乐队		默认
+ordained	adj.命中注定的;神授的		默认
+order	n.顺序 v.命令		默认
+orderly	adj.有秩序的;整齐的		默认
+ordinance	n.条例;法令		默认
+ordinary	adj.普通的;平凡的		默认
+ore	n.矿石;矿		默认
+organ	n.器官;风琴		默认
+organic	adj.器官的;有机的		默认
+organism	n.生物体;有机体		默认
+organization	n.组织;机构		默认
+organize	v.组织;安排		默认
+orient	v.定位;定方向		默认
+oriental	adj.东方的;东方人的		默认
+orientation	n.方向;定位		默认
+origin	n.起源;出身		默认
+original	adj.原始的 n.原件		默认
+originality	n.创造性;独特性		默认
+ornament	n.装饰物 v.装饰		默认
+orphaned	adj.孤儿的;无依无靠的		默认
+orthodox	adj.正统的;惯常的		默认
+other	adj.其他的;另外的		默认
+otherwise	adv.否则;另外		默认
+ought	modal v.应该;应当		默认
+ounce	n.盎司;少量		默认
+our	pron.我们的		默认
+ours	pron.我们的		默认
+ourselves	pron.我们自己		默认
+out	adv.出;在外 prep.从...出来		默认
+outcome	n.结果;效果		默认
+outdoor	adj.室外的;户外的		默认
+outer	adj.外部的;外面的		默认
+outfit	n.一套装备 v.配备		默认
+outing	n.外出;远足		默认
+outlet	n.出口;发泄		默认
+outline	n.轮廓 v.概述		默认
+outlook	n.观点;展望		默认
+output	n.输出;产量 v.输出		默认
+outrage	n.暴行;愤怒		默认
+outright	adj.完全的;直率的		默认
+outset	n.开始;起始		默认
+outside	adv.在外面 n.外部		默认
+outsider	n.局外人;外来者		默认
+outskirts	n.郊区;市郊		默认
+outstanding	adj.杰出的;突出的		默认
+outward	adj.向外的 adv.向外		默认
+oval	adj.椭圆形的 n.椭圆形		默认
+oven	n.炉;灶		默认
+over	adv.结束 prep.在...之上		默认
+overcoat	n.大衣;外套		默认
+overcome	v.克服;征服		默认
+overflow	v.溢出;充满		默认
+overhead	adj.高架的;在头顶上的		默认
+overlook	v.忽略;俯瞰		默认
+overnight	adj.通宵的 adv.一夜之间		默认
+overpass	n.过街天桥 v.走过		默认
+overpopulation	n.人口过密;过剩		默认
+overseas	adv.海外 adj.海外的		默认
+oversight	n.疏忽;管理		默认
+overtake	v.超过;突然袭击		默认
+overthrow	v.推翻;废黜		默认
+overtime	adj.超时的 adv.加班		默认
+overturn	v.推翻;倾覆		默认
+overwhelm	v.压倒;使不知所措		默认
+overwhelming	adj.压倒性的;巨大的		默认
+owe	v.欠;归功于		默认
+owing	adj.欠的;未付的		默认
+owl	n.猫头鹰		默认
+own	adj.自己的 v.拥有		默认
+owner	n.所有者;物主		默认
+ownership	n.所有权;所有制		默认
+ox	n.牛;公牛		默认
+oxide	n.氧化物		默认
+oxygen	n.氧;氧气		默认
+oyster	n.牡蛎;蚝		默认
+pace	n.步;速度 v.踱步		默认
+pacific	adj.和平的 n.太平洋		默认
+pack	n.包装 v.打包		默认
+package	n.包裹;套装 v.包装		默认
+packet	n.小包;数据包		默认
+paddle	n.桨 v.用桨划		默认
+paddock	n.围场;马厩		默认
+pagan	n.异教徒 adj.异教的		默认
+page	n.页;页码		默认
+pagination	n.分页;编号		默认
+paid	adj.付费的		默认
+pain	n.痛苦;疼痛		默认
+painful	adj.痛苦的;困难的		默认
+paint	n.油漆 v.画;涂漆		默认
+painter	n.画家;油漆工		默认
+painting	n.绘画;油画		默认
+pair	n.一对;双 v.配对		默认
+palace	n.宫殿;宏伟的住宅		默认
+pale	adj.苍白的;浅的 v.失色		默认
+paleontology	n.古生物学		默认
+pan	n.平底锅;盘		默认
+pancake	n.薄煎饼;烤饼		默认
+panda	n.熊猫		默认
+panel	n.面板;专家咨询组		默认
+panic	n.恐慌 v.使恐慌		默认
+panorama	n.全景;全景画		默认
+pant	n.气喘 v.喘息		默认
+panting	adj.喘息的;气喘吁吁的		默认
+pants	n.裤子;长裤		默认
+paper	n.纸;报纸		默认
+paperback	n.平装书;简装书		默认
+parachute	n.降落伞 v.跳伞		默认
+parade	n.游行 v.游行		默认
+paradigm	n.范例;范式		默认
+paradise	n.天堂;乐土		默认
+paragraph	n.段落;文章		默认
+parallel	adj.平行的 n.平行线		默认
+paralyse	v.使瘫痪;使麻痹		默认
+parameter	n.参数;界限		默认
+parcel	n.包裹;邮包		默认
+pardon	n.原谅 v.原谅		默认
+parent	n.父母;母亲		默认
+parental	adj.父母的;亲本的		默认
+parenthesis	n.括号;附加说明		默认
+park	n.公园;停车场 v.停车		默认
+parliament	n.议会;国会		默认
+part	n.部分;角色 v.分离		默认
+partial	adj.部分的;偏袒的		默认
+participant	n.参与者;分享者		默认
+participate	v.参与;分享		默认
+participation	n.参与;分享		默认
+particle	n.粒子;微粒		默认
+particular	adj.特别的;具体的		默认
+particularly	adv.特别地;尤其		默认
+partition	n.分割;划分		默认
+partly	adv.部分地;不完全地		默认
+partner	n.伙伴;合伙人		默认
+partnership	n.合伙;合作关系		默认
+part-time	adj.兼职的;部分时间的		默认
+party	n.党;聚会		默认
+pass	v.通过;传递		默认
+passage	n.通道;段落		默认
+passenger	n.乘客;旅客		默认
+passion	n.激情;热情		默认
+passionate	adj.热情的;热烈的		默认
+passive	adj.被动的;消极的		默认
+passport	n.护照;通行证		默认
+password	n.密码;口令		默认
+past	adj.过去的 n.过去		默认
+paste	n.浆糊 v.粘贴		默认
+pastime	n.消遣;娱乐		默认
+pasture	n.牧场;草地		默认
+pat	n.轻拍 v.轻拍		默认
+patch	n.补丁;补片 v.修补		默认
+patent	n.专利权 adj.专利的		默认
+path	n.小路;路径		默认
+pathetic	adj.引起怜悯的;可怜的		默认
+patience	n.耐性;忍耐		默认
+patient	adj.有耐心的 n.病人		默认
+patriot	n.爱国者;爱国主义者		默认
+patriotic	adj.爱国的		默认
+patriotism	n.爱国主义;爱国心		默认
+patrol	v./n.巡逻;巡查		默认
+patron	n.赞助人;顾客		默认
+pattern	n.图案;模式 v.模仿		默认
+pause	n.暂停;中止 v.暂停		默认
+pave	v.铺路;准备		默认
+pavement	n.人行道;路面		默认
+paw	n.爪子		默认
+pay	v.支付;报酬 n.工资		默认
+payment	n.支付;报酬		默认
+pea	n.豌豆;豌豆属		默认
+peace	n.和平;宁静		默认
+peaceful	adj.和平的;安静的		默认
+peach	n.桃子;桃树		默认
+peak	n.山峰;尖端 adj.最高的		默认
+peanut	n.花生;花生豆		默认
+pear	n.梨;梨树		默认
+pearl	n.珍珠;珍珠色		默认
+peasant	n.农民;佃农		默认
+pebble	n.小圆石;卵石		默认
+peck	v.啄;轻啄 n.啄		默认
+peculiar	adj.奇怪的;特有的		默认
+peculiarity	n.特性;怪癖		默认
+pedal	n.踏板 v.骑自行车		默认
+pedestrian	n.行人 adj.徒步的		默认
+pediatrician	n.小儿医生		默认
+pedestrian	n.行人;步行者		默认
+pee	v.撒尿;小便		默认
+peer	n.同等的人 v.凝视		默认
+pelican	n.鹈鹕		默认
+pen	n.钢笔;作家		默认
+penalty	n.罚款;处罚		默认
+pencil	n.铅笔 v.用铅笔写		默认
+pendulum	n.钟摆;摆动		默认
+penetrate	v.穿透;洞察		默认
+peninsula	n.半岛		默认
+pension	n.退休金;抚恤金		默认
+people	n.人们;民族		默认
+pepper	n.胡椒;辣椒粉		默认
+per	prep.每;每一		默认
+perceive	v.感知;认为		默认
+perception	n.感知;洞察力		默认
+perch	n.鲈鱼;栖息处		默认
+percussion	n.敲击;打击乐器		默认
+perfect	adj.完美的 v.使完美		默认
+perfection	n.完美;完成		默认
+perform	v.执行;表演		默认
+performance	n.表演;表现		默认
+perfume	n.香水;香味		默认
+perhaps	adv.也许;大概		默认
+peril	n.危险;冒险		默认
+perimeter	n.周长;边界		默认
+period	n.时期;学时		默认
+periodic	adj.周期的;定期的		默认
+peripheral	adj.外围的;次要的		默认
+periphery	n.外围;边缘		默认
+perish	v.死亡;毁灭		默认
+permanent	adj.永久的;持久的		默认
+permission	n.允许;同意		默认
+permit	v.允许 n.许可证		默认
+perpendicular	adj.垂直的 n.垂线		默认
+perpetual	adj.永久的;长期的		默认
+perplex	v.使困惑;使迷惑		默认
+perplexity	n.困惑;迷惑		默认
+persecute	v.迫害;困扰		默认
+persecution	n.迫害;困扰		默认
+persevere	v.坚持;不屈不挠		默认
+persistent	adj.坚持不懈的;持久的		默认
+person	n.人;个人		默认
+personal	adj.个人的;私人的		默认
+personality	n.个性;人物		默认
+personnel	n.人员;员工		默认
+perspective	n.透视;观点		默认
+persuade	v.说服;劝说		默认
+persuasion	n.说服;信念		默认
+pertinent	adj.相关的;恰当的		默认
+perturb	v.扰乱;使不安		默认
+perusal	n.精读;细读		默认
+peruse	v.细读;研读		默认
+pessimistic	adj.悲观的		默认
+pest	n.害虫;害人虫		默认
+pesticide	n.杀虫剂		默认
+pet	n.宠物;宠爱的人		默认
+petition	n.请愿;请求 v.请愿		默认
+petitioner	n.请愿人;请求者		默认
+petty	adj.细小的;不重要的		默认
+phase	n.阶段;相位		默认
+phenomenon	n.现象;非凡的人		默认
+philosopher	n.哲学家;哲人		默认
+philosophy	n.哲学;人生观		默认
+phone	n.电话 v.打电话		默认
+phonetic	adj.语音的;音标的		默认
+photo	n.照片;相片		默认
+photograph	n.照片 v.拍照		默认
+photographer	n.摄影师;拍照者		默认
+photographic	adj.摄影的;照片的		默认
+phrase	n.短语;习惯用语		默认
+physical	adj.物理的;身体的		默认
+physician	n.内科医生;医生		默认
+physicist	n.物理学家		默认
+physics	n.物理;物理学		默认
+physiology	n.生理学;生理机能		默认
+pianist	n.钢琴家;钢琴师		默认
+piano	n.钢琴		默认
+pick	v.挑选;采摘		默认
+pickup	n.皮卡车 v.捡起		默认
+picture	n.图片;画		默认
+picturesque	adj.独特的;生动的		默认
+pie	n.馅饼;派		默认
+piece	n.块;件;作品		默认
+pierce	v.刺穿;穿透		默认
+pig	n.猪		默认
+pigeon	n.鸽子;传书鸽		默认
+pike	n.长矛;梭子鱼		默认
+pile	n.堆;桩 v.堆叠		默认
+pilgrim	n.朝圣者;旅客		默认
+pilgrimage	n.朝圣;朝拜之旅		默认
+pill	n.药丸;小丸		默认
+pillar	n.柱子;柱形物		默认
+pillow	n.枕头		默认
+pilot	n.飞行员;领航员 v.领航		默认
+pin	n.钉;别针 v.钉住		默认
+pinch	v.掐;捏 n.匮乏		默认
+pine	n.松树;松木		默认
+pineapple	n.菠萝		默认
+ping	n.乒乓声 v.乒乓响		默认
+pink	n./adj.粉红色（的） v.扎		默认
+pint	n.品脱		默认
+pioneer	n.先锋;开拓者		默认
+pious	adj.虔诚的;尽责的		默认
+pipe	n.管;烟斗 v.用管道输送		默认
+pirate	n.海盗;剽窃者		默认
+pistol	n.手枪;左轮手枪		默认
+pit	n.坑;陷阱 v.使入陷井		默认
+pitch	n.沥青;音高 v.投掷		默认
+pitcher	n.投手;水壶		默认
+pity	n.怜悯;遗憾		默认
+pivot	n.枢轴;中心 v.旋转		默认
+pivotal	adj.中心的;关键的		默认
+place	n.地方;位置 v.放置		默认
+placid	adj.平静的;温和的		默认
+plague	n.瘟疫;灾祸 v.折磨		默认
+plain	adj.简单的 n.平原		默认
+plains	n.平原;旷野		默认
+plan	n.计划;平面图 v.计划		默认
+plane	n.平面;飞机		默认
+planet	n.行星		默认
+plank	n.厚木板;板条		默认
+planner	n.计划者;规划者		默认
+plant	n.植物;工厂 v.种植		默认
+plantation	n.种植园;大农场		默认
+plasma	n.血浆;等离子体		默认
+plaster	n.石膏;灰泥 v.抹泥		默认
+plastic	adj.可塑的 n.塑料		默认
+plate	n.盘子;金属板		默认
+plateau	n.高原;平稳状态		默认
+platform	n.平台;讲台		默认
+plausible	adj.似乎合理的;花言巧语的		默认
+play	v.玩;播放 n.戏剧		默认
+playground	n.操场;运动场		默认
+playwright	n.剧作家		默认
+plentiful	adj.丰富的;富裕的		默认
+plenty	n.丰富;大量		默认
+plight	n.困境;境况		默认
+plot	n.情节;图谋 v.密谋		默认
+plough	n.犁 v.犁田		默认
+plow	n.犁 v.犁耕		默认
+pluck	v.拔;摘 n.勇气		默认
+plug	n.塞子;插头 v.塞住		默认
+plumber	n.水管工人		默认
+plume	n.羽毛;羽饰		默认
+plump	adj.丰满的 v.使丰满		默认
+plunder	v./n.抢劫;掠夺		默认
+plunge	v.投入;跳入 n.投入		默认
+poach	v.偷猎;潜入		默认
+pocket	n.口袋;钱		默认
+pod	n.豆荚;舱		默认
+poem	n.诗;韵文		默认
+poet	n.诗人		默认
+poetic	adj.诗的;诗意的		默认
+poetry	n.诗歌;诗集		默认
+point	n.点;要点 v.指向		默认
+pointer	n.指针;指示器		默认
+poison	n.毒药 v.放毒		默认
+poke	v.刺;捅;伸		默认
+polar	adj.极地的;极性的		默认
+polarity	n.极性;极端		默认
+pole	n.杆;极点		默认
+police	n.警察;警方 v.管辖		默认
+policeman	n.警察;警员		默认
+policewoman	n.女警察		默认
+policy	n.政策;保险单		默认
+polish	n.磨光;亮光 v.磨光		默认
+polite	adj.有礼貌的;客气的		默认
+political	adj.政治的;政治上的		默认
+politician	n.政治家;政客		默认
+politics	n.政治;政治学		默认
+poll	n.民意测验;投票		默认
+pollen	n.花粉;粉状物		默认
+pollinate	v.授粉;传粉		默认
+pollution	n.污染;污染物		默认
+polo	n.马球;水球		默认
+pond	n.池塘;水池		默认
+pony	n.小马;矮种马		默认
+pool	n.水池;共用物 v.共享		默认
+poor	adj.贫穷的;可怜的		默认
+pop	adj.流行的;通俗的		默认
+pope	n.天主教皇;教皇		默认
+popular	adj.流行的;受欢迎的		默认
+popularity	n.普及;受欢迎		默认
+population	n.人口;全体居民		默认
+populous	adj.人口稠密的;人口多的		默认
+porcelain	n.瓷器;瓷		默认
+porch	n.门廊;入口处		默认
+pork	n.猪肉		默认
+port	n.港口;左舷		默认
+portable	adj.轻便的;手提式的		默认
+porter	n.搬运工;门房		默认
+portion	n.一部分;一分		默认
+portrait	n.肖像;描写		默认
+portray	v.描绘;扮演		默认
+pose	v.造成;摆姿势		默认
+position	n.位置;职位		默认
+positive	adj.肯定的;积极的		默认
+possess	v.拥有;占有		默认
+possession	n.拥有;所有物		默认
+possibility	n.可能性;潜在性		默认
+possible	adj.可能的;可能存在的		默认
+possibly	adv.可能地;也许		默认
+post	n.邮政;邮件 v.邮寄		默认
+postage	n.邮费;邮资		默认
+postcard	n.明信片		默认
+poster	n.海报;招贴		默认
+posterior	adj.较后的;后部的		默认
+posterity	n.后代;子孙		默认
+postman	n.邮递员;邮差		默认
+postpone	v.推迟;延期		默认
+posture	n.姿势;态度		默认
+pot	n.壶;盆		默认
+potato	n.马铃薯;土豆		默认
+potential	adj.潜在的 n.潜能		默认
+poultry	n.家禽;禽肉		默认
+pound	n.磅;英镑 v.重击		默认
+pour	v.倒;倾泻		默认
+poverty	n.贫穷;贫困		默认
+powder	n.粉末;药粉		默认
+power	n.力量;幂 v.激励		默认
+powerful	adj.强大的;有力的		默认
+powerless	adj.无力的;无权力的		默认
+practical	adj.实际的;实用的		默认
+practice	n.练习;实践 v.练习		默认
+practise	v.练习;实践		默认
+practitioner	n.开业者;从业者		默认
+pragmatic	adj.实际的;实用主义的		默认
+prairie	n.大草原;牧场		默认
+praise	n.赞扬;称赞 v.赞扬		默认
+prayer	n.祈祷;祈求		默认
+preach	v.宣讲;布道		默认
+precaution	n.预防;警惕		默认
+precede	v.在...之前;先于		默认
+precedent	n.先例;前例		默认
+precious	adj.宝贵的;珍贵的		默认
+precipice	n.悬崖;绝境		默认
+precipitate	v.促成;加速		默认
+precipitation	n.降水;急躁		默认
+precise	adj.精确的;明确的		默认
+precision	n.精确;精密		默认
+preclude	v.排除;妨碍		默认
+precocious	adj.早熟的;过早的		默认
+predict	v.预言;预测		默认
+prediction	n.预言;预测		默认
+predominant	adj.占优势的;主要的		默认
+preface	n.序言;前言		默认
+prefect	n.地方长官;校长		默认
+prefer	v.宁愿;更喜欢		默认
+preference	n.偏爱;优先		默认
+prefix	n.前缀 v.放在前面		默认
+pregnant	adj.怀孕的;充满的		默认
+prejudice	n.偏见;损害		默认
+preliminary	adj.预备的;初步的		默认
+prelude	n.前奏;序幕		默认
+premier	n.总理;首相		默认
+premise	n.前提;假定		默认
+premium	n.保险费;奖金		默认
+preoccupation	n.忧虑;全神贯注		默认
+preoccupy	v.使全神贯注		默认
+preparation	n.准备;配置		默认
+prepare	v.准备;使适合		默认
+prepared	adj.准备好的;有准备的		默认
+preposition	n.介词		默认
+prescribe	v.开药;规定		默认
+prescription	n.药方;处方		默认
+presence	n.存在;出席		默认
+present	adj.出现的 v.提供		默认
+presentation	n.呈现;介绍		默认
+presenter	n.展示者;主持人		默认
+preserve	v.保护;保存		默认
+president	n.总统;校长		默认
+presidential	adj.总统的;首长的		默认
+press	v.压;逼迫 n.出版社		默认
+pressure	n.压力;压迫		默认
+prestige	n.声望;威信		默认
+presto	adj.迅速的;熟练的		默认
+presumably	adv.大概;可能		默认
+presume	v.假定;推测		默认
+pretence	n.伪装;借口		默认
+pretend	v.假装;装扮		默认
+pretext	n.借口;托辞		默认
+pretty	adj.漂亮的;可爱的		默认
+prevail	v.盛行;获胜		默认
+prevailing	adj.流行的;盛行的		默认
+prevalence	n.普遍;盛行		默认
+prevent	v.预防;阻止		默认
+prevention	n.预防;阻止		默认
+previous	adj.以前的;早先的		默认
+prey	n.猎物;牺牲品 v.捕食		默认
+price	n.价格;代价		默认
+pricing	n.定价;价格确定		默认
+pride	n.自豪;骄傲		默认
+priest	n.教士;神父		默认
+priestess	n.女祭司;女法师		默认
+primary	adj.主要的;初级的		默认
+prime	adj.主要的 n.质数		默认
+primitive	adj.原始的;简单的		默认
+prince	n.王子;王孙		默认
+princess	n.公主;王妃		默认
+principal	adj.主要的 n.校长		默认
+principle	n.原则;原理		默认
+print	n.印刷品;字体 v.印刷		默认
+printer	n.印刷工;打印机		默认
+prior	adj.优先的;在前的		默认
+priority	n.优先;重点		默认
+prism	n.棱镜;晶体		默认
+prison	n.监狱;牢狱		默认
+prisoner	n.囚犯;犯人		默认
+privacy	n.隐私;隐居		默认
+private	adj.私人的;私下的		默认
+privilege	n.特权;特殊利益		默认
+prize	n.奖;奖品 v.珍视		默认
+pro	n.专业人士;前缀		默认
+probability	n.可能性;概率		默认
+probable	adj.可能的;大概的		默认
+probe	n.探针 v.探索		默认
+problem	n.问题;难题		默认
+procedure	n.程序;手续		默认
+proceed	v.进行;继续		默认
+process	n.过程;方法 v.加工		默认
+procession	n.队伍;行列		默认
+proclaim	v.宣告;宣布		默认
+proclamation	n.宣告;公布		默认
+produce	v.生产;产生		默认
+producer	n.生产者;制片人		默认
+product	n.产品;结果		默认
+production	n.生产;制造		默认
+productive	adj.多产的;有成效的		默认
+productivity	n.生产力;生产率		默认
+profession	n.职业;声明		默认
+professional	adj.专业的;职业的		默认
+professor	n.教授;教师		默认
+proficiency	n.熟练;精通		默认
+proficient	adj.熟练的;精通的		默认
+profile	n.轮廓;外形 v.扼要介绍		默认
+profit	n.利润;利益 v.有益于		默认
+profitable	adj.有利的;有益的		默认
+profound	adj.深刻的;渊博的		默认
+program	n.程序;计划 v.安排		默认
+programme	n.节目;计划 v.规划		默认
+progress	n.进步;发展 v.进展		默认
+progressive	adj.进步的;向前进的		默认
+prohibit	v.禁止;阻止		默认
+prohibition	n.禁止;禁令		默认
+project	n.项目;工程 v.投射		默认
+projectile	n.抛射物;弹丸		默认
+projection	n.投影;突出部分		默认
+projector	n.放映机;投影仪		默认
+prolong	v.延长;拖延		默认
+prolonged	adj.延长的;拖延的		默认
+promenade	n./v.散步;漫步		默认
+promote	v.促进;提升		默认
+promoter	n.促进者;发起人		默认
+promotion	n.提升;促销		默认
+prompt	v.促使 adj.敏捷的		默认
+prompting	n.促使;激励		默认
+prone	adj.倾向于;俯卧的		默认
+pronoun	n.代名词		默认
+pronounce	v.发音;宣布		默认
+pronunciation	n.发音;发音方法		默认
+proof	n.证据;证明 v.试验		默认
+prop	n.支柱;道具 v.支撑		默认
+propaganda	n.宣传;宣传资料		默认
+propagate	v.传播;繁殖		默认
+propagation	n.传播;繁殖		默认
+propel	v.推进;激励		默认
+propeller	n.推进器;螺旋桨		默认
+proper	adj.适合的;恰当的		默认
+property	n.财产;属性		默认
+prophecy	n.预言;预言能力		默认
+prophet	n.先知;预言者		默认
+proponent	n.支持者;建议者		默认
+proportion	n.比例;部分		默认
+proportional	adj.成比例的;相称的		默认
+proportionate	adj.相应的;成比例的		默认
+proposal	n.提议;建议		默认
+propose	v.建议;求婚		默认
+proposition	n.主张;命题		默认
+proprietor	n.所有者;业主		默认
+propriety	n.适当;礼节		默认
+propulsion	n.推进力;推进		默认
+prosaic	adj.散文的;平凡的		默认
+prose	n.散文;白话文		默认
+prosecute	v.检举;告发		默认
+prosecution	n.起诉;检举		默认
+prosecutor	n.检察官;公诉人		默认
+prospect	n.前途;景象		默认
+prospective	adj.未来的;预期的		默认
+prosper	v.繁荣;成功		默认
+prosperity	n.繁荣;成功		默认
+prosperous	adj.繁荣的;成功的		默认
+prostitute	n.妓女 v.使沦为妓女		默认
+prostitution	n.卖淫;堕落		默认
+prostrate	adj.俯卧的;沮丧的		默认
+protagonist	n.主角;主要人物		默认
+protect	v.保护;警戒		默认
+protection	n.保护;防卫		默认
+protective	adj.保护的;防护的		默认
+protein	n.蛋白质;朊		默认
+protest	n.抗议;反对 v.抗议		默认
+protester	n.抗议者;反对者		默认
+protocol	n.协议;草案		默认
+prototype	n.原型;典型		默认
+protract	v.延长;拖长		默认
+protrude	v.突出;伸出		默认
+proud	adj.自豪的;骄傲的		默认
+prove	v.证明;展现		默认
+proverb	n.谚语;格言		默认
+proverbial	adj.谚语的;众所周知的		默认
+provide	v.提供;供应		默认
+provided	adj.假如;倘若		默认
+provider	n.提供者;供应者		默认
+province	n.省;领域		默认
+provincial	adj.省的;地方性的		默认
+provision	n.供应;条款		默认
+provisional	adj.暂时的;临时的		默认
+provoke	v.激怒;挑起		默认
+provoked	adj.被激怒的;被挑衅的		默认
+provocation	n.激怒;挑衅		默认
+provocative	adj.挑衅的;挑逗的		默认
+provoke	v.激怒;挑起		默认
+prowess	n.英勇;技能		默认
+prowl	v.潜行;徘徊		默认
+proximate	adj.接近的;最接近的		默认
+proximity	n.接近;亲近		默认
+proxy	n.代理人;代理权		默认
+prude	n.假正经的人;过分拘谨的人		默认
+prudence	n.谨慎;审慎		默认
+prudent	adj.谨慎的;精明的		默认
+prune	v.修剪;削减		默认
+psyche	n.心智;心灵		默认
+psychiatrist	n.精神病学家;精神病医生		默认
+psychiatry	n.精神病学;精神病治疗		默认
+psychic	adj.心灵的;超自然的		默认
+psychology	n.心理学;心理状态		默认
+pub	n.酒馆;客栈		默认
+public	adj.公共的 n.公众		默认
+publication	n.出版;出版物		默认
+publicity	n.公开;宣传		默认
+publish	v.出版;发布		默认
+publisher	n.出版者;发布者		默认
+puck	n.冰球;小精灵		默认
+pucker	v.起皱;收缩		默认
+pudding	n.布丁;甜点		默认
+puddle	n.水坑;洼		默认
+puff	n.一阵;吹嘘 v.喘息		默认
+puffin	n.海雀;海鹦鹉		默认
+pull	v.拉;拖		默认
+pulley	n.滑轮;滑车		默认
+pulse	n.脉搏;脉冲		默认
+pump	n.泵 v.打气		默认
+pumpkin	n.南瓜		默认
+punch	v.冲压;穿孔 n.冲压机		默认
+punctual	adj.准时的;守时的		默认
+punctuality	n.准时;守时		默认
+punish	v.惩罚;处罚		默认
+punishment	n.惩罚;处罚		默认
+puny	adj.弱小的;微小的		默认
+pup	n.小狗;幼犬		默认
+pupil	n.瞳孔;学生		默认
+puppet	n.木偶;傀儡		默认
+purchase	n.购买 v.购买		默认
+pure	adj.纯的;纯洁的		默认
+purity	n.纯净;纯洁		默认
+purple	adj.紫色的 n.紫色		默认
+purpose	n.目的;意图		默认
+purse	n.钱包;小包		默认
+pursue	v.追求;追赶		默认
+pursuit	n.追求;追赶		默认
+pus	n.脓;脓汁		默认
+push	v.推;推动		默认
+pushy	adj.强迫的;过分自信的		默认
+pussy	n.小猫;懦夫		默认
+put	v.放;表达		默认
+puzzle	n.谜;难题 v.迷惑		默认
+puzzling	adj.使迷惑的;令人费解的		默认
+pyramid	n.金字塔;角锥形		默认
+quack	n.庸医;鸭子叫声 v.发出嘎嘎声		默认
+quadrant	n.象限;四分之一圆		默认
+quaint	adj.古雅的;有趣的		默认
+quake	n.地震;颤抖 v.震动		默认
+qualification	n.资格;限制条件		默认
+qualified	adj.有资格的;合格的		默认
+qualify	v.使有资格;限定		默认
+qualitative	adj.质的;定性的		默认
+quality	n.质量;品质		默认
+quantify	v.量化;确定数量		默认
+quantitative	adj.数量的;定量的		默认
+quantum	n.量子;数量		默认
+quarrel	n.争吵 v.争吵		默认
+quarry	n.采石场;猎物		默认
+quarter	n.四分之一;地区		默认
+quarterly	adj.季度的 adv.季度地		默认
+quartet	n.四重奏;四重唱		默认
+quartz	n.石英;水晶		默认
+quay	n.码头;停泊处		默认
+queen	n.女王;王后		默认
+queer	adj.奇怪的;不适的		默认
+quench	v.熄灭;压制		默认
+quest	n.寻找;追求		默认
+question	n.问题 v.询问		默认
+questionnaire	n.调查表;问卷		默认
+queue	n.队列;长队 v.排队		默认
+quicken	v.加速;使活跃		默认
+quicksilver	adj.水银的 n.水银		默认
+quiet	adj.安静的 v.使安静		默认
+quietly	adv.安静地;悄悄地		默认
+quilt	n.被子;棉被		默认
+quiver	n.颤抖;箭袋 v.颤抖		默认
+quiz	n.小测验;问答比赛		默认
+quota	n.配额;限额		默认
+quotation	n.引用;报价		默认
+quote	v.引用 n.引用		默认
+quotient	n.商;比率		默认
+rabbi	n.犹太教教士		默认
+rabbit	n.兔子;野兔		默认
+race	n.种族;赛跑 v.赛跑		默认
+racial	adj.种族的;人种的		默认
+racism	n.种族主义;种族歧视		默认
+rack	n.架;行李架 v.折磨		默认
+racket	n.球拍;喧闹声		默认
+radar	n.雷达;无线电探测器		默认
+radiant	adj.发光的;容光焕发的		默认
+radiate	v.辐射;发射		默认
+radiation	n.辐射;放射线		默认
+radical	adj.根本的;激进的		默认
+radio	n.收音机;无线电		默认
+radioactive	adj.放射性的		默认
+radius	n.半径;范围		默认
+rag	n.破布;碎布		默认
+rage	n.愤怒;狂暴		默认
+raid	n./v.袭击;搜捕		默认
+rail	n.铁路;栏杆 v.抱怨		默认
+railway	n.铁路;铁道		默认
+rain	n.雨;下雨 v.下雨		默认
+rainbow	n.彩虹		默认
+raincoat	n.雨衣		默认
+raise	v.举起;增加;养育		默认
+raisin	n.葡萄干		默认
+rally	n.集会;拉力赛 v.集合		默认
+ram	n.公羊;撞击 v.撞击		默认
+ramp	n.斜坡;坡道		默认
+rampage	n.暴怒;狂暴行为 v.狂暴		默认
+ranch	n.大农场;牧场		默认
+rancher	n.牧场主;农场主		默认
+random	adj.随机的;任意的		默认
+range	n.范围 v.排列		默认
+rank	n.等级;军衔 v.排列		默认
+rap	n.轻敲;责骂 v.轻敲		默认
+rape	n.强奸;油菜 v.强奸		默认
+rapid	adj.快的 n.急流		默认
+rapport	n.默契;和睦		默认
+rascal	n.流氓;无赖		默认
+rash	adj.轻率的 n.疹子		默认
+rat	n.老鼠;叛徒		默认
+rate	n.比率;速度 v.评价		默认
+rather	adv.宁可;相当		默认
+ratio	n.比率;比例		默认
+rational	adj.合理的;有理的		默认
+rationalize	v.使合理;合理化		默认
+rattle	n.嘎嘎声 v.使发出嘎嘎声		默认
+ravage	n.破坏 v.毁坏		默认
+raven	n.乌鸦;掠夺者		默认
+raw	adj.生的;未加工的		默认
+rawhide	n.生皮;生牛皮		默认
+ray	n.光线;射线		默认
+razor	n.剃刀;刮胡刀		默认
+reach	v.到达;伸手		默认
+react	v.反应;起作用		默认
+reaction	n.反应;反作用		默认
+read	v.读;理解		默认
+reader	n.读者;读物		默认
+readily	adv.容易地;乐意地		默认
+reading	n.阅读;读数		默认
+ready	adj.准备好的 adv.准备好地		默认
+real	adj.真的;实的		默认
+realism	n.现实主义;实在性		默认
+realistic	adj.现实的;实际的		默认
+reality	n.现实;实在		默认
+realize	v.实现;认识到		默认
+realm	n.领域;王国		默认
+ream	n.令箭花;纸堆		默认
+reap	v.收割;获得		默认
+rear	n.后部;背面		默认
+rearrange	v.重新安排		默认
+reason	n.理由 v.推理		默认
+reasonable	adj.合理的;公道的		默认
+reasoning	n.推理;理由		默认
+reassure	v.使安心;再保证		默认
+rebel	n.反叛者 v.反叛		默认
+rebellion	n.反叛;叛乱		默认
+rebellious	adj.反叛的;难控制的		默认
+rebirth	n.再生;复兴		默认
+reborn	adj.再生的;重生的		默认
+rebound	v.反弹 n.反弹		默认
+rebuff	n.断然拒绝;冷落		默认
+rebuild	v.重建;改造		默认
+rebut	v.反驳;反抗		默认
+rebuttal	adj.可反驳的;可驳斥的		默认
+recalcitrant	adj.反抗的;难以控制的		默认
+recall	v.回忆;召回		默认
+recapitulate	v.重述;概括		默认
+recapture	v.重新捕获;再次获得		默认
+recast	v.重铸;改变		默认
+recede	v.后退;收回		默认
+receipt	n.收据;收到		默认
+receive	v.收到;接纳		默认
+received	adj.被一般承认的		默认
+receiver	n.接收器;收款员		默认
+recent	adj.新近的;近来的		默认
+receptacle	n.容器;插座		默认
+reception	n.接待;接收		默认
+receptive	adj.善于接受的;接受的		默认
+recess	n.休息时间;凹处		默认
+recession	n.衰退;后退		默认
+recipe	n.食谱;处方		默认
+recipient	n.接受者;收受人		默认
+reciprocal	adj.相互的;互惠的		默认
+reciprocate	v.回报;相互作用		默认
+reciprocity	n.互惠;相互性		默认
+recital	n.独奏;朗诵		默认
+recitation	n.朗诵;背诵		默认
+recite	v.背诵;叙述		默认
+reckless	adj.粗心的;鲁莽的		默认
+reckon	v.计算;认为		默认
+reclaim	v.开垦;回收		默认
+reclamation	n.开垦;回收		默认
+recline	v.使后仰;倚靠		默认
+recluse	n.隐士;遁世者		默认
+recognition	n.认出;识别		默认
+recognize	v.认出;认可		默认
+recoil	v.退缩;弹回		默认
+recollect	v.回忆;记起		默认
+recollection	n.回忆;记忆		默认
+recommend	v.推荐;建议		默认
+recommendation	n.推荐;建议		默认
+recompense	n.报酬;赔偿金		默认
+reconcile	v.和解;使一致		默认
+reconciliation	n.和解;调和		默认
+recondite	adj.深奥的;难懂的		默认
+recondition	v.重新调整;再训练		默认
+reconnaissance	n.侦察;预先探索		默认
+reconsider	v.重新考虑		默认
+reconstruct	v.重建;重构		默认
+reconstruction	n.重建;复兴		默认
+record	n.记录 v.记录		默认
+recorder	n.记录员;录音机		默认
+recourse	n.求助;依赖		默认
+recover	v.恢复;痊愈		默认
+recovery	n.恢复;痊愈		默认
+recreate	v.再创造;娱乐		默认
+recreation	n.娱乐;消遣		默认
+recreational	adj.娱乐的;消遣的		默认
+recruit	n.新兵;新成员 v.招募		默认
+rectangular	adj.矩形的;长方形的		默认
+rectify	v.纠正;整流		默认
+rectilinear	adj.直线的;直角的		默认
+rectitude	n.正直;正当		默认
+rectory	n.教区牧师的住宅		默认
+recumbent	adj.躺着的;倚靠的		默认
+recuperate	v.恢复;复原		默认
+recur	v.再发生;重现		默认
+recurrence	n.重现;再发生		默认
+recycling	n.回收利用;再利用		默认
+red	n./adj.红色（的）		默认
+redound	v.产生有利的结果		默认
+redress	v./n.改正;赔偿		默认
+reduce	v.减少;降低		默认
+reduction	n.减少;降低		默认
+redundant	adj.多余的;失业的		默认
+reed	n.芦苇;簧片		默认
+reeds	n.芦苇丛;苇丛		默认
+reek	n.小湾;气味 v.发出气味		默认
+reel	n.卷轴 v.卷;蹒跚		默认
+referee	n.裁判员;仲裁人		默认
+reference	n.参考;提及		默认
+referendum	n.公民投票;公投		默认
+refine	v.精炼;提纯		默认
+refined	adj.精炼的;有教养的		默认
+refinement	n.精炼;文雅		默认
+reflect	v.反映;思考		默认
+reflection	n.反射;思考		默认
+reflective	adj.反射的;深思的		默认
+reflex	n.反射;反映		默认
+reflexes	n.反射;本能反应		默认
+reflexive	adj.反射的;反身的		默认
+reform	v./n.改革;重组		默认
+refrain	v.抑制 n.重复句		默认
+refresh	v.刷新;使恢复		默认
+refreshing	adj.提神的;使人精神焕发的		默认
+refreshment	n.刷新;点心		默认
+refrigerator	n.冰箱;冷藏库		默认
+refuge	n.避难所;庇护		默认
+refugee	n.难民;流亡者		默认
+refund	n.退款 v.退还		默认
+refurbish	v.刷新;再磨光		默认
+refusal	n.拒绝;拒绝权		默认
+refuse	v.拒绝;不接受		默认
+refutation	n.反驳;驳斥		默认
+refute	v.反驳;驳斥		默认
+regain	v.恢复;重新获得		默认
+regal	adj.帝王的;庄严的		默认
+regard	v.看待;尊重		默认
+regarding	prep.关于		默认
+regardless	adv.不顾;不顾一切		默认
+regenerate	v.再生;更新		默认
+regime	n.政权;制度		默认
+regiment	n.团;大量		默认
+region	n.地区;范围		默认
+register	n.登记 v.登记		默认
+registrar	n.注册员;登记员		默认
+registration	n.注册;登记		默认
+registry	n.登记;注册处		默认
+regress	v.倒退;退化		默认
+regression	n.退化;退步		默认
+regret	n.遗憾 v.后悔		默认
+regretful	adj.后悔的;惋惜的		默认
+regrettable	adj.遗憾的;可惜的		默认
+regulate	v.调节;规定		默认
+regulation	n.规则;调节		默认
+regulatory	adj.调节的;规定的		默认
+regurgitate	v.反胃;涌回		默认
+rehabilitate	v.修复;康复		默认
+rehabilitation	n.修复;康复		默认
+rehearse	v.排练;预演		默认
+reign	n.统治;统治时期 v.统治		默认
+rein	n.缰绳 v.控制		默认
+reincarnate	v.转世;化身		默认
+reincarnation	n.转世;化身		默认
+reinforce	v.加强;加固		默认
+reinforcement	n.加强;加固		默认
+reins	n.缰绳;控制		默认
+reiterate	v.重申;反复		默认
+reject	v.拒绝;排斥		默认
+rejected	adj.被拒绝的;被抛弃的		默认
+rejection	n.拒绝;排斥		默认
+rejoice	v.高兴;庆祝		默认
+rejoicing	n.欢乐;庆祝		默认
+rejoin	v.重新加入;回答		默认
+rejoinder	n.反驳;回答		默认
+relate	v.使关联;叙述		默认
+relation	n.关系;叙述		默认
+relationship	n.关系;关联		默认
+relative	adj.相对的 n.亲戚		默认
+relativity	n.相对性;相对论		默认
+relax	v.放松;放宽		默认
+relaxation	n.放松;休息		默认
+relay	n.中继;接力 v.转送		默认
+release	v.释放;发布		默认
+reliability	n.可靠性;可信赖		默认
+reliable	adj.可靠的;可信赖的		默认
+reliance	n.信赖;信任		默认
+reliant	adj.依赖的;信任的		默认
+relief	n.减轻;浮雕		默认
+relieve	v.减轻;解除		默认
+religion	n.宗教;宗教信仰		默认
+religious	adj.宗教的;虔诚的		默认
+reluctance	n.不愿;犹豫		默认
+reluctant	adj.不愿的;勉强的		默认
+rely	v.依赖;依靠		默认
+remain	v.保持;留下		默认
+remainder	n.剩余物;余数		默认
+remaining	adj.剩下的;其余的		默认
+remains	n.遗址;遗骸		默认
+remake	v.改造;重做		默认
+remand	n.还押候审		默认
+remark	n.评论 v.评论		默认
+remarkable	adj.显著的;异常的		默认
+remedy	n.补救;药品 v.补救		默认
+remember	v.记得;记住		默认
+remembrance	n.记忆;回忆		默认
+remind	v.提醒;使想起		默认
+reminder	n.提醒者;提醒物		默认
+reminisce	v.回忆;怀旧		默认
+reminiscent	adj.回忆的;怀旧的		默认
+remission	n.宽恕;赦免		默认
+remit	v.汇款;免除		默认
+remittance	n.汇款;汇付		默认
+remnant	n.残余;剩余		默认
+remodel	v.改造;改型		默认
+remorse	n.懊悔;同情		默认
+remorseful	adj.后悔的;悔恨的		默认
+remote	adj.遥远的;疏远的		默认
+remoteness	n.遥远;偏僻		默认
+removal	n.移开;移除		默认
+remove	v.移开;脱掉		默认
+removes	n.距离;移除		默认
+renaissance	n.复兴;文艺复兴		默认
+render	v.使成为;提供		默认
+rendering	n.表演;翻译		默认
+rendezvous	n.约会;集合点		默认
+rendition	n.表演;翻译		默认
+renegade	n.叛徒;背教者		默认
+renege	v.背信;违约		默认
+renew	v.使更新;续期		默认
+renewal	n.更新;续新		默认
+renovate	v.翻新;更新		默认
+renovation	n.翻新;更新		默认
+renovator	n.革新者;修复者		默认
+rent	n.租金 v.出租		默认
+rental	n.租赁;出租		默认
+reopen	v.重开;再打开		默认
+reorganization	n.重组;重建		默认
+reorganize	v.重组;重建		默认
+rep	n.代表;代理人		默认
+repair	n.修理 v.修理		默认
+repairman	n.修理工;技工		默认
+reparation	n.赔偿;修理		默认
+repay	v.偿还;报答		默认
+repayment	n.偿还;报答		默认
+repeal	v.撤销;废除		默认
+repeat	v.重复;重做		默认
+repeated	adj.重复的;再发生的		默认
+repel	v.击退;排斥		默认
+repellent	n.驱虫剂;排斥者		默认
+repent	v.悔改;后悔		默认
+repentance	n.悔改;后悔		默认
+repentant	adj.悔改的;后悔的		默认
+repercussion	n.反响;影响		默认
+repertoire	n.全部剧目;节目单		默认
+repertory	n.仓库;剧目		默认
+repetition	n.重复;反复		默认
+replace	v.替换;代替		默认
+replacement	n.替换;代替		默认
+replenish	v.补充;重新装满		默认
+replenishment	n.补充;重新装满		默认
+replete	adj.充满的;装满的		默认
+replica	n.复制品;仿制品		默认
+replicate	v.复制;重复		默认
+replication	n.复制;重复		默认
+reply	v./n.回答;答复		默认
+report	n.报告;报道 v.报告		默认
+reportedly	adv.据报道;据传闻		默认
+reporter	n.报告人;记者		默认
+repose	v.休息;放置		默认
+reposition	v.重新定位		默认
+repository	n.仓库;存放处		默认
+represent	v.代表;象征		默认
+representation	n.代表;表示		默认
+representative	adj.代表性的 n.代表		默认
+repress	v.镇压;抑制		默认
+repression	n.镇压;抑制		默认
+repressive	adj.压制的;抑制的		默认
+reprisal	n.报复;回击		默认
+reproach	n.责备;耻辱		默认
+reproachful	adj.感到耻辱的;责难的		默认
+reproduce	v.繁殖;复制		默认
+reproduction	n.繁殖;复制		默认
+reptile	n.爬行动物;爬虫		默认
+republic	n.共和国;共和政体		默认
+republican	adj.共和的 n.共和党人		默认
+repudiate	v.抛弃;拒绝接受		默认
+repudiation	n.抛弃;拒绝接受		默认
+repugnant	adj.令人厌恶的;矛盾的		默认
+repulse	v.击退;使厌恶		默认
+repulsion	n.击退;厌恶		默认
+repulsive	adj.令人厌恶的;排斥的		默认
+repurchase	v.重新购买;买回		默认
+reputable	adj.有名的;值得尊敬的		默认
+reputation	n.名誉;名声		默认
+repute	n.名气;声誉		默认
+request	n./v.请求;需要		默认
+requested	adj.被请求的;要求的		默认
+require	v.需要;要求		默认
+requirement	n.要求;必要条件		默认
+requisite	adj.必要的 n.必需品		默认
+requisition	n.征用;要求		默认
+reread	v.再读;重读		默认
+rescue	n./v.营救;救援		默认
+research	n.研究 v.研究		默认
+researcher	n.研究者;调查员		默认
+resemblance	n.相似;相似之处		默认
+resemble	v.类似;像		默认
+resent	v.怨恨;愤恨		默认
+resentful	adj.怨恨的;愤慨的		默认
+resentment	n.怨恨;愤恨		默认
+reservation	n.保留;预约		默认
+reserve	n.储备 v.保留		默认
+reserved	adj.保留的;缄默的		默认
+reservist	n.后备役军人		默认
+reservoir	n.蓄水池;水库		默认
+reset	v.重新设定		默认
+reside	v.居住;属于		默认
+residence	n.居住;驻扎		默认
+residency	n.居住;居住期		默认
+resident	n.居民 adj.居住的		默认
+residential	adj.居住的;住宅的		默认
+residual	adj.剩余的;残留的		默认
+residue	n.残渣;剩余		默认
+resign	v.辞职;顺从		默认
+resignation	n.辞职;放弃		默认
+resigned	adj.逆来顺受的;已辞职的		默认
+resilience	n.弹性;恢复力		默认
+resilient	adj.有弹性的;能恢复的		默认
+resin	n.树脂;松香		默认
+resist	v.抵抗;反对		默认
+resistance	n.抵抗;抵抗力		默认
+resistant	adj.抵抗的;有抵抗力的		默认
+resolute	adj.坚决的;果断的		默认
+resolution	n.坚决;决议		默认
+resolve	v.解决;决心		默认
+resonance	n.共振;共鸣		默认
+resonant	adj.共振的;回响的		默认
+resort	n.度假胜地 v.求助		默认
+resound	v.回响;回荡		默认
+resounding	adj.响亮的;深刻的		默认
+resource	n.资源;手段		默认
+resourceful	adj.资源丰富的;足智多谋的		默认
+respect	n./v.尊敬;尊重		默认
+respectable	adj.值得尊敬的;体面的		默认
+respectful	adj.恭敬的;尊重的		默认
+respective	adj.分别的;各自的		默认
+respectively	adv.分别地;各自地		默认
+respiration	n.呼吸;呼气		默认
+respirator	n.呼吸器;防毒面具		默认
+respite	n.休息;暂缓		默认
+respond	v.回答;反应		默认
+response	n.回答;反应		默认
+responsibility	n.责任;职责		默认
+responsible	adj.有责任的;负责的		默认
+rest	n.休息 v.休息		默认
+restless	adj.不安的;不静止的		默认
+restoration	n.恢复;修复		默认
+restore	v.恢复;修复		默认
+restrain	v.抑制;限制		默认
+restrained	adj.抑制的;克制的		默认
+restraint	n.抑制;限制		默认
+restrict	v.限制;束缚		默认
+restriction	n.限制;束缚		默认
+restrictive	adj.限制的;限制性的		默认
+result	n.结果 v.结果		默认
+resultant	adj.作为结果的;产生的		默认
+resume	v.继续;重新开始		默认
+resumption	n.继续;重新开始		默认
+resurrect	v.复活;复兴		默认
+resurrection	n.复活;复兴		默认
+resuscitate	v.使复活;复苏		默认
+retail	n.零售 v.零售		默认
+retailer	n.零售商		默认
+retain	v.保持;保留		默认
+retainer	n.保持者;雇员		默认
+retaliate	v.报复;反击		默认
+retaliation	n.报复;反击		默认
+retard	v.延迟;阻碍		默认
+retarded	adj.被延迟的;智力迟钝的		默认
+retch	n.哽咽;恶心 v.哽咽		默认
+retention	n.保留;保持		默认
+retentive	adj.保持的;有记忆力的		默认
+reticent	adj.沉默的;有保留的		默认
+retinue	n.随从;侍从		默认
+retract	v.缩回;收回		默认
+retraction	n.缩回;收回		默认
+retreat	n.撤退 v.撤退		默认
+retrench	v.削减;紧缩		默认
+retrenchment	n.削减;紧缩		默认
+retrial	n.再审;复审		默认
+retribution	n.报应;惩罚		默认
+retrieval	n.取回;检索		默认
+retrieve	v.取回;检索		默认
+retrospect	n.回顾		默认
+retrospective	adj.回顾的;怀旧的		默认
+return	n.归还 v.返回		默认
+reunion	n.团聚;再联合		默认
+reveal	v.显示;揭露		默认
+revealing	adj.揭示的;暴露的		默认
+revelation	n.揭露;启示		默认
+revenge	n.报仇;复仇		默认
+revenue	n.收入;税收		默认
+reverberate	v.回响;反响		默认
+reverberation	n.回响;反响		默认
+revere	v.尊敬;崇敬		默认
+reverence	n.尊敬;崇敬		默认
+reverend	n.尊敬的;教区牧师		默认
+reverent	adj.尊敬的;崇敬的		默认
+reverie	n.幻想;梦想		默认
+reversal	n.颠倒;反转		默认
+reverse	n.反面 v.反转		默认
+reversion	n.恢复;转回		默认
+revert	v.恢复原状;重新考虑		默认
+review	n.复习 v.复习		默认
+reviewer	n.评论者;审查者		默认
+revise	v.修订;修改		默认
+revision	n.修订;修改		默认
+revival	n.复兴;复活		默认
+revive	v.苏醒;复兴		默认
+revoke	v.撤销;废除		默认
+revolt	n./v.叛乱;反抗		默认
+revolting	adj.令人厌恶的;叛乱的		默认
+revolution	n.革命;旋转		默认
+revolutionary	adj.革命的 n.革命者		默认
+revolutionize	v.革命化;彻底改革		默认
+revolve	v.旋转;演变		默认
+revolver	n.左轮手枪;旋转者		默认
+revulsion	n.强烈反感;厌恶		默认
+reward	n.报酬 v.奖励		默认
+rewarding	adj.有益的;值得的		默认
+reword	v.重述;改写		默认
+rework	v.重做;重新加工		默认
+rhetoric	n.修辞;修辞学		默认
+rhetorical	adj.修辞的;修辞学的		默认
+rhyme	n.韵;押韵 v.押韵		默认
+rhythm	n.节奏;韵律		默认
+rib	n.肋骨;肋状物		默认
+ribbon	n.丝带;带		默认
+rice	n.稻米;米饭		默认
+rich	adj.富有的;肥沃的		默认
+rid	v.使摆脱;消除		默认
+riddance	n.摆脱;消除		默认
+riddle	n.谜;谜语 v.使困惑		默认
+ride	v.骑;乘车 n.乘车		默认
+rider	n.骑手;驾驭者		默认
+ridge	n.岭;脊		默认
+ridicule	n.嘲笑 v.嘲笑		默认
+ridiculous	adj.荒谬的;可笑的		默认
+rife	adj.流行的;普遍的		默认
+riff	n.裂缝;冲突		默认
+rifle	n.步枪;来复枪 v.搜查		默认
+rift	n.裂缝;冲突		默认
+rig	n.钻井平台;装备		默认
+rigged	adj.有装备的;被操纵的		默认
+right	adj.正确的 n.权利		默认
+righteous	adj.正直的;正当的		默认
+rightful	adj.合法的;正当的		默认
+rigid	adj.刚硬的;僵硬的		默认
+rigidity	n.刚硬;僵硬		默认
+rigor	n.严格;严厉		默认
+rigorous	adj.严格的;彻底的		默认
+rim	n.边缘;边		默认
+ring	n.戒指 v.打电话		默认
+riot	n.暴乱;骚动		默认
+rip	v.撕破 n.裂口		默认
+ripe	adj.熟的;成熟的		默认
+ripen	v.成熟;变熟		默认
+ripple	n.波纹;涟漪 v.起涟漪		默认
+rise	n.上升 v.上升		默认
+risk	n.风险 v.冒...的危险		默认
+risky	adj.冒险的;危险的		默认
+rite	n.仪式;礼节		默认
+ritual	adj.仪式的 n.仪式		默认
+rival	n.对手;竞争者		默认
+rivalry	n.竞争;对抗		默认
+river	n.河;江		默认
+rivulet	n.小河;小溪		默认
+road	n.路;道路		默认
+roam	v.漫游;流浪		默认
+roar	v.吼叫;轰鸣		默认
+roast	v.烤 n.烤肉		默认
+rob	v.抢劫;剥夺		默认
+robbery	n.抢劫;盗窃		默认
+robe	n.长袍;礼服		默认
+robot	n.机器人;自动机		默认
+robust	adj.强健的;健康的		默认
+rock	n.岩石;摇滚乐 v.摇动		默认
+rocket	n.火箭 v.急升		默认
+rod	n.杆;棍		默认
+role	n.角色;任务		默认
+roll	n.卷;名单 v.滚动		默认
+roller	n.滚筒;滚轴		默认
+romance	n.传奇;浪漫		默认
+romantic	adj.浪漫的;传奇的		默认
+romp	v.奔跑;嬉戏		默认
+roof	n.屋顶;顶部		默认
+rooster	n.公鸡		默认
+root	n.根;根源 v.生根		默认
+rope	n.绳;绳索		默认
+rose	n.玫瑰;粉红色		默认
+rotate	v.旋转;轮流		默认
+rotten	adj.腐烂的;糟糕的		默认
+rotund	adj.圆润的;洪亮的		默认
+rough	adj.粗糙的;大致的		默认
+round	adj.圆的 adv.周围		默认
+roundabout	adj.间接的 n.旋转木马		默认
+rouse	v.唤醒;激起		默认
+royalty	n.王族;版税		默认
+rub	v.擦;摩擦		默认
+rubber	n.橡皮;橡胶		默认
+rubbish	n.垃圾;废话		默认
+rubble	n.碎石;瓦砾		默认
+ruby	n.红宝石;红宝石色		默认
+rudder	n.舵;方向舵		默认
+rude	adj.粗鲁的;无理的		默认
+rue	n.芸香;后悔 v.后悔		默认
+ruffle	v.弄皱;激怒		默认
+rug	n.小地毯;垫子		默认
+ruin	n.废墟 v.毁灭		默认
+ruination	n.毁灭;破产		默认
+rule	n.规则 v.统治		默认
+ruler	n.统治者;尺		默认
+rum	n.朗姆酒;传闻		默认
+rumor	n.谣言;传闻		默认
+rumour	n.谣言;传闻		默认
+rump	n.臀部;后部		默认
+rung	n.横档;梯级		默认
+rupture	n.破裂;疝气 v.破裂		默认
+rural	adj.农村的;田园的		默认
+ruse	n.诡计;欺骗		默认
+rush	v.冲;匆忙 n.冲		默认
+rust	n.锈 v.生锈		默认
+rustic	adj.乡村的;质朴的		默认
+rustle	n.沙沙声 v.发出沙沙声		默认
+rut	n.车辙;常规		默认
+ruthless	adj.无情的;冷酷的		默认
+sabotage	n.破坏;颠覆活动		默认
+sack	n.麻袋;解雇 v.解雇		默认
+sacrifice	n.牺牲 v.牺牲		默认
+sacred	adj.神圣的;宗教的		默认
+sacrifice	v.牺牲;献祭		默认
+sad	adj.悲哀的;难过的		默认
+sadden	v.使悲伤;使悲哀		默认
+saddle	n.鞍;马鞍		默认
+safe	adj.安全的 n.保险箱		默认
+safety	n.安全;保险		默认
+sail	n.帆 v.航行		默认
+sailor	n.水手;海员		默认
+saint	n.圣人;道德崇高的人		默认
+sake	n.缘故;目的		默认
+salad	n.色拉;沙拉		默认
+salmon	n.鲑鱼;鲑鱼肉		默认
+salon	n.沙龙;客厅		默认
+salt	n.盐 v.腌制		默认
+salty	adj.咸的;含盐的		默认
+salute	n./ v.敬礼;赞扬		默认
+salvation	n.拯救;救助		默认
+same	adj.相同的 pron.相同的		默认
+sample	n.样品;样本 v.尝试		默认
+sand	n.沙;沙子		默认
+sandwich	n.三明治 v.夹入		默认
+sandy	adj.含沙的;沙的		默认
+sane	adj.神智健全的;明智的		默认
+sanguine	adj.乐观的;血红色的		默认
+sanitary	adj.卫生的;清洁的		默认
+sanitation	n.卫生;下水道系统		默认
+sap	n.树液;活力 v.消耗		默认
+sapiens	n.智人;现代人		默认
+sarcasm	n.讽刺;嘲笑		默认
+sardonic	adj.讽刺的;嘲笑的		默认
+sash	n.腰带;腰包		默认
+sat	n.酢;丰富 adj.丰富的		默认
+satan	n.撒旦;魔鬼		默认
+sate	v.使饱;使厌腻		默认
+satellite	n.卫星;人造卫星		默认
+satire	n.讽刺;讽刺文学		默认
+satisfaction	n.满足;满意		默认
+satisfactory	adj.满意的;合意的		默认
+saturate	v.浸透;使饱和		默认
+saturation	n.饱和;饱和度		默认
+sauce	n.酱油;调味汁		默认
+saucepan	n.煮菜锅;深锅		默认
+saucer	n.茶托;圆盘		默认
+saucy	adj.俏皮的;无礼的		默认
+sauerkraut	n.泡菜;德国泡菜		默认
+sausage	n.香肠;腊肠		默认
+savage	adj.野蛮的 n.野蛮人		默认
+savannah	n.大草原;热带草原		默认
+save	v.救;节省		默认
+savings	n.存款;储蓄		默认
+savor	n.风味;味道 v.品尝		默认
+savory	adj.风味的;可口的		默认
+savour	n.风味;味道 v.品尝		默认
+saw	n.锯子 v.锯		默认
+saxophone	n.萨克斯管		默认
+say	v.说;表示		默认
+sayings	n.言论;格言		默认
+scab	n.痂;疤		默认
+scaffold	n.脚手架;绞刑台		默认
+scale	n.鳞;天平 v.攀登		默认
+scallop	n.扇贝;干贝		默认
+scalpel	n.外科手术刀		默认
+scamp	n.露营;简陋的小屋		默认
+scan	v.扫描;浏览		默认
+scandal	n.丑闻;诽谤		默认
+scandalize	v.使愤慨;使震惊		默认
+scant	adj.不足的 v.节省		默认
+scar	n.疤;创伤 v.留下伤痕		默认
+scarce	adj.缺乏的;稀有的		默认
+scarcely	adv.几乎不;简直不		默认
+scare	n.惊恐 v.使害怕		默认
+scarf	n.围巾;头巾		默认
+scarlet	adj.猩红的 n.猩红色		默认
+scatter	v.分散;散播		默认
+scene	n.场景;景色		默认
+scenery	n.风景;舞台布景		默认
+scent	n.气味;嗅觉		默认
+schedule	n.时间表 v.安排		默认
+schema	n.计划;模式		默认
+schematic	adj.计划的;图表的		默认
+scheme	n.计划;阴谋		默认
+scholar	n.学者;奖学金获得者		默认
+scholarship	n.奖学金;学问		默认
+school	n.学校;学科		默认
+science	n.科学;学科		默认
+scientific	adj.科学的		默认
+scientist	n.科学家		默认
+scissors	n.剪刀;剪子		默认
+scoff	v.嘲笑;蔑视		默认
+scold	v.责骂;训斥		默认
+scorch	v.烧焦;烤焦		默认
+scorn	n.轻蔑;鄙视		默认
+scorpion	n.蝎子;蝎		默认
+scotch	n./adj.苏格兰（人）的		默认
+scoundrel	n.恶棍;无赖		默认
+scour	v.擦洗;搜索		默认
+scourge	n.灾难;鞭子		默认
+scout	n.侦察员;侦察		默认
+scowl	v.皱眉;愁眉苦脸		默认
+scramble	v.攀登;争夺		默认
+scrap	n.碎片;废料		默认
+scratch	v.抓;刮擦		默认
+scream	n.尖叫声 v.尖叫		默认
+screech	v.尖叫;发出尖锐声		默认
+screen	n.屏幕;屏风 v.掩蔽		默认
+screw	n.螺旋;螺丝 v.拧紧		默认
+screwdriver	n.螺丝刀;改锥		默认
+scribble	v.乱写;涂鸦		默认
+script	n.脚本;手稿		默认
+scroll	n.卷轴;卷形物		默认
+scrub	v.擦洗;灌木丛		默认
+scruffy	adj.肮脏的;不整洁的		默认
+scruple	n.顾忌;犹豫		默认
+scrupulous	adj.细心的;谨慎的		默认
+scrutinize	v.仔细检查;细读		默认
+scrutiny	n.详细审查;仔细		默认
+sculpture	n.雕塑;雕刻 v.雕塑		默认
+sculptural	adj.雕刻的;雕塑的		默认
+sculptured	adj.雕刻的;雕塑的		默认
+scurry	v.急跑;疾走		默认
+scurvy	adj.坏血的;不礼貌的		默认
+scuttle	v.急走;急跑		默认
+seabed	n.海床;海底		默认
+seafood	n.海鲜;海产食品		默认
+seagull	n.海鸥		默认
+seal	n.海豹 v.封上		默认
+seam	n.缝;接缝		默认
+seaman	n.水手;海员		默认
+seamless	adj.无缝的;无接缝的		默认
+seaport	n.港口;海港		默认
+sear	n.烧灼;焦土 v.烧灼		默认
+search	n./v.搜索;搜寻		默认
+searchlight	n.探照灯;搜索灯		默认
+seaside	n.海滨;海边		默认
+season	n.季节 v.加味		默认
+seasoning	n.调味品;佐料		默认
+seat	n.座位;席位 v.使坐下		默认
+secede	v.脱离;退出		默认
+secession	n.脱离;退出		默认
+second	n.第二;秒		默认
+secondary	adj.第二的;次要的		默认
+secondhand	adj.二手的		默认
+secret	adj.秘密的 n.秘密		默认
+secretariat	n.秘书处;书记处		默认
+secrete	v.分泌;隐藏		默认
+secretion	n.分泌;分泌物		默认
+secretly	adv.秘密地;背地里		默认
+sect	n.教派;部门		默认
+section	n.段;部分		默认
+sector	n.扇形;部门		默认
+secular	adj.世俗的;长期的		默认
+secure	adj.安全的 v.保护		默认
+security	n.安全;保障		默认
+sedate	adj.安静的;稳重的		默认
+sedative	adj.镇静的 n.镇静剂		默认
+sediment	n.沉淀物;沉积		默认
+sedition	n.煽动;暴乱		默认
+seditious	adj.煽动性的;叛逆的		默认
+seduce	v.勾引;诱惑		默认
+seduction	n.勾引;诱惑		默认
+seductive	adj.诱惑的;有魅力的		默认
+see	v.看见;理解		默认
+seed	n.种子 v.播种		默认
+seedling	n.幼苗;秧苗		默认
+seek	v.寻找;寻求		默认
+seem	v.似乎;好像		默认
+seemingly	adv.看来;看来是		默认
+seen	v.被看见		默认
+segment	n.段;部分		默认
+segregate	v.隔离;分离		默认
+segregated	adj.隔离的		默认
+segregation	n.隔离;分离		默认
+seismic	adj.地震的;地震引起的		默认
+seldom	adv.很少;难得		默认
+select	v.选择 adj.精选的		默认
+selection	n.选择;挑选		默认
+selective	adj.选择的;挑剔的		默认
+selector	n.选择器;选择者		默认
+selenium	n.硒		默认
+self	n.自己;自我		默认
+selfish	adj.自私的		默认
+selfishness	n.自私		默认
+sell	v.卖;销售		默认
+semantic	adj.语义的;语义学的		默认
+semblance	n.相似;外观		默认
+semen	n.精液;精子		默认
+semiconductor	n.半导体		默认
+seminal	adj.种子的;重大的		默认
+seminar	n.研讨会;讨论会		默认
+seminary	n.神学院;学院		默认
+senate	n.参议院;上院		默认
+senator	n.参议员		默认
+send	v.送;派遣		默认
+senile	adj.年老的;衰老的		默认
+senility	n.衰老;老迈		默认
+senior	adj.年长的 n.上司		默认
+sensation	n.感觉;轰动		默认
+sensational	adj.轰动的;耸人听闻的		默认
+sense	n.感觉 v.理解		默认
+senseless	adj.无感觉的;无意识的		默认
+sensible	adj.明智的;可感觉到的		默认
+sensitive	adj.敏感的;易受伤害的		默认
+sensitivity	n.敏感性;灵敏性		默认
+sensor	n.传感器;感应器		默认
+sensory	adj.感官的;感觉的		默认
+sensual	adj.感官的;肉欲的		默认
+sentiment	n.感情;情绪		默认
+sentimental	adj.感情的;多愁善感的		默认
+sentinel	n.哨兵;警戒者		默认
+separable	adj.可分离的		默认
+separate	adj.单独的 v.分开		默认
+separation	n.分离;分开		默认
+separatist	n.分离主义者		默认
+September	n.九月		默认
+sequel	n.结局;续集		默认
+sequence	n.顺序;连续		默认
+sequent	adj.随后的;后来的		默认
+sequential	adj.连续的;一连串的		默认
+sequester	v.隐退;使隐退		默认
+sequestration	n.隐退;没收		默认
+serene	adj.宁静的;安详的		默认
+serenity	n.宁静;安详		默认
+sergeant	n.军士;警官		默认
+serial	adj.连续的 n.连载		默认
+series	n.系列;级数		默认
+serif	n.衬线;印刷字体		默认
+serifed	adj.有衬线的		默认
+serious	adj.严肃的;严重的		默认
+seriousness	n.严肃;严重性		默认
+sermon	n.布道;讲道		默认
+serpent	n.蛇;狡猾的人		默认
+serrate	adj.锯齿状的		默认
+servant	n.仆人;雇员		默认
+serve	v.服务;服役		默认
+service	n.服务;服役		默认
+serviceable	adj.有用的;耐用的		默认
+servile	adj.奴隶的;谄媚的		默认
+servitude	n.奴役;奴役状态		默认
+session	n.会议;开庭期		默认
+set	n.集合 v.放置		默认
+setback	n.挫折;倒退		默认
+setting	n.环境;安装		默认
+settle	v.安置;解决		默认
+settlement	n.解决;殖民		默认
+settler	n.移民;殖民者		默认
+sever	v.切断;脱离		默认
+several	adj.几个;各自的		默认
+severe	adj.严重的;严厉的		默认
+severity	n.严肃;严重性		默认
+sew	v.缝制;缝		默认
+sewage	n.污水;下水道		默认
+sewer	n.下水道;阴沟		默认
+sex	n.性别;性		默认
+sexual	adj.性的;性别的		默认
+shabby	adj.破旧的;卑鄙的		默认
+shack	n.简陋的小屋		默认
+shackle	n.枷锁;束缚		默认
+shade	n.荫;阴影		默认
+shading	n.遮蔽;阴影		默认
+shadow	n.阴影;影子 v.跟踪		默认
+shadowy	adj.阴暗的;多阴影的		默认
+shady	adj.成荫的;可疑的		默认
+shaft	n.轴;矛		默认
+shag	n.粗糙的毛发		默认
+shaggy	adj.毛发粗浓的;蓬松的		默认
+shake	v.摇动;震动		默认
+shaky	adj.不稳定的;不可靠的		默认
+shall	aux.将要;必须		默认
+shallow	adj.浅的;浅薄的		默认
+sham	n.假冒;虚假		默认
+shambles	n.混乱;废墟		默认
+shame	n.羞耻;羞愧		默认
+shameful	adj.可耻的;羞耻的		默认
+shampoo	n.洗发剂 v.洗发		默认
+shanghai	v.欺骗;诱拐		默认
+shape	n.形状 v.形成		默认
+shapeless	adj.无形状的;无定形的		默认
+share	n.份额 v.分享		默认
+shareholder	n.股东		默认
+shark	n.鲨鱼		默认
+sharp	adj.锋利的;敏锐的		默认
+sharpen	v.削尖;变锋利		默认
+shatter	v.打碎;破坏		默认
+shattered	adj.破碎的;被破坏的		默认
+shave	v.剃须;剃毛		默认
+shaven	n.避难所 v.避难		默认
+shawl	n.披肩;围巾		默认
+she	pron.她		默认
+shear	v.剪;剪切		默认
+shears	n.大剪刀		默认
+sheath	n.鞘;套		默认
+shed	n.棚;脱落 v.脱落		默认
+sheen	n.光辉;光泽		默认
+sheep	n.羊;绵羊		默认
+sheer	adj.纯粹的;绝对的		默认
+sheet	n.被单;薄片		默认
+shelf	n.架子;搁板		默认
+shell	n.壳;贝壳		默认
+shelter	n.掩蔽;避难所 v.掩蔽		默认
+sheltered	adj.掩蔽的;受保护的		默认
+shelve	v.搁置;放置		默认
+shelf	n.架子;搁板		默认
+shelves	n.架子;搁板		默认
+shelter	n.掩蔽;避难所 v.掩蔽		默认
+shepherd	n.牧羊人;牧羊者		默认
+sheriff	n.郡长;治安官		默认
+shied	v.躲避;遮避		默认
+shift	v.转移;变换		默认
+shifty	adj.变幻的;狡猾的		默认
+shilling	n.先令（旧时英国货币）		默认
+shimmer	v.发微光;闪烁		默认
+shimmering	adj.闪烁的;闪亮的		默认
+shine	v.发光;擦亮		默认
+shiny	adj.发亮的;有光泽的		默认
+ship	n.船 v.装运		默认
+shipment	n.装运;装载		默认
+shipping	n.装货;船运		默认
+shipwreck	n.船只失事		默认
+shipyard	n.造船厂;船坞		默认
+shire	n.郡		默认
+shirk	v.逃避;规避		默认
+shirt	n.衬衫		默认
+shiver	n.颤抖;碎片 v.颤抖		默认
+shock	n.冲击;震惊 v.使休克		默认
+shocked	adj.震惊的;吃惊的		默认
+shocking	adj.令人震惊的		默认
+shod	v.给...穿上鞋		默认
+shoe	n.鞋		默认
+shoemaker	n.鞋匠;鞋制造者		默认
+shoot	v.射击;发芽		默认
+shop	n.商店 v.逛商店		默认
+shopkeeper	n.店主;店主人		默认
+shopping	n.购物		默认
+shore	n.岸;滨		默认
+short	adj.短的;缺乏的		默认
+shortage	n.不足;缺少		默认
+shortcoming	n.缺点;短处		默认
+shortcut	n.近路;捷径		默认
+shorten	v.缩短;变短		默认
+shortly	adv.不久;立刻		默认
+shot	n.射击;射门		默认
+should	aux.应该;将要		默认
+shoulder	n.肩;肩部		默认
+shout	v.呼喊;喊叫		默认
+shove	v.推;挤		默认
+shovel	n.铲;铁铲		默认
+show	n.显示 v.展示		默认
+shower	n.阵雨;淋浴		默认
+showing	n.显示;展示		默认
+shred	n.碎片;少量		默认
+shrewd	adj.精明的;狡猾的		默认
+shriek	n.尖叫声 v.尖叫		默认
+shrill	adj.尖锐的;刺耳的		默认
+shrimp	n.虾;小虾		默认
+shrine	n.神龛;圣地		默认
+shrink	v.收缩;缩小		默认
+shrinkage	n.收缩;减少		默认
+shrivel	v.萎缩;枯萎		默认
+shrub	n.灌木;灌木丛		默认
+shrug	v./n.耸肩		默认
+shudder	n.战栗;发抖		默认
+shuffle	v.拖步走;洗牌		默认
+shun	v.避开;避免		默认
+shut	v.关闭;停业		默认
+shutdown	n.关闭;停工		默认
+shutter	n.百叶窗;快门		默认
+shuttle	n.梭子;航天飞机 v.穿梭		默认
+shy	adj.害羞的;羞怯的		默认
+shyness	n.害羞;羞怯		默认
+sibyl	n.女预言家;女先知		默认
+sick	adj.有病的;恶心的		默认
+sicken	v.使生病;使厌恶		默认
+sickening	adj.令人厌恶的;令人恶心的		默认
+sickle	n.镰刀;新月形		默认
+sickness	n.疾病;恶心		默认
+side	n.边;方面		默认
+sidewalk	n.人行道		默认
+sideways	adv.斜着;向一边		默认
+siege	n.围攻;包围		默认
+sieve	n.筛子;筛		默认
+sift	v.筛;过滤		默认
+sigh	n.叹息;叹气 v.叹息		默认
+sight	n.视力;景象		默认
+sightseeing	n.观光;游览		默认
+sign	n.符号 v.签字		默认
+signal	n.信号 v.发信号		默认
+signature	n.签名;署名		默认
+significance	n.意义;重要性		默认
+significant	adj.重要的;显著的		默认
+signify	v.表示;意味		默认
+silence	n.沉默;寂静		默认
+silent	adj.沉默的;无声的		默认
+silently	adv.沉默地;安静地		默认
+silhouette	n.轮廓;剪影		默认
+silicon	n.硅;硅元素		默认
+silk	n.丝绸;丝		默认
+silken	adj.丝的;柔软的		默认
+silly	adj.愚蠢的;荒谬的		默认
+silver	n.银;银子		默认
+silverware	n.银器;餐具		默认
+similar	adj.类似的;相同的		默认
+similarity	n.相似;类似		默认
+simile	n.明喻;比拟		默认
+simmer	v.炖;煨		默认
+simple	adj.简单的;朴素的		默认
+simplicity	n.简单;朴素		默认
+simplify	v.简化;简化		默认
+simply	adv.简单地;仅仅		默认
+simulate	v.模仿;模拟		默认
+simulated	adj.模拟的;假装的		默认
+simulation	n.模拟;模仿		默认
+simultaneous	adj.同时的;联立的		默认
+sin	n.罪;罪恶		默认
+since	adv.从那时以来 prep.从		默认
+sincere	adj.真诚的;真挚的		默认
+sincerely	adv.真诚地;真挚地		默认
+sincerity	n.真诚;真挚		默认
+sinful	adj.有罪的;罪恶的		默认
+sing	v.唱;歌唱		默认
+singer	n.歌手;歌唱家		默认
+single	adj.单一的 n.一个		默认
+singly	adv.单独地;各自地		默认
+singsong	n.轻快地唱歌;悦耳的声音		默认
+singular	adj.单一的;非凡的		默认
+sinister	adj.邪恶的;不祥的		默认
+sinuous	adj.蜿蜒的;迂回的		默认
+sip	v.啜饮;尝 n.一小口		默认
+sir	n.先生;阁下		默认
+sire	n.君主;统治者		默认
+siren	n.汽笛;妖妇		默认
+sister	n.姐妹		默认
+sit	v.坐;位于		默认
+site	n.地点;位置		默认
+sitting	n.会议;座位		默认
+sitter	n.临时保姆;模特儿		默认
+sitting	room 客厅		默认
+situated	adj.位于...的		默认
+situation	n.情况;位置		默认
+six	num.六		默认
+sixteen	num.十六		默认
+sixth	num.第六		默认
+size	n.尺寸;大小		默认
+skate	n.冰鞋 v.滑冰		默认
+sketch	n.素描;草图 v.素描		默认
+skew	adj.斜的 v.使偏斜		默认
+skewer	n.串肉扦 v.串肉		默认
+ski	n.滑雪 v.滑雪		默认
+skid	v.滑倒 n.滑倒		默认
+skill	n.技能;技巧		默认
+skilled	adj.熟练的;有技能的		默认
+skillful	adj.熟练的;灵巧的		默认
+skim	v.撇去;掠过		默认
+skimp	v.节省;吝啬		默认
+skin	n.皮;皮肤 v.剥皮		默认
+skinny	adj.皮包骨的;瘦的		默认
+skip	v.跳;跳绳		默认
+skirmish	n.小战;小争吵		默认
+skirt	n.裙子 v.绕过		默认
+skullduggery	n.欺骗;不正当手段		默认
+skull	n.头盖骨;骷髅		默认
+skunk	n.臭鼬;黄鼠狼		默认
+sky	n.天;天空		默认
+skyscraper	n.摩天楼		默认
+slab	n.石板;厚板		默认
+slack	adj.松弛的;萧条的		默认
+slag	n.渣;矿渣		默认
+slam	v.砰地关上;猛然抨击		默认
+slander	n.诽谤;诋毁		默认
+slanderous	adj.诽谤的;诋毁的		默认
+slang	n.俚语;行话		默认
+slant	n.倾斜;斜面 v.倾斜		默认
+slap	v.拍;掌击 n.拍		默认
+slapdash	adj.马虎的;草率的		默认
+slapstick	n.闹剧;打闹喜剧		默认
+slash	n.砍;削减 v.砍		默认
+slat	n.板条;狭长条		默认
+slaughter	n.屠杀;杀戮 v.屠杀		默认
+slave	n.奴隶 v.苦干		默认
+slavery	n.奴隶制度;奴隶身分		默认
+slay	v.杀死;杀害		默认
+sledge	n.雪橇		默认
+sledgehammer	n.大锤		默认
+sleek	adj.光滑的;时髦的		默认
+sleep	n.睡眠 v.睡觉		默认
+sleepy	adj.困倦的;不活跃的		默认
+sleet	n.雨夹雪;冰雹		默认
+sleeve	n.袖子;护套		默认
+sleigh	n.雪橇		默认
+sleight	n.巧妙;技巧		默认
+slender	adj.苗条的;纤细的		默认
+slice	n.薄片;部分 v.切成片		默认
+slick	adj.光滑的;巧妙的		默认
+slide	n.滑动;滑梯 v.滑动		默认
+slight	adj.轻微的;纤细的		默认
+slightly	adv.轻微地;纤细地		默认
+slim	adj.苗条的;微小的		默认
+slime	n.粘液;泥浆		默认
+sling	v.投掷;吊运		默认
+slip	n.滑倒;纸条 v.滑动		默认
+slipper	n.拖鞋;便鞋		默认
+slippery	adj.滑的;不稳定的		默认
+slit	n.裂缝;狭缝		默认
+sliver	n.裂片;细长条		默认
+slob	n.懒散的人;笨拙的人		默认
+sloe	n.黑刺李;黑刺李树		默认
+slog	n.沉重的步伐 v.沉重地走		默认
+slogan	n.标语;口号		默认
+sloop	n.小帆船		默认
+slope	n.斜坡;倾斜 v.倾斜		默认
+sloping	adj.倾斜的		默认
+slosh	v.溅泼;泥泞地走		默认
+slot	n.狭缝;空位		默认
+slouch	v.懒散地坐或站		默认
+slough	n.泥潭;沟		默认
+slow	adj.慢的 v.放慢		默认
+slowly	adv.慢慢地		默认
+sludge	n.烂泥;淤泥		默认
+slug	n.蛞蝓;缓慢的人		默认
+sluggish	adj.行动迟缓的;懒惰的		默认
+slum	n.贫民窟;棚户区		默认
+slumber	n.睡眠;沉睡		默认
+slump	n.暴跌;低潮期		默认
+slung	v.吊;抛		默认
+slur	n.诽谤;忽视 v.忽视		默认
+slush	n.雪泥;软泥		默认
+sly	adj.狡猾的;偷偷的		默认
+smack	v.拍;重击 n.少量		默认
+small	adj.小的;少的		默认
+smart	adj.聪明的;巧妙的		默认
+smash	v.打碎;撞击		默认
+smattering	n.少量;一知半解		默认
+smear	n.涂;诽谤 v.涂		默认
+smell	n.气味 v.嗅		默认
+smelt	v.冶炼;提炼		默认
+smirk	v.假笑;得意地笑		默认
+smith	n.铁匠;金属匠		默认
+smithereens	adv.粉碎地		默认
+smog	n.烟雾;空气污染		默认
+smoke	n.烟 v.吸烟		默认
+smooth	adj.平滑的 v.弄平		默认
+smoothly	adv.平稳地;顺利地		默认
+smoothness	n.平滑;平坦		默认
+smother	v.窒息;闷死		默认
+smudge	n.污迹;弄脏 v.弄脏		默认
+smug	adj.自满的;自鸣得意的		默认
+smuggle	v.走私;偷运		默认
+smut	n.污点;诽谤		默认
+snack	n.小吃;快餐		默认
+snag	n.障碍;意外		默认
+snail	n.蜗牛 v.缓慢移动		默认
+snake	n.蛇		默认
+snap	v.猛咬;突然折断		默认
+snapshot	n.快照;快相		默认
+snare	n.陷阱;罗网 v.诱捕		默认
+snarl	n.纠缠;缠结 v.纠缠		默认
+sneak	v.潜行;偷走		默认
+sneaker	n.运动鞋;潜行者		默认
+sneer	v.嘲笑;嗤之以鼻		默认
+sneeze	v.打喷嚏 n.喷嚏		默认
+snick	v.剪;修剪		默认
+sniff	v.嗅;闻		默认
+sniffle	v.抽噎;抽鼻子		默认
+snob	n.势利小人;攀高枝		默认
+snobbish	adj.势利的;势利眼的		默认
+snobbery	n.势利;谄上欺下		默认
+snoop	v.窥探;侦察		默认
+snore	v.打鼾 n.鼾声		默认
+snorkel	n.通气管 v.用通气管潜泳		默认
+snort	v.用鼻子吸气;轻蔑		默认
+snout	n.鼻子;猪嘴		默认
+snow	n.雪 v.下雪		默认
+snowdrift	n.雪堆;雪崩		默认
+snowflake	n.雪花;雪片		默认
+snowstorm	n.暴风雪		默认
+snowy	adj.雪的;下雪的		默认
+snub	v.冷落;不理睬		默认
+snuff	n.鼻烟;熄灭 v.熄灭		默认
+snug	adj.温暖的;舒适的		默认
+so	adv.如此;那么		默认
+soak	v.浸泡;渗透		默认
+soaked	adj.湿透的;浸湿的		默认
+soaking	n.浸泡;渗透		默认
+soap	n.肥皂 v.涂肥皂		默认
+sob	v./n.哭泣;呜咽		默认
+sober	adj.清醒的;素淡的		默认
+sobriety	n.清醒;节制		默认
+sobriquet	n.别名;绰号		默认
+social	adj.社会的;社交的		默认
+socialism	n.社会主义		默认
+socialist	adj.社会主义的 n.社会主义者		默认
+society	n.社会;协会		默认
+sock	n.短袜;袜子		默认
+soda	n.苏打;汽水		默认
+sodden	adj.浸透的;湿透的		默认
+sodium	n.钠		默认
+soever	adv.丝毫;一点儿		默认
+sofa	n.沙发		默认
+soft	adj.软的;柔和的		默认
+soften	v.变软;变柔和		默认
+softness	n.柔软;柔和		默认
+soil	n.土壤;土地		默认
+sojourn	n.逗留;短暂停留		默认
+solace	n.安慰;慰藉		默认
+solar	adj.太阳的;日光的		默认
+solder	v./n.焊接;焊料		默认
+soldier	n.士兵;军人		默认
+sole	adj.唯一的 n.脚底		默认
+solely	adv.单独地;仅仅		默认
+solemn	adj.庄严的;隆重的		默认
+solicitor	n.律师;请求者		默认
+solicit	v.请求;征求		默认
+solicitation	n.请求;征求		默认
+solicitor	n.律师;请求者		默认
+solid	adj.固体的 n.固体		默认
+solidarity	n.团结;一致		默认
+solidify	v.凝固;使团结		默认
+solitary	adj.孤独的 n.隐士		默认
+solitude	n.孤独;隐居		默认
+solo	adj.单独的 n.独奏		默认
+soluble	adj.可溶的;可溶解的		默认
+solution	n.溶解;解决		默认
+solve	v.解决;解答		默认
+solvency	n.溶解能力;偿债能力		默认
+solvent	adj.溶解的 n.溶剂		默认
+somber	adj.忧郁的;阴暗的		默认
+some	adj.一些的;几个		默认
+somebody	pron.某人;有人		默认
+somehow	adv.以某种方式		默认
+someone	pron.某人;有人		默认
+sometime	adv.在某时		默认
+sometimes	adv.有时;时而		默认
+somewhat	adv.稍微;有点		默认
+somewhere	adv.在某处		默认
+son	n.儿子		默认
+sonar	n.声纳;超声波		默认
+sonata	n.奏鸣曲		默认
+song	n.歌唱;歌曲		默认
+sonnet	n.十四行诗		默认
+soon	adv.很快;不久		默认
+sooner	adv.更早地;宁愿		默认
+soot	n.煤烟;烟灰		默认
+sophisticated	adj.老于世故的;复杂的		默认
+sophistication	n.诡辩;复杂		默认
+soporific	adj.催眠的 n.安眠药		默认
+sordid	adj.肮脏的;利欲熏心的		默认
+sore	adj.疼痛的 n.痛处		默认
+sorely	adv.非常;厉害地		默认
+sorghum	n.高粱		默认
+sorrow	n.悲伤;懊悔		默认
+sorry	adj.抱歉的;难过的		默认
+sort	n.种类 v.分类		默认
+sos	n.紧急求救信号		默认
+sottish	adj.酗酒的;精神不振的		默认
+sough	v./n.呻吟;悲叹		默认
+soul	n.灵魂;心灵		默认
+sound	adj.健康的 v.听起来		默认
+sounding	n.探针;声音		默认
+soup	n.汤		默认
+sour	adj.酸的;脾气坏的		默认
+source	n.来源;水源		默认
+sourness	n.酸味;痛苦		默认
+south	n.南方 adj.南的		默认
+southeast	n.东南 adv.在东南		默认
+southern	adj.南方的		默认
+southward	adv.向南方		默认
+souvenir	n.纪念品;纪念物		默认
+sovereign	adj.至高无上的 n.君主		默认
+sovereignty	n.主权;主权国家		默认
+soviet	n.苏维埃;苏联		默认
+sow	v.播种;散布		默认
+sown	v.播种;散布		默认
+soybean	n.大豆		默认
+spa	n.矿泉疗养地		默认
+space	n.空间;空白		默认
+spacecraft	n.宇宙飞船		默认
+spacing	n.间隔;间距		默认
+spacious	adj.宽敞的;广阔的		默认
+spade	n.铲子;铁锹		默认
+span	n.跨度;范围		默认
+sparrow	n.麻雀		默认
+sparse	adj.稀疏的;稀少的		默认
+spartan	adj.斯巴达的;简朴的		默认
+spasm	n.痉挛;抽筋		默认
+spasmodic	adj.痉挛的;间歇的		默认
+spat	v.吐痰;争吵		默认
+spatial	adj.空间的;有关空间的		默认
+spatter	v.溅污 n.溅污		默认
+spear	n.矛;枪		默认
+spec	n.试印;试验		默认
+special	adj.特别的 n.特派员		默认
+specialist	n.专家;专家		默认
+specialize	v.专门研究		默认
+specialty	n.专业;特色菜		默认
+specie	n.种类;硬币		默认
+species	n.种;物种		默认
+specific	adj.明确的 n.细节		默认
+specification	n.详述;规格		默认
+specify	v.指定;详述		默认
+specimen	n.样本;标本		默认
+speck	n.斑点;微粒		默认
+spectacle	n.奇观;眼镜		默认
+spectacular	adj.壮观的;引人入胜的		默认
+spectator	n.观众;旁观者		默认
+specter	n.幽灵;妖怪		默认
+spectral	adj.光谱的;鬼魂的		默认
+spectrum	n.光谱;范围		默认
+speculate	v.推测;投机		默认
+speculation	n.推测;投机		默认
+speech	n.演讲;讲话		默认
+speed	n.速度 v.加速		默认
+speedy	adj.快的;迅速的		默认
+spell	n.符咒 v.拼写		默认
+spelling	n.拼写		默认
+spend	v.花费;度过		默认
+sphere	n.球;领域		默认
+spherical	adj.球形的;球面的		默认
+spice	n.香料;调味品		默认
+spicy	adj.有香料的;加香料的		默认
+spider	n.蜘蛛		默认
+spike	n.长钉;钉鞋		默认
+spill	v.溢出;溅出		默认
+spin	v.旋转;纺纱		默认
+spine	n.脊柱;刺		默认
+spiral	adj.螺旋形的 n.螺旋		默认
+spirit	n.精神;烈酒		默认
+spiritual	adj.精神的;心灵的		默认
+spit	v.吐出 n.唾液		默认
+spite	n.恶意;怨恨		默认
+spiteful	adj.怀恨的;恶意的		默认
+splash	n.溅泼声 v.溅湿		默认
+splendid	adj.壮丽的;极好的		默认
+splendor	n.壮丽;光辉		默认
+splice	v.接合;嫁接		默认
+splinter	n.碎片;刺		默认
+split	v.劈开;分裂		默认
+spoil	v.破坏;溺爱		默认
+spoke	n.轮辐;辐条		默认
+spoken	adj.口语的		默认
+spokesman	n.代言人;发言人		默认
+sponge	n.海绵 v.擦拭		默认
+sponsor	n.赞助者 v.赞助		默认
+spontaneous	adj.自发的;本能的		默认
+spoon	n.匙;调羹		默认
+sport	n.运动;游戏		默认
+sporting	adj.运动的;爽快的		默认
+spot	n.地点;斑点 v.发现		默认
+spotted	adj.有斑点的;发现的		默认
+spotless	adj.无瑕疵的;清洁的		默认
+spouse	n.配偶 v.和...结婚		默认
+sprawl	v.伸开四肢坐卧		默认
+spray	n.喷雾;喷雾剂 v.喷射		默认
+spread	v.展开;传播 n.传播		默认
+spree	n.狂欢;泛滥		默认
+spring	n.春天;弹簧 v.跳起		默认
+sprinkle	v.洒;点缀		默认
+sprite	n.精灵;鬼魂		默认
+spur	n.刺激;马刺 v.刺激		默认
+spurious	adj.假的;伪造的		默认
+spurn	v.蔑视;拒绝		默认
+spurt	n.喷出;涌出 v.喷出		默认
+squabble	n.争吵;口角		默认
+squad	n.小队;班		默认
+squadron	n.中队		默认
+squalid	adj.肮脏的;令人不快的		默认
+squalor	n.污秽;肮脏		默认
+squander	v.浪费;挥霍		默认
+square	n.正方形;广场		默认
+squash	n.挤压;南瓜 v.压碎		默认
+squat	v.蹲下;蹲坐		默认
+squatter	n.擅自占地者;擅自占地者		默认
+squeak	v.吱吱响 n.吱吱声		默认
+squeaky	adj.吱吱响的;不稳定的		默认
+squeal	v.尖叫;告密		默认
+squeeze	n.挤压 v.压榨		默认
+squelch	v.压制;镇压		默认
+squint	v.眯着眼看 n.眯眼		默认
+squirrel	n.松鼠 v.贮藏		默认
+stab	v.刺;戳		默认
+stability	n.稳定;稳定性		默认
+stable	adj.稳定的 n.马厩		默认
+stack	n.堆;堆叠 v.堆积		默认
+stadium	n.体育场;运动场		默认
+staff	n.职员;棒		默认
+stag	n.雄鹿;停滞		默认
+stage	n.舞台;阶段		默认
+stagnant	adj.停滞的;不景气的		默认
+stain	n.污点 v.染色		默认
+stake	n.桩;赌注 v.打桩		默认
+stakeholder	n.利益相关者		默认
+stale	adj.不新鲜的;陈旧的		默认
+stalk	n.茎;高视阔步 v.潜行		默认
+stall	n.货摊 v.故意拖延		默认
+stamina	n.耐力;毅力		默认
+stamp	n.邮票;印记 v.盖章		默认
+stampede	n.奔跑;蜂拥		默认
+stance	n.立场;位置		默认
+stand	v.站立;经受 n.立场		默认
+standard	n.标准 adj.标准的		默认
+standpoint	n.立场;观点		默认
+staple	n.主要成分;钉书钉		默认
+star	n.星;明星 v.表演出色		默认
+starvation	n.饥饿;饿死		默认
+starve	v.饿死;渴望		默认
+stash	v.藏匿;塞满		默认
+state	n.状态 v.陈述		默认
+statement	n.声明;陈述		默认
+stateside	adv.在国内的		默认
+static	adj.静态的;不变的		默认
+station	n.站;驻地		默认
+stationery	n.信纸;文具		默认
+stationmaster	n.站长		默认
+statistic	n.统计;统计资料		默认
+statue	n.雕像;塑像		默认
+stature	n.身高;身材		默认
+status	n.地位;状态		默认
+statute	n.法令;法规		默认
+statutory	adj.法定的;法令的		默认
+stay	v.停留;坚持 n.逗留		默认
+stead	n.代替人;立场		默认
+steadfast	adj.坚定的;忠实的		默认
+steady	adj.稳定的 v.使稳定		默认
+steak	n.牛排;肉排		默认
+steal	v.偷;窃取		默认
+stealth	n.秘密;潜行		默认
+stealthy	adj.秘密的;鬼鬼祟祟的		默认
+steam	n.蒸汽 v.蒸煮		默认
+steamer	n.蒸汽机;轮船		默认
+steel	n.钢;钢铁		默认
+steep	adj.陡峭的 v.浸泡		默认
+steeple	n.尖塔;塔楼		默认
+steer	v.驾驶;控制		默认
+stellar	adj.星的;星星的		默认
+stem	n.茎;词干 v.起源于		默认
+stencil	n.蜡纸;模版 v.用蜡纸印刷		默认
+stenographer	n.速记员;打字员		默认
+step	n.步;步骤 v.行走		默认
+steppe	n.草原;干草原		默认
+sterile	adj.不育的;无菌的		默认
+sterility	n.不育;不育症		默认
+sterilize	v.使不育;消毒		默认
+stern	adj.严厉的;坚决的		默认
+sternum	n.胸骨;胸膛		默认
+stethoscope	n.听诊器		默认
+stew	n.炖肉;困境 v.炖		默认
+steward	n.乘务员;看管人		默认
+stewardess	n.女乘务员;空姐		默认
+stick	n.棍;棒 v.粘贴		默认
+stickler	n.坚持细节者;顽固者		默认
+sticky	adj.粘的;粘性的		默认
+stiff	adj.硬的;僵硬的		默认
+stiffen	v.变硬;变僵		默认
+stifle	v.窒息;扼杀		默认
+stifling	adj.令人窒息的		默认
+stigma	n.耻辱;污名		默认
+stigmatize	v.污名化;标记		默认
+still	adj.静止的 adv.仍然		默认
+stillness	n.静止;寂静		默认
+stilt	n.高跷;支柱		默认
+stimulant	n.刺激物;兴奋剂		默认
+stimulate	v.刺激;激励		默认
+stimulating	adj.令人兴奋的		默认
+stimulation	n.刺激;激励		默认
+stimulus	n.刺激;激励因素		默认
+sting	n.刺;刺痛 v.刺		默认
+stinging	adj.刺骨的;尖锐的		默认
+stingy	adj.吝啬的;小气的		默认
+stink	v.发臭;令人厌恶		默认
+stint	n.份额;阶段		默认
+stipend	n.津贴;奖学金		默认
+stipulate	v.规定;要求		默认
+stipulation	n.规定;要求		默认
+stir	v.搅拌;激发		默认
+stirring	adj.激动人心的;动人的		默认
+stitch	n.一针;缝线 v.缝合		默认
+stock	n.存货;股票		默认
+stockade	n.栅栏;围栏		默认
+stockbroker	n.股票经纪人		默认
+stockholder	n.股东		默认
+stockpile	n.囤积;库存		默认
+stocky	adj.矮胖的;健壮的		默认
+stodgy	adj.笨重的;缺乏想象力的		默认
+stoic	n.斯多葛;坚忍的人		默认
+stoical	adj.无感情的;坚忍的		默认
+stoke	v.添煤;激发		默认
+stolen	adj.偷来的;窃取的		默认
+stomach	n.胃;腹部		默认
+stone	n.石头;果实核		默认
+stoneware	n.石器;炻器		默认
+stony	adj.石头的;无情的		默认
+stoop	v.弯腰;屈服		默认
+stop	v.停止;堵塞		默认
+stoppage	n.停止;阻塞		默认
+storage	n.存储;仓库		默认
+store	n.商店 v.存储		默认
+storehouse	n.仓库;货仓		默认
+storey	n.层;楼层		默认
+storm	n.暴风雨 v.袭击		默认
+stormy	adj.暴风雨的;激烈的		默认
+story	n.故事;传说		默认
+stout	adj.肥胖的;勇敢的		默认
+stove	n.火炉;炉子		默认
+stow	v.贮藏;装载		默认
+straddle	v.跨坐;跨越		默认
+straggle	v.挣扎;散漫地走		默认
+straight	adj.直的 adv.直地		默认
+straightforward	adj.直接的;简单的		默认
+strain	n.紧张 v.拉紧		默认
+strained	adj.紧张的;不自然的		默认
+strait	n.海峡;困境		默认
+strand	n.线;串 v.使滞留		默认
+strange	adj.陌生的;奇怪的		默认
+stranger	n.陌生人;新来者		默认
+strangle	v.勒死;压制		默认
+strangulation	n.勒死;扼杀		默认
+strap	n.带子 v.用带子系紧		默认
+strata	n.地层;阶层		默认
+strategic	adj.战略的;重要的		默认
+strategist	n.战略家;策划者		默认
+strategy	n.战略;策略		默认
+straw	n.稻草;吸管		默认
+stray	v.迷路;偏离		默认
+streak	n.条纹;线条 v.加条纹		默认
+stream	n.溪流 v.流动		默认
+streamline	v.使成流线型		默认
+street	n.街道;马路		默认
+strength	n.力量;强度		默认
+strengthen	v.加强;巩固		默认
+strenuous	adj.费力的;奋发的		默认
+stress	n.压力 v.强调		默认
+stressful	adj.紧张的;压力重的		默认
+stretch	v.伸展 n.伸展		默认
+strewn	adj.散布的;分散的		默认
+stricken	adj.受困的;受打击的		默认
+strict	adj.严格的;绝对的		默认
+strictly	adv.严格地;绝对地		默认
+stride	v.大步走 n.大步		默认
+strife	n.冲突;竞争		默认
+strike	v.打;罢工		默认
+striking	adj.引人注目的;显著的		默认
+string	n.线;一串 v.系		默认
+strip	n.条;带 v.剥去		默认
+stripe	n.条纹;条纹 v.加条纹		默认
+striped	adj.有条纹的;有斑纹的		默认
+strive	v.努力;奋斗		默认
+stroke	n.打;中风		默认
+stroll	v.闲逛 n.闲逛		默认
+strong	adj.强壮的;强的		默认
+stronghold	n.要塞;据点		默认
+structural	adj.结构的;建筑的		默认
+structure	n.结构;建筑物		默认
+struggle	n.斗争 v.斗争		默认
+strut	v.昂首阔步 n.支柱		默认
+stubborn	adj.顽固的;固执的		默认
+stubbornly	adv.顽固地;固执地		默认
+stubbornness	n.顽固;固执		默认
+stucco	n.灰泥;泥浆		默认
+stuck	adj.被卡住的;被粘住的		默认
+stud	n.种马;饰钉		默认
+studded	adj.有饰钉的;散布的		默认
+student	n.学生;学者		默认
+studio	n.工作室;摄影室		默认
+study	n.学习 v.学习		默认
+stuff	n.材料;东西 v.填满		默认
+stuffy	adj.闷热的;古板的		默认
+stumble	v.绊倒;结巴		默认
+stump	n.树桩;残余 v.砍伐		默认
+stun	v.使昏迷;打昏		默认
+stunning	adj.令人晕倒的;极好的		默认
+stunt	n.特技;噱头 v.表演特技		默认
+stupefy	v.使惊呆;使茫然		默认
+stupendous	adj.巨大的;惊人的		默认
+stupid	adj.愚蠢的;感觉迟钝的		默认
+stupidity	n.愚蠢;愚昧		默认
+stupor	n.昏迷;昏迷状态		默认
+sturdy	adj.结实的;健康的		默认
+stutter	v.口吃 n.口吃		默认
+sty	n.猪圈;猪舍		默认
+style	n.风格;样式		默认
+stylish	adj.时髦的;潇洒的		默认
+stylist	n.美学家;文体家		默认
+stylized	adj.风格化的;程式化的		默认
+suave	adj.温文尔雅的;圆滑的		默认
+subdivide	v.再分;细分		默认
+subdue	v.征服;减弱		默认
+subdued	adj.被抑制的;柔和的		默认
+subdue	v.征服;减弱		默认
+subject	n.主题 adj.服从的		默认
+subjective	adj.主观的;个人的		默认
+subjugate	v.征服;镇压		默认
+subjunctive	n.虚拟语气 adj.虚拟的		默认
+sublimate	v.升华;提炼		默认
+sublime	adj.崇高的;极好的		默认
+submarine	adj.海下的 n.潜水艇		默认
+submerge	v.浸没;淹没		默认
+submerged	adj.潜水的;淹没的		默认
+submission	n.服从;提交		默认
+submissive	adj.服从的;顺从的		默认
+submit	v.提交;服从		默认
+subordinate	adj.从属的 n.部属		默认
+subpoena	n.传票 v.传讯		默认
+subscribe	v.订阅;捐助		默认
+subscriber	n.订阅者;捐助者		默认
+subscription	n.订阅;捐助		默认
+subsequent	adj.随后的;后来的		默认
+subsidiary	adj.辅助的;次要的		默认
+subsidy	n.补助金;津贴		默认
+subsist	v.存在;维持生活		默认
+subsistence	n.生存;生活		默认
+subsoil	n.底土;下层土壤		默认
+substance	n.物质;实质		默认
+substantial	adj.大量的;实质的		默认
+substantiate	v.证实;确定		默认
+substantive	adj.实质的;有实质的		默认
+substitute	n.代替者 v.代替		默认
+substitution	n.代替;替换		默认
+subterranean	adj.地下的;秘密的		默认
+subtitle	n.副标题;字幕		默认
+subtle	adj.微妙的;敏感的		默认
+subtract	v.减去;减法		默认
+suburb	n.郊区;城外		默认
+suburban	adj.郊区的;田园的		默认
+suburbia	n.郊区;郊区生活		默认
+subversive	adj.颠覆性的;破坏性的		默认
+subvert	v.颠覆;推翻		默认
+subway	n.地铁;地道		默认
+succeed	v.成功;继承		默认
+success	n.成功;成就		默认
+successful	adj.成功的;有成效的		默认
+succession	n.连续;继承		默认
+successive	adj.连续的;继承的		默认
+successor	n.继承人;后继者		默认
+succinct	adj.简洁的;简明的		默认
+succumb	v.屈服;死亡		默认
+such	adj.这样的;这样的		默认
+suchlike	adj.这样的;这种类型的		默认
+suck	v.吸吮;吸取		默认
+sucker	n.吸盘;易受骗的人		默认
+sudden	adj.突然的;意外的		默认
+suddenly	adv.突然地		默认
+sue	v.控告;提出请求		默认
+suffer	v.受苦;遭受		默认
+sufferance	n.忍受;容忍		默认
+suffering	n.痛苦;苦难		默认
+suffice	v.足够;胜任		默认
+sufficient	adj.足够的;充分的		默认
+sufficiently	adv.足够地;充分地		默认
+suffix	n.后缀;后缀词		默认
+suffocate	v.窒息;闷死		默认
+suffrage	n.选举权;投票		默认
+suffragist	n.争取参政权者		默认
+sugar	n.糖;食糖		默认
+suggest	v.建议;暗示		默认
+suggestion	n.建议;暗示		默认
+suggestive	adj.暗示的;提示的		默认
+suicidal	adj.自杀的;导致自杀的		默认
+suicide	n.自杀;自杀行为		默认
+suit	n.套装 v.适合		默认
+suitable	adj.合适的;适宜的		默认
+suitcase	n.手提箱;衣箱		默认
+suite	n.套房;套间		默认
+suitor	n.求婚者;原告		默认
+sulfur	n.硫;硫磺		默认
+sulk	v.生气;愠怒		默认
+sullen	adj.闷闷不乐的;阴沉的		默认
+sully	v.玷污;诽谤		默认
+sulphur	n.硫磺;硫磺（英式拼写）		默认
+sum	n.总和 v.总结		默认
+summarize	v.概括;总结		默认
+summary	n.摘要;概要		默认
+summer	n.夏天;夏季		默认
+summit	n.顶点;最高级会议		默认
+summon	v.召唤;召集		默认
+summons	n.传票;召集		默认
+sun	n.太阳;阳光		默认
+sunburn	n.晒伤 v.晒伤		默认
+sunder	n.断裂;分裂 v.使分离		默认
+sundry	adj.各种的;若干		默认
+sunk	adj.沉没的;被沉没的		默认
+sunken	adj.沉没的;塌陷的		默认
+sunlight	n.日光;阳光		默认
+sunny	adj.阳光的;晴朗的		默认
+sunrise	n.日出;黎明		默认
+sunset	n.日落;傍晚		默认
+sunshine	n.阳光		默认
+super	adj.超级的;极好的		默认
+superannuate	v.使过时		默认
+superb	adj.高级的;极好的		默认
+superficial	adj.表面的;肤浅的		默认
+superfluous	adj.多余的;不必要的		默认
+superintendent	n.监督者;主管		默认
+superior	adj.上级的 n.上级		默认
+superiority	n.优越;优越感		默认
+superlative	adj.最高级的;最佳的		默认
+supernatural	adj.超自然的		默认
+superscript	n.上标;上标号		默认
+supersonic	adj.超音速的		默认
+superstition	n.迷信;迷信行为		默认
+superstitious	adj.超级的;迷信的		默认
+supervise	v.监督;管理		默认
+supervision	n.监督;管理		默认
+supervisor	n.监督者;监工		默认
+supper	n.晚餐;晚饭		默认
+supplant	v.排挤;取代		默认
+supple	adj.柔软的;灵活的		默认
+supplement	n.补遗;补充		默认
+supplementary	adj.补遗的;补充的		默认
+suppliant	adj.恳求的;哀求的		默认
+supplicant	n.恳求者;请求者		默认
+supplicate	v.恳求;祈求		默认
+supplication	n.恳求;祈求		默认
+supplier	n.供应者;供应厂商		默认
+supplies	n.供应品;补给品		默认
+supply	n.供应 v.供给		默认
+support	n.支持 v.支持		默认
+supporter	n.支持者;支撑者		默认
+supportive	adj.支持的;支持性的		默认
+suppose	v.假设;认为		默认
+supposed	adj.假定的;被认为的		默认
+supposition	n.假设;前提		默认
+suppress	v.镇压;压制		默认
+suppression	n.镇压;压制		默认
+supremacy	n.至高无上;霸权		默认
+supreme	adj.至高的;最高的		默认
+surcharge	n.附加费;额外收费		默认
+sure	adj.确信的;可靠的		默认
+surely	adv.无疑地;一定		默认
+surf	n.冲浪 v.冲浪		默认
+surface	n.表面;表层		默认
+surge	n.浪涌;激增 v.涌上		默认
+surgeon	n.外科医生;军医		默认
+surgery	n.外科;外科手术		默认
+surly	adj.粗暴的;脾气坏的		默认
+surmise	v.猜测;推测		默认
+surmount	v.克服;战胜		默认
+surname	n.姓;姓氏		默认
+surpass	v.超过;超越		默认
+surplus	n.过剩;剩余		默认
+surprise	n.惊奇 v.使惊奇		默认
+surprised	adj.感到惊讶的		默认
+surprising	adj.令人惊讶的		默认
+surprisingly	adv.令人惊讶地		默认
+surrender	v.投降;交出		默认
+surrender	n.投降;交出		默认
+surrogate	n.代理人;代替者		默认
+surround	v.围绕;环绕		默认
+surrounding	adj.周围的;附近的		默认
+surroundings	n.环境;周围的事物		默认
+surveillance	n.监视;监控		默认
+survey	n.调查;测量 v.调查		默认
+survive	v.生存;幸免于难		默认
+survival	n.生存;幸存		默认
+survivor	n.幸存者;生还者		默认
+susceptibility	n.易受影响;敏感性		默认
+susceptible	adj.易受影响的;敏感的		默认
+suspect	v.怀疑;不信任		默认
+suspend	v.暂停;悬挂		默认
+suspender	n.吊索;吊带		默认
+suspense	n.悬念;怀疑		默认
+suspension	n.暂停;悬挂		默认
+suspicion	n.怀疑;嫌疑		默认
+suspicious	adj.怀疑的;可疑的		默认
+sustain	v.支撑;维持		默认
+sustained	adj.持久的;持续的		默认
+sustenance	n.维持;食物		默认
+swab	n.拖把;药棉球 v.擦洗		默认
+swag	n.赃物;赃物		默认
+swagger	v.夸耀;大摇大摆地走		默认
+swallow	n.燕子 v.吞下		默认
+swamp	n.沼泽;湿地 v.淹没		默认
+swampy	adj.沼泽的;湿地的		默认
+swan	n.天鹅 v.闲逛		默认
+swap	v.交换;交换		默认
+swarm	n.一群;一大群 v.蜂拥		默认
+sway	n.摇摆;摇动		默认
+swear	v.宣誓;咒骂		默认
+sweat	n.汗 v.出汗		默认
+sweater	n.毛线衣;运动衫		默认
+sweaty	adj.出汗的;导致出汗的		默认
+sweep	v.扫;席卷		默认
+sweet	adj.甜的 n.糖果		默认
+swell	v.肿胀;膨胀		默认
+swelling	n.肿胀;增大		默认
+swerve	v.转向;突然改变		默认
+swift	adj.快的;迅速的		默认
+swim	v.游泳 n.游泳		默认
+swimming	n.游泳;游泳		默认
+swindle	v.诈骗;骗取		默认
+swipe	v.擦;刷		默认
+swirl	n.漩涡;螺旋形 v.旋转		默认
+swish	v.挥动;发嗖嗖声		默认
+switch	n.开关 v.转换		默认
+swivel	n.转椅;旋转		默认
+sword	n.剑;刀		默认
+swore	v.宣誓;保证		默认
+sworn	adj.宣誓的;发誓的		默认
+swung	v.摇摆;悬挂		默认
+syllabus	n.教学大纲;纲要		默认
+symbol	n.符号;象征		默认
+symbolic	adj.符号的;象征的		默认
+symbolize	v.象征;代表		默认
+symmetric	adj.对称的;均齐的		默认
+symmetry	n.对称;均衡		默认
+sympathetic	adj.同情的;共鸣的		默认
+sympathize	v.同情;共鸣		默认
+sympathy	n.同情;共鸣		默认
+symphony	n.交响乐;和谐		默认
+symptom	n.症状;征候		默认
+synchronize	v.同步;合拍		默认
+synchronous	adj.同步的;同时发生的		默认
+syndrome	n.综合症状;并发症		默认
+synthesis	n.合成;综合		默认
+synthetic	adj.合成的;人造的		默认
+syringe	n.注射器;洗胃器		默认
+system	n.系统;体系		默认
+systematic	adj.系统的;有计划的		默认
+tab	n.标签;制表		默认
+table	n.桌子;表格		默认
+tableau	n.活人画;场景		默认
+tabloid	n.药片;小报		默认
+taboo	adj.忌讳的 n.禁忌		默认
+tabular	adj.桌子的;表格的		默认
+tacit	adj.默契的;心照不宣的		默认
+tacitness	n.默契;默许		默认
+tack	n.大头钉;方针		默认
+tackle	v.对付;处理		默认
+tact	n.机智;圆滑		默认
+tactic	n.策略;战术		默认
+tactical	adj.战术的;策略的		默认
+tactics	n.战术;策略		默认
+tactile	adj.触觉的;有感觉的		默认
+tad	n.一点儿;少量		默认
+taint	n.污点;玷污 v.玷污		默认
+take	v.拿;取		默认
+takeover	n.接管;接收		默认
+talent	n.才能;天资		默认
+talented	adj.有才能的;有才华的		默认
+talk	n.谈话 v.谈话		默认
+talkative	adj.多话的;健谈的		默认
+tall	adj.高的 adv.高地		默认
+tally	n.计数器;得分 v.合计		默认
+talon	n.爪;猛禽的利爪		默认
+tambourine	n.手鼓		默认
+tame	adj.驯服的;顺从的		默认
+tamper	v.窜改;破坏		默认
+tan	n.鞣料 adj.棕黄色的		默认
+tangent	n.正切;切线		默认
+tangle	n.纠缠;缠结 v.纠缠		默认
+tangled	adj.纠缠的;复杂的		默认
+tank	n.坦克;大容器		默认
+tanker	n.油船;大型飞机		默认
+tap	n.龙头;轻拍 v.轻拍		默认
+tape	n.带子;录音 v.录音		默认
+taper	n.逐渐变细 v.逐渐变细		默认
+tapestry	n.挂毯;织锦		默认
+tar	n.焦油;柏油		默认
+target	n.目标 v.瞄准		默认
+tariff	n.关税;价目表		默认
+tarpaulin	n.油布;防水布		默认
+tarragon	n.龙蒿;龙蒿属植物		默认
+tarry	v.耽搁;延迟		默认
+tart	adj.酸的;尖酸的		默认
+tartan	n.塔特恩（苏格兰）		默认
+tartar	n.酒石;塔塔尔人		默认
+task	n.任务;工作		默认
+tassel	n.流苏;穗		默认
+taste	n.味道 v.尝		默认
+tasteful	adj.有味道的;审美的		默认
+tasteless	adj.无味道的;乏味的		默认
+tasty	adj.美味的;可口的		默认
+tatter	n.破烂;碎布		默认
+tattered	adj.破旧的;衣衫褴褛的		默认
+taunt	v.逗弄;挑逗		默认
+taut	adj.绷紧的;拉紧的		默认
+tavern	n.小酒馆;客栈		默认
+tawdry	adj.华而不实的;廉价的		默认
+tax	n.税 v.征税		默认
+taxation	n.征税;税金		默认
+taxi	n.出租汽车;的士		默认
+taxonomic	adj.分类的;分类学的		默认
+taxonomy	n.分类学;分类法		默认
+tea	n.茶;茶叶		默认
+teach	v.教;教授		默认
+teacher	n.教师;教师		默认
+teaching	n.教学;教导		默认
+team	n.队 v.结合		默认
+teamwork	n.合作;协作		默认
+tear	n.眼泪 v.撕破		默认
+tearful	adj.含泪的;感伤的		默认
+tease	v.取笑;戏弄		默认
+teaspoon	n.茶匙		默认
+technical	adj.技术的;专门的		默认
+technicality	n.技术性;细节		默认
+technique	n.技巧;方法		默认
+technology	n.技术;工艺		默认
+tedious	adj.乏味的;冗长的		默认
+tedium	n.厌倦;厌倦感		默认
+teem	v.充满;到处都是		默认
+teeming	adj.充满的;拥挤的		默认
+teeth	n.牙齿		默认
+teethe	v.出牙;使烦躁		默认
+telegram	n.电报		默认
+telegraph	n.电报机 v.电报		默认
+telephone	n.电话 v.打电话		默认
+telescope	n.望远镜 v.缩短		默认
+televise	v.电视播放;播送		默认
+television	n.电视;电视机		默认
+tell	v.告诉;分辨		默认
+teller	n.银行出纳员;讲述者		默认
+temper	n.脾气;性情		默认
+tempera	n.蛋彩画;气质		默认
+temperament	n.气质;性情		默认
+temperamental	adj.喜怒无常的;易变的		默认
+temperature	n.温度;体温		默认
+temperate	adj.温和的;适度的		默认
+tempest	n.暴风雨;骚动		默认
+tempestuous	adj.暴风雨的;激烈的		默认
+template	n.模板;样板		默认
+temple	n.庙宇;太阳穴		默认
+temporal	adj.世俗的;时间的		默认
+temporary	adj.临时的;暂时的		默认
+tempt	v.引诱;诱惑		默认
+temptation	n.引诱;诱惑		默认
+tempting	adj.吸引人的;诱人的		默认
+ten	num.十		默认
+tenable	adj.站得住脚的;合理的		默认
+tenacious	adj.坚韧的;固执的		默认
+tenacity	n.坚韧;固执		默认
+tenancy	n.租赁;占有		默认
+tenant	n.房客;佃户		默认
+tend	v.倾向于;照料		默认
+tendency	n.倾向;趋势		默认
+tender	adj.温柔的 n.投标		默认
+tenderness	n.温柔;嫩度		默认
+tendon	n.腱;筋		默认
+tenement	n.租赁房屋;住宅		默认
+tenet	n.信条;原则		默认
+tenor	n.男高音;要点		默认
+tense	adj.拉紧的;紧张的		默认
+tensile	adj.拉伸的;拉力的		默认
+tension	n.拉力;张力		默认
+tent	n.帐篷 v.搭建帐篷		默认
+tentacle	n.触手;触须		默认
+tentative	adj.试探性的;不确定的		默认
+tenterhooks	n.焦虑不安		默认
+term	n.学期;术语		默认
+terminal	adj.末期的 n.终端		默认
+terminate	v.终止;结束		默认
+termination	n.结束;终止		默认
+terminology	n.术语;术语学		默认
+terminus	n.终点;终点车站		默认
+termite	n.白蚁		默认
+terrace	n.阳台;平台		默认
+terrain	n.地形;地带		默认
+terrestrial	adj.地球的;陆地的		默认
+terrible	adj.可怕的;糟糕的		默认
+terribly	adv.可怕地;非常		默认
+terrific	adj.极大的;极好的		默认
+terrify	v.使恐怖;恐吓		默认
+territory	n.领土;领域		默认
+terror	n.恐怖;惊恐		默认
+terrorist	n.恐怖分子		默认
+terse	adj.简洁的;简明的		默认
+tertiary	adj.第三的;第三位的		默认
+test	n.测试 v.测试		默认
+testament	n.遗嘱;证据		默认
+testify	v.作证;证明		默认
+testimony	n.证词;证明		默认
+testy	adj.性急的;易怒的		默认
+tether	n.绳索;束缚 v.束缚		默认
+text	n.文本;课文		默认
+textbook	n.教科书		默认
+textile	n.纺织品;织物		默认
+texture	n.质地;结构		默认
+than	conj.比		默认
+thank	v.感谢 n.感谢		默认
+thankful	adj.感激的;感谢的		默认
+thankfully	adv.感激地;感谢地		默认
+thankless	adj.不领情的;不感谢的		默认
+that	adj.那个 pron.那个		默认
+thaw	v.解冻 n.解冻		默认
+theatre	n.剧场;戏剧		默认
+theatrical	adj.戏剧的;戏剧性的		默认
+thee	pron.你（古英语）		默认
+theft	n.盗窃;偷窃		默认
+their	pron.他们的		默认
+theirs	pron.他们的		默认
+them	pron.他们		默认
+theme	n.主题;题目		默认
+themselves	pron.他们自己		默认
+then	adv.那么;当时		默认
+thence	adv.从那里		默认
+theologian	n.神学家		默认
+theology	n.神学;宗教		默认
+theorem	n.定理;原理		默认
+theoretical	adj.理论的		默认
+theorist	n.理论家;理论者		默认
+theory	n.理论;学说		默认
+therapeutic	adj.治疗的;治疗的		默认
+therapist	n.治疗专家;临床医生		默认
+therapy	n.治疗;疗法		默认
+there	adv.在那里		默认
+thereafter	adv.之后;后来		默认
+thereby	adv.因此;在那附近		默认
+therefore	adv.因此;所以		默认
+therein	adv.在其中		默认
+thereof	adv.在其中;在那方面		默认
+thermal	adj.热的;热量的		默认
+thermometer	n.温度计;寒暑表		默认
+thesis	n.论文;论点		默认
+they	pron.他们		默认
+thick	adj.厚的;浓的		默认
+thicken	v.变厚;变浓		默认
+thicket	n.灌木丛;丛林		默认
+thickness	n.厚度;浓密		默认
+thief	n.贼;小偷		默认
+thieve	v.偷;盗窃		默认
+thigh	n.大腿;股		默认
+thin	adj.薄的;瘦的		默认
+thine	pron.你的（古英语）		默认
+thing	n.东西;事情		默认
+think	v.想;认为		默认
+thinkable	adj.可想象的;可能的		默认
+third	adj.第三的 n.三分之一		默认
+thirdly	adv.第三地;第三方面		默认
+thirst	n.渴;渴望		默认
+thirsty	adj.渴的;渴望的		默认
+thirteen	num.十三		默认
+thirty	num.三十		默认
+this	adj.这 pron.这个		默认
+thorn	n.刺;荆棘		默认
+thorny	adj.多刺的;困难的		默认
+thorough	adj.彻底的;详尽的		默认
+thoroughly	adv.彻底地;完全地		默认
+though	conj.虽然 adv.可是		默认
+thought	n.思考;思想		默认
+thoughtful	adj.深思的;体贴的		默认
+thoughtless	adj.无思考的;轻率的		默认
+thousand	num.一千		默认
+thrash	v.鞭打;打败		默认
+thread	n.线;线索 v.穿线		默认
+threadbare	adj.磨破的;陈腐的		默认
+threat	n.威胁;凶兆		默认
+threaten	v.威胁;预示		默认
+three	num.三		默认
+threshold	n.阈值;门槛		默认
+thrift	n.节俭;节约		默认
+thrifty	adj.节俭的;节约的		默认
+thrill	n.兴奋;震颤 v.使兴奋		默认
+thrilling	adj.令人兴奋的		默认
+thrive	v.繁荣;兴旺		默认
+throat	n.喉咙;嗓子		默认
+throes	n.嗓音		默认
+throne	n.宝座;王位		默认
+throng	n.人群 v.拥挤		默认
+through	adv.通过 prep.通过		默认
+throughout	adv.贯穿;到处		默认
+throughput	n.吞吐量;产量		默认
+throw	v.投;抛		默认
+thrust	v.推;刺 n.推力		默认
+thud	n.重击声;砰		默认
+thumb	n.拇指 v.用拇指拨弄		默认
+thump	v.重击;敲击		默认
+thumping	adj.重的;砰砰响的		默认
+thunder	n.雷声 v.打雷		默认
+thunderous	adj.雷鸣般的;巨大的		默认
+thunderstorm	n.雷雨;雷电交加		默认
+thwart	v.阻碍;阻挠		默认
+thyme	n.百里香		默认
+tiara	n.头饰;小型王冠		默认
+tibia	n.胫骨;小腿骨		默认
+tick	n.滴答声;勾号		默认
+ticket	n.票;标签		默认
+tickle	v.痒;胳肢		默认
+tid	n.潮流;潮水		默认
+tide	n.潮汐;潮流		默认
+tidy	adj.整洁的 v.整理		默认
+tie	n.领带 v.系;束缚		默认
+tier	n.层;行		默认
+tiger	n.老虎;凶暴的人		默认
+tight	adj.紧的 adv.紧地		默认
+tighten	v.变紧;勒紧		默认
+tile	n.瓦片;瓷砖		默认
+till	conj.直到 prep.直到		默认
+tilt	v.倾斜;倾倒		默认
+timber	n.木材;木料		默认
+time	n.时间;次		默认
+timely	adj.及时的;适时的		默认
+timid	adj.胆小的;羞怯的		默认
+timidity	n.胆小;缺乏自信		默认
+tin	n.锡;罐头		默认
+tinge	n.色彩;气味 v.染色		默认
+tingle	v.刺痛;感到刺痛		默认
+tinker	v.修补;胡乱修补		默认
+tinkle	n.叮当声 v.发出叮当声		默认
+tint	n.色彩;色泽 v.染色		默认
+tiny	adj.微小的;极小的		默认
+tip	n.尖端;小费 v.倾斜		默认
+tire	v.疲劳 n.轮胎		默认
+tired	adj.疲劳的;厌倦的		默认
+tiresome	adj.累人的;令人厌烦的		默认
+tissue	n.组织;薄纱		默认
+titanic	adj.巨大的;了不起的		默认
+title	n.标题;头衔		默认
+to	adv.向;到		默认
+toad	n.蟾蜍;癞蛤蟆		默认
+toast	n.烤面包 v.敬酒		默认
+tobacco	n.烟草;烟		默认
+toe	n.脚趾		默认
+toenail	n.脚趾甲		默认
+toffee	n.奶糖;太妃糖		默认
+together	adv.一起;共同		默认
+toggle	n.切换 v.切换		默认
+toil	n.辛苦;辛勤工作 v.辛苦工作		默认
+toilet	n.厕所;洗手间		默认
+token	n.表示;标志		默认
+tolerable	adj.可容忍的		默认
+tolerance	n.容忍;公差		默认
+tolerant	adj.容忍的;有耐性的		默认
+tolerate	v.容忍;容许		默认
+toll	n.通行费;钟声		默认
+tomahawk	n.战斧;印第安战斧		默认
+tomato	n.番茄		默认
+tomb	n.坟墓;墓穴		默认
+tomorrow	n.明天		默认
+ton	n.吨		默认
+tone	n.语气;音调		默认
+tongue	n.舌头;语言		默认
+tonic	n.补药;补品		默认
+tonnage	n.吨数;排水量		默认
+too	adv.也;太		默认
+tool	n.工具;器具		默认
+tooth	n.牙齿;齿		默认
+top	n.顶部 adj.最高的		默认
+topic	n.题目;话题		默认
+topple	v.推翻;倾覆		默认
+torment	n.痛苦;苦恼		默认
+tormentor	n.折磨者;迫害者		默认
+torn	adj.撕破的;分裂的		默认
+tornado	n.龙卷风		默认
+torpedo	n.鱼雷 v.用鱼雷攻击		默认
+torrent	n.奔流;洪流		默认
+torture	n.折磨 v.折磨		默认
+toss	v.投掷;摇摆		默认
+total	adj.总的 n.总数		默认
+totalitarian	adj.极权主义的		默认
+totter	v.摇摇欲坠;蹒跚		默认
+touch	n.触觉 v.接触		默认
+touching	adj.动人的;动人的		默认
+touchy	adj.敏感的;易生气的		默认
+tough	adj.坚硬的;棘手的		默认
+tour	n.旅游;巡回		默认
+tourism	n.旅游;旅游业		默认
+tourist	n.旅行者;游客		默认
+tousle	v.弄乱;斗争		默认
+tout	v.招揽;兜售		默认
+tow	v.拖;牵引		默认
+towards	prep.向;朝		默认
+toxic	adj.有毒的;中毒的		默认
+toxin	n.毒素;毒质		默认
+toy	n.玩具 v.玩弄		默认
+trace	n.痕迹 v.追溯		默认
+traceable	adj.可追踪的;可归因的		默认
+track	n.轨道 v.追踪		默认
+tract	n.地区;大片土地		默认
+tractor	n.拖拉机;牵引机		默认
+trade	n.贸易 v.交易		默认
+trademark	n.商标 v.打商标		默认
+tradition	n.传统;风俗		默认
+traditional	adj.传统的;风俗的		默认
+traffic	n.交通;贸易		默认
+tragedy	n.悲剧;灾难		默认
+tragic	adj.悲剧的;悲惨的		默认
+trail	n.痕迹;小径 v.拖		默认
+trailer	n.拖车;预告片		默认
+train	n.火车 v.训练		默认
+trained	adj.受过训练的		默认
+trainer	n.训练员;教练		默认
+training	n.训练;培养		默认
+trait	n.特征;特性		默认
+traitor	n.叛徒;卖国贼		默认
+tram	n.电车;有轨电车		默认
+tramp	v.重步走 n.长途跋涉		默认
+trample	v.踩踏;践踏		默认
+trance	n.出神;恍惚		默认
+tranquil	adj.平静的;宁静的		默认
+tranquility	n.平静;宁静		默认
+transaction	n.交易;办理		默认
+transcend	v.超越;胜过		默认
+transcendent	adj.超卓越的		默认
+transcribe	v.转录;抄写		默认
+transcript	n.抄本;副本		默认
+transfer	v.转移;调动		默认
+transference	n.转移;转让		默认
+transform	v.改变;变换		默认
+transformation	n.变化;改造		默认
+transient	adj.短暂的;瞬时的		默认
+transit	n.运输;经过		默认
+transition	n.转变;过渡		默认
+transitory	adj.短暂的;临时的		默认
+translate	v.翻译;解释		默认
+translation	n.翻译;译文		默认
+transmission	n.传动;传送		默认
+transmit	v.传输;传播		默认
+transparency	n.透明;透明度		默认
+transparent	adj.透明的;显然的		默认
+transplant	v.移植;移居		默认
+transport	v.运输 n.运输		默认
+transportation	n.运输;运输系统		默认
+transverse	adj.横的;横贯的		默认
+trap	n.陷阱 v.诱捕		默认
+trapeze	n.空中秋千		默认
+trapezoid	n.梯形;陷井		默认
+trauma	n.创伤;外伤		默认
+travail	n.辛苦;痛苦		默认
+travel	n.旅行 v.旅行		默认
+traveler	n.旅行者;游客		默认
+traverse	v.横贯;穿过		默认
+travesty	n.男扮女装;装扮		默认
+trawl	v.拖网;搜索		默认
+tray	n.托盘;盘		默认
+treacherous	adj.背叛的;危险的		默认
+tread	n.步;脚步 v.踩		默认
+treadmill	n.踏车;跑步机		默认
+treason	n.叛国;背叛		默认
+treasure	n.财宝 v.珍视		默认
+treasurer	n.财务主管;出纳员		默认
+treasury	n.国库;宝库		默认
+treat	v.对待;款待		默认
+treatment	n.治疗;处理		默认
+treaty	n.条约;协定		默认
+treble	adj.三重的 n.三重唱		默认
+tree	n.树		默认
+tremble	v.颤抖;震动		默认
+tremendous	adj.巨大的;极好的		默认
+trench	n.沟;壕沟		默认
+trend	n.趋势;倾向		默认
+trendy	adj.流行的;时髦的		默认
+trepidation	n.恐惧;忧虑		默认
+trespass	n.侵入;侵权 v.侵入		默认
+triad	n.三个一组;三重奏		默认
+trial	n.试验;审判		默认
+triangle	n.三角形		默认
+triangular	adj.三角形的		默认
+tribe	n.部落;族		默认
+tribulation	n.苦难;磨难		默认
+tribute	n.贡品;称赞		默认
+trick	n.诡计;把戏		默认
+trickle	v.滴下 n.小溪		默认
+trifle	n.小事;琐事		默认
+trifling	adj.微不足道的;不重要的		默认
+trigger	n.扳机 v.引发		默认
+trillion	num.万亿		默认
+trim	adj.整齐的 v.修剪		默认
+trinket	n.小饰品;小玩意儿		默认
+triple	adj.三倍的 n.三个一组		默认
+triumph	n.胜利 v.获胜		默认
+triumphant	adj.胜利的;得意的		默认
+trivial	adj.微不足道的;琐细的		默认
+trolley	n.手推车;电车		默认
+troop	n.军队;一群		默认
+trooper	n.骑兵;警察		默认
+trophy	n.奖品;战利品		默认
+tropical	adj.热带的;热情的		默认
+trot	v./n.小跑;快步		默认
+trouble	n.麻烦 v.麻烦		默认
+troublesome	adj.麻烦的;讨厌的		默认
+trough	n.饲料槽;低谷		默认
+trounce	v.重击;痛打		默认
+troupe	n.剧团;演员阵容		默认
+trousers	n.裤子;长裤		默认
+trout	n.鳟鱼		默认
+truce	n.停战;休战		默认
+truck	n.卡车;货车		默认
+truculent	adj.好战的;凶狠的		默认
+trumpet	n.小号;喇叭		默认
+trumpeter	n.吹小号者;传令官		默认
+truncate	v.截断;缩短		默认
+trunk	n.树干;躯干		默认
+truss	n.支撑;桁架		默认
+trust	n.信任 v.信任		默认
+trustee	n.受托人;托管人		默认
+truth	n.真理;真相		默认
+try	v.尝试;审判		默认
+tsar	n.沙皇（俄国皇帝）		默认
+tub	n.桶;浴盆		默认
+tube	n.管;管子		默认
+tuck	v.夹住;卷起		默认
+tuesday	n.星期二		默认
+tuft	n.一簇;一丛		默认
+tug	v.拖;拉		默认
+tuition	n.学费;教学		默认
+tulip	n.郁金香		默认
+tumble	v.跌倒;滚落		默认
+tumult	n.骚动;混乱		默认
+tumultuous	adj.骚乱的;剧烈的		默认
+tuna	n.金枪鱼		默认
+tune	n.调子;和谐 v.调音		默认
+tunnel	n.隧道;地道		默认
+turbulent	adj.骚乱的;动荡的		默认
+turf	n.草皮;赛马场		默认
+turmoil	n.混乱;骚动		默认
+turn	v.转动 n.轮流		默认
+turning	n.转弯;转变		默认
+turnip	n.萝卜		默认
+turret	n.塔楼;炮塔		默认
+tutor	n.家庭教师 v.辅导		默认
+tutorial	adj.辅导的;教学的		默认
+twilight	n.黎明;黄昏		默认
+twin	adj.双胞胎的 n.双胞胎		默认
+twinkle	v.闪烁;闪亮		默认
+twist	v.扭曲 n.扭曲		默认
+twisted	adj.扭曲的;蜿蜒的		默认
+twit	n.傻瓜;笨蛋		默认
+two	num.二;两个		默认
+twofold	adj.双重的;两倍的		默认
+type	n.类型 v.打字		默认
+typewriter	n.打字机		默认
+typhoid	n.伤寒;斑疹伤寒		默认
+typhoon	n.台风;飓风		默认
+tyranny	n.暴政;专横		默认
+tyrant	n.暴君;专横的人		默认
+ubiquitous	adj.普遍存在的;无所不在的		默认
+ugly	adj.丑陋的;难看的		默认
+ulcer	n.溃疡;腐烂物		默认
+ultimate	adj.最终的;极限的		默认
+ultimatum	n.最后通牒		默认
+ultraviolet	adj.紫外线的		默认
+ultrasound	n.超声波		默认
+ultraviolet	adj.紫外线的		默认
+umbilical	adj.脐带的;中心的		默认
+umbrella	n.伞;保护物		默认
+umpire	n.裁判员;仲裁人		默认
+umpteen	adj.无数的;许多的		默认
+umpteenth	adj.第n次的;第n个的		默认
+unabashed	adj.不害羞的;不畏惧的		默认
+unable	adj.不能的;无能力的		默认
+unacceptable	adj.无法接受的		默认
+unaccounted	adj.未解释的;未说明的		默认
+unanimous	adj.意见一致的		默认
+unarmed	adj.未武装的;空手的		默认
+unassuming	adj.谦逊的;不装腔作势的		默认
+unattached	adj.未附加的;未婚的		默认
+unattainable	adj.达不到的;无法获得的		默认
+unauthorized	adj.未授权的;非法的		默认
+unavoidable	adj.不能避免的		默认
+unbalance	v.使失去平衡		默认
+unbalanced	adj.不平衡的;不稳定的		默认
+unbearable	adj.难以忍受的;承受不了的		默认
+unbelievable	adj.难以置信的;不可信的		默认
+unbosom	v.吐露心事;倾诉		默认
+unbridled	adj.无拘无束的;放纵的		默认
+unburden	v.减轻负担;卸下负担		默认
+unbutton	v.解开纽扣;放松		默认
+uncannier	adj.更古怪的;更离奇的		默认
+uncanny	adj.神秘的;不可思议的		默认
+unceasing	adj.不断的;不停的		默认
+uncertain	adj.不确定的;无常的		默认
+uncertainty	n.不确定;疑惑		默认
+unchallenged	adj.未受挑战的;无争议的		默认
+unchangeable	adj.不变的;不可改变的		默认
+uncheck	v.检查;不受限制		默认
+unchecked	adj.未受限制的;未被抑制的		默认
+uncivil	adj.不文明的;粗野的		默认
+uncivilized	adj.未开化的;野蛮的		默认
+unclaimed	adj.未被认领的;无人认领的		默认
+uncle	n.叔叔;伯伯		默认
+uncommon	adj.不寻常的;罕见的		默认
+uncompromising	adj.不妥协的;坚定的		默认
+unconventional	adj.非传统的;不寻常的		默认
+uncouth	adj.粗俗的;无教养的		默认
+uncover	v.发现;揭开		默认
+uncovered	adj.无遮盖的;暴露的		默认
+unction	n.unction;油脂		默认
+unctuous	adj.谄媚的;过分殷勤的		默认
+undaunted	adj.无畏的;勇敢的		默认
+under	prep.在...之下 adv.在下面		默认
+undercurrent	n.暗流;潜流		默认
+underdog	n.失败者;弱者		默认
+underline	v.强调;在...下划线		默认
+underlying	adj.潜在的;根本的		默认
+undermine	v.破坏;侵蚀		默认
+underneath	prep.在...下面 adv.在下面		默认
+underpants	n.内裤;内衣		默认
+underscore	v.强调;在...下划线		默认
+undershirt	n.汗衫;内衣		默认
+understand	v.理解;懂得		默认
+understanding	n.理解;理解力		默认
+understate	v.轻描淡写;低估		默认
+understatement	n.轻描淡写;保守的陈述		默认
+understood	adj.被理解的;被听说的		默认
+undertake	v.承担;从事		默认
+undertaking	n.承担;任务		默认
+underwood	n.灌木林;下层林		默认
+underworld	n.阴间;犯罪集团		默认
+undesirable	adj.不受欢迎的 n.不受欢迎的人		默认
+undo	v.取消;解开		默认
+undoing	n.取消;解体		默认
+undoubted	adj.无疑问的;确定的		默认
+undress	v.脱衣 n.女装;服装		默认
+undue	adj.不适当的;过分的		默认
+undying	adj.不死的;不朽的		默认
+unearth	v.发掘;发现		默认
+unearthly	adj.超自然的;非尘世的		默认
+unemployment	n.失业;失业率		默认
+uneven	adj.不平坦的;不均匀的		默认
+uneventful	adj.平静的;无重大事件的		默认
+unfair	adj.不公平的;不公正的		默认
+unfaithful	adj.不忠实的;不忠诚的		默认
+unfamiliar	adj.不熟悉的;陌生的		默认
+unfavorable	adj.不利的;不赞成的		默认
+unfold	v.展开;发展		默认
+unforeseen	adj.未预见到的;意外的		默认
+unfriendly	adj.不友好的;敌对的		默认
+unfrock	v.脱去法衣;剥夺圣职		默认
+unfurl	v.展开;打开		默认
+ungovernable	adj.难驾驭的;难控制的		默认
+ungrateful	adj.忘恩负义的;不领情的		默认
+unguarded	adj.无防备的;不小心的		默认
+unguent	n.药膏;油膏		默认
+unhinge	v.使铰链松脱		默认
+unholy	adj.邪恶的;不神圣的		默认
+unicorn	n.独角兽;麒麟		默认
+unification	n.统一;一致		默认
+uniform	adj.一致的 n.制服		默认
+uniformity	n.一致;均匀		默认
+unify	v.统一;使相同		默认
+unilateral	adj.单方面的;单边的		默认
+unimpeachable	adj.无可指责的;无瑕疵的		默认
+uninhibited	adj.无拘无束的;放荡的		默认
+uninspired	adj.无灵感的;缺乏创造力的		默认
+unintelligible	adj.难以理解的;不清楚的		默认
+unintended	adj.非故意的;无意的		默认
+uninterrupted	adj.不断的;连续的		默认
+union	n.联合;联盟		默认
+unique	adj.独特的;独一无二的		默认
+unison	n.一致;和谐		默认
+unit	n.单位;单元		默认
+unite	v.联合;团结		默认
+united	adj.团结的;统一的		默认
+unity	n.统一;一致		默认
+universal	adj.普遍的;通用的		默认
+universe	n.宇宙;世界		默认
+university	n.大学;高等学府		默认
+unjust	adj.不公平的;不公正的		默认
+unkempt	adj.未修剪的;蓬乱的		默认
+unkind	adj.不仁慈的;不友好的		默认
+unleash	v.释放;解开		默认
+unlettered	adj.未受教育的;文盲的		默认
+unlike	adj.不同的 prep.和...不同		默认
+unlikely	adj.不太可能的;不合适的		默认
+unlimited	adj.无限的;无限制的		默认
+unload	v.卸货;摆脱		默认
+unlucky	adj.不幸的;倒霉的		默认
+unmake	v.取消;撤销		默认
+unman	v.剥夺男子气概;使成为懦夫		默认
+unmarked	adj.无标记的;无特色的		默认
+unmask	v.揭露;暴露		默认
+unmatched	adj.无敌的;无双的		默认
+unnatural	adj.不自然的;不近人情的		默认
+unnerve	v.使失去勇气;使不安		默认
+unpack	v.打开包裹;卸下		默认
+unparalleled	adj.无比的;空前的		默认
+unpleasant	adj.使人不愉快的;讨厌的		默认
+unpopular	adj.不受欢迎的;不流行的		默认
+unprecedented	adj.空前的;无前例的		默认
+unpredictable	adj.无法预测的;不可预料的		默认
+unprejudiced	adj.无偏见的;公平的		默认
+unpretentious	adj.不炫耀的;不矫揉造作的		默认
+unprincipled	adj.无原则的;不道德的		默认
+unprofitable	adj.无利可图的;无益处的		默认
+unprotected	adj.无保护的;未受保护的		默认
+unravel	v.解开;解决		默认
+unreal	adj.不真实的;不现实的		默认
+unrealistic	adj.不切实际的;不实在的		默认
+unreason	n.无理性;失去理智		默认
+unreasonable	adj.不合理的;过度的		默认
+unrelenting	adj.不懈的;不屈不挠的		默认
+unreliable	adj.不可靠的;不可信赖的		默认
+unrest	n.不安;动荡		默认
+unrestrained	adj.无节制的;无限制的		默认
+unripe	adj.未成熟的;未煮过的		默认
+unrivaled	adj.无敌的;无双的		默认
+unroll	v.展开;滚动		默认
+unruly	adj.难驾驭的;不守规矩的		默认
+unsaddle	v.卸下马鞍;使下马		默认
+unscathed	adj.未受伤的;未受损害的		默认
+unscrupulous	adj.无道德的;不择手段的		默认
+unseat	v.推翻;使下台		默认
+unseemly	adj.不适当的;不适宜的		默认
+unset	n.日落 v.日落		默认
+unset	n.日落;傍晚		默认
+unshakable	adj.坚定不移的;不可动摇的		默认
+unsocial	adj.不好社交的;不友好的		默认
+unsophisticated	adj.未开化的;单纯的		默认
+unsought	adj.未被寻求的;未被要求的		默认
+unsound	adj.不健康的;不稳固的		默认
+unspeakable	adj.难以言表的;说不出口的		默认
+unspecific	adj.不具体的;不明确的		默认
+unstable	adj.不稳定的;不稳固的		默认
+unstated	adj.未声明的;未说明的		默认
+unsteady	adj.不稳定的;不稳固的		默认
+unstop	v.停止;阻止		默认
+unstoppable	adj.无法停止的;不可遏止的		默认
+unsubstantial	adj.无实质的;不实在的		默认
+unsuitable	adj.不适当的;不适宜的		默认
+unsung	adj.未被歌颂的;未被赞扬的		默认
+unswerving	adj.坚定不移的;不动摇的		默认
+untamed	adj.未被驯服的;野生的		默认
+untenable	adj.站不住脚的;守不住的		默认
+unthinkable	adj.难以想象的;不可思议的		默认
+untidy	adj.凌乱的;不整洁的		默认
+untimely	adj.不合时宜的;过早的		默认
+untiring	adj.不疲倦的;不懈怠的		默认
+unto	prep.直到;直到		默认
+untold	adj.未被讲述的;未说出的		默认
+untouchable	adj.碰不得的;不可接触的		默认
+untouched	adj.未被触及的;未受影响的		默认
+untoward	adj.不易控制的;不听话的		默认
+untrained	adj.未经训练的;未经培养的		默认
+untreated	adj.未处理的;未治疗的		默认
+untried	adj.未经试验的;未经审理的		默认
+untrue	adj.不真实的;不忠实的		默认
+untruth	n.谎言;不真实		默认
+unused	adj.未使用的;不习惯的		默认
+unusual	adj.不寻常的;与众不同的		默认
+unveil	v.揭开;揭示		默认
+unvoiced	adj.未发表的;未表达的		默认
+unwarranted	adj.无根据的;无理由的		默认
+unwed	adj.未婚的;未结婚的		默认
+unwelcome	adj.不受欢迎的;不想要的		默认
+unwell	adj.不舒服的;生病的		默认
+unwieldy	adj.笨重的;难处理的		默认
+unwilling	adj.不愿意的;不情愿的		默认
+unwind	v.放松;解开		默认
+unwise	adj.不明智的;不聪明的		默认
+unwitting	adj.不知情的;非故意的		默认
+unwonted	adj.不寻常的;不习惯的		默认
+unworldly	adj.非世俗的;超脱的		默认
+unworthy	adj.不值得的;不配的		默认
+unwrap	v.解开包装;拆封		默认
+up	adv.向上;在上		默认
+upbringing	n.养育;教育		默认
+update	v.更新;使现代化		默认
+upgrade	n.升级 v.升级		默认
+uphold	v.支持;维护		默认
+upland	n.高地;山区		默认
+uplift	v.抬起;鼓舞		默认
+upon	prep.在...上面		默认
+upper	adj.上部的;较高的		默认
+upright	adj.直立的;正直的		默认
+uprising	n.起义;暴动		默认
+upset	v.扰乱;使心烦		默认
+upshot	n.结果;要点		默认
+upstairs	adv.楼上;在上		默认
+upstream	adv.逆流地;向上游		默认
+uptake	n.摄取量;接受		默认
+up-to-date	adj.最新的;现代的		默认
+upturn	n.好转;上升趋势		默认
+upward	adj.向上的 adv.向上地		默认
+urban	adj.城市的;都市的		默认
+urge	v.敦促;强烈欲望		默认
+urgency	n.紧急;催促		默认
+urgent	adj.紧急的;紧迫的		默认
+urine	n.尿;尿液		默认
+urn	n.瓮;骨灰瓮		默认
+usable	adj.可用的;合用的		默认
+use	n.利用 v.利用		默认
+used	adj.用过的;二手的		默认
+useful	adj.有用的;有益的		默认
+useless	adj.无用的;无效的		默认
+usher	n.引座员;招待员		默认
+usual	adj.通常的;平常的		默认
+usurp	v.篡夺;霸占		默认
+usury	n.高利贷;放债		默认
+utensil	n.用具;器具		默认
+utilize	v.利用;使用		默认
+utmost	adj.最极度的 n.极限		默认
+utter	adj.完全的 v.发出		默认
+utterance	n.发言;说话		默认
+vacant	adj.空的;未被占用的		默认
+vacate	v.腾出;撤离		默认
+vacation	n.假期;休假		默认
+vaccination	n.接种疫苗		默认
+vaccine	n.疫苗;菌苗		默认
+vacillate	v.犹豫;摇摆		默认
+vacuum	n.真空;空虚		默认
+vagabond	n.流浪者;游手好闲者		默认
+vagrant	adj.流浪的 n.流浪者		默认
+vague	adj.含糊的;不明确的		默认
+vain	adj.徒劳的;自负的		默认
+vainly	adv.徒劳地;无效地		默认
+valet	n.贴身男仆;服务员		默认
+valiant	adj.勇敢的;英勇的		默认
+valiantly	adv.勇敢地;英勇地		默认
+valley	n.谷;流域		默认
+valor	n.英勇;勇气		默认
+valuable	adj.贵重的;有价值的		默认
+valuation	n.评价;估价		默认
+value	n.价值;估价 v.估价		默认
+vampire	n.吸血鬼;吸血者		默认
+van	n.货车;篷车		默认
+vandalism	n.恣意破坏		默认
+vane	n.风向标;指示器		默认
+vanish	v.消失;消散		默认
+vanity	n.虚荣心;虚荣		默认
+vanquish	v.征服;克服		默认
+vantage	n.优势;有利条件		默认
+vapid	adj.无味的;不感兴趣的		默认
+vapor	n.水蒸气;烟雾		默认
+variable	adj.可变的 n.变量		默认
+variation	n.变化;变体		默认
+varied	adj.不同的;变化的		默认
+variegate	v.使多样化;使斑斓		默认
+variety	n.多样性;种类		默认
+various	adj.各种各样的;不同的		默认
+varnish	n.清漆;光泽 v.上清漆		默认
+vary	v.变化;改变		默认
+vascular	adj.血管的;含血管的		默认
+vase	n.花瓶;装饰瓶		默认
+vassal	n.附庸;封臣		默认
+vast	adj.广阔的;巨大的		默认
+vastly	adv.极大地;非常地		默认
+vastness	n.广阔;广大		默认
+vat	n.大桶;瓮		默认
+vault	n.拱顶;地下室		默认
+vaulting	n.穹顶;跳跃		默认
+veal	v.揭露;展现		默认
+vector	n.向量;矢量		默认
+veer	v.转向;改变方向		默认
+vegetable	n.蔬菜;植物		默认
+vegetarian	n.素食者 adj.素食的		默认
+vegetation	n.植被;植物		默认
+vehement	adj.激烈的;热烈的		默认
+vehicle	n.车辆;工具		默认
+veil	n.面纱;遮蔽物 v.遮蔽		默认
+vein	n.静脉;纹理		默认
+veined	adj.有纹理的;有脉络的		默认
+vellum	n.小牛皮纸;精制犊皮纸		默认
+velocity	n.速度;速率		默认
+velvet	n.天鹅绒;天鹅绒		默认
+velvety	adj.天鹅绒的;柔软的		默认
+venal	adj.贪污的;受贿的		默认
+vendetta	n.深仇;宿怨		默认
+vendor	n.卖主;商人		默认
+veneer	n.饰面;外表 v.贴面		默认
+venerable	adj.可敬的;值得尊敬的		默认
+veneration	n.尊敬;崇敬		默认
+venereal	adj.性病的;性交的		默认
+vengeful	adj.复仇心重的;报复的		默认
+venom	n.毒液;恶意		默认
+venomous	adj.有毒的;恶意的		默认
+vent	n.通风口;排放		默认
+ventilate	v.通风;使空气流通		默认
+ventilation	n.通风;通气		默认
+venturous	adj.冒险的;大胆的		默认
+venture	n.冒险 v.冒险		默认
+venue	n.地点;发生地		默认
+veranda	n.阳台;游廊		默认
+verb	n.动词		默认
+verbal	adj.口头的;文字的		默认
+verbatim	adj.逐字的;照字面的		默认
+verbiage	n.冗长而无聊的话		默认
+verbose	adj.冗长的;啰嗦的		默认
+verbosity	n.啰嗦;冗长		默认
+verdant	adj.青翠的;新鲜的		默认
+verdict	n.裁决;定论		默认
+verge	n.边缘 v.接近		默认
+verifiable	adj.可验证的;确实的		默认
+verification	n.验证;核实		默认
+verify	v.证实;证明		默认
+veritable	adj.真正的;确实的		默认
+verity	n.真实;真理		默认
+vermin	n.害虫;寄生虫		默认
+vernacular	n.本地话;行话		默认
+vernal	adj.春季的;温暖的		默认
+versatile	adj.多才多艺的;多功能的		默认
+verse	n.诗;韵文		默认
+versed	adj.熟练的;精通的		默认
+version	n.版本;译文		默认
+versus	prep.对着;对抗		默认
+vertigo	n.眩晕;头晕		默认
+verve	n.热情;精神		默认
+vessel	n.船;容器		默认
+vest	n.背心;汗衫		默认
+vestige	n.遗迹;痕迹		默认
+vestige	n.遗迹;痕迹		默认
+vestment	n.官服;法衣		默认
+vet	n.退伍军人 v.审查		默认
+veteran	n.老兵;老手		默认
+veterinary	adj.兽医的 n.兽医		默认
+veto	n.否决;禁止 v.否决		默认
+via	prep.通过;经由		默认
+viable	adj.可行的;能生存的		默认
+vibrant	adj.振动的;充满生机的		默认
+vibrate	v.振动;摇摆		默认
+vibration	n.振动;摆动		默认
+vicar	n.教区牧师;副牧师		默认
+vicarious	adj.代理的;间接的		默认
+vice	n.恶习;缺点		默认
+vice	versa 反之亦然		默认
+vicinity	n.附近;邻近		默认
+vicious	adj.邪恶的;恶意的		默认
+victim	n.受害者;牺牲品		默认
+victorious	adj.胜利的;凯旋的		默认
+victory	n.胜利;成功		默认
+video	n.视频;录像		默认
+vie	v.竞争;争夺		默认
+vigil	n.守夜;警戒		默认
+vigilant	adj.警惕的;警醒的		默认
+vigor	n.活力;力量		默认
+vigorous	adj.有力的;精力充沛的		默认
+vile	adj.卑鄙的;下贱的		默认
+vilify	v.诽谤;诋毁		默认
+villa	n.别墅;大厦		默认
+village	n.村庄;乡村		默认
+villager	n.村民;乡下人		默认
+vindicate	v.辩护;证明...正确		默认
+vindication	n.辩护;证明		默认
+vindictive	adj.报复性的;怀恨的		默认
+vine	n.葡萄树;藤		默认
+vinegar	n.醋;酸味		默认
+vintage	n.葡萄收获期;葡萄酒酿造年份		默认
+violate	v.违反;亵渎		默认
+violation	n.违反;侵犯		默认
+violent	adj.暴力的;猛烈的		默认
+violet	n.紫罗兰;紫色		默认
+violin	n.小提琴		默认
+virgin	n.处女;未婚女子		默认
+virginal	adj.处女的;纯洁的		默认
+virility	n.男子气概;生殖力		默认
+virtue	 n.美德;优点		默认
+virtuosity	n.高超技巧;精湛技艺		默认
+virtuoso	n.艺术大师;专家		默认
+virtuous	adj.有美德的;贞洁的		默认
+virulence	n.恶意;毒力		默认
+virulent	adj.恶意的;剧毒的		默认
+virus	n.病毒;病毒性疾病		默认
+visa	n.签证;许可证		默认
+visage	n.面貌;面孔		默认
+viscosity	n.粘度;粘性		默认
+viscous	adj.粘性的;粘的		默认
+vise	n.钳子;老虎钳		默认
+visibility	n.可见性;能见度		默认
+visible	adj.可见的;看得见的		默认
+vision	n.视觉;幻想		默认
+visionary	adj.空想的;有远见的		默认
+visit	v.访问;参观		默认
+visitation	n.访问;探望		默认
+visitor	n.访问者;游客		默认
+visor	n.帽舌;遮阳板		默认
+vista	n.远景;展望		默认
+vitality	n.活力;生命力		默认
+vitalization	n.激活;刺激		默认
+vitalize	v.激发;赋予生命		默认
+vitally	adv.生死攸关地;根本地		默认
+vitamin	n.维生素;维他命		默认
+vitiate	v.恶化;腐败		默认
+vitriolic	adj.刻薄的;腐蚀性的		默认
+vituperation	n.痛骂;非难		默认
+vivacious	adj.活泼的;生动的		默认
+vivacity	n.活泼;生动		默认
+vivid	adj.生动的;鲜明的		默认
+vocabulary	n.词汇;词汇量		默认
+vocal	adj.声音的;歌唱的		默认
+vocalist	n.声乐家;歌手		默认
+vocation	n.职业;天职		默认
+vociferous	adj.大声疾呼的;喧哗的		默认
+vogue	n.流行;时尚		默认
+voice	n.声音;发言权		默认
+voiceless	adj.无声的;无发言权的		默认
+void	adj.空的 n.空间		默认
+volatile	adj.挥发性的;不稳定的		默认
+volatility	n.挥发性;不稳定性		默认
+volcanic	adj.火山的;猛烈的		默认
+volcano	n.火山		默认
+volition	n.意志力;决断力		默认
+voluble	adj.健谈的;流利的		默认
+volley	n.齐射;排炮		默认
+volt	n.伏特（电压单位）		默认
+voltage	n.电压		默认
+volume	n.体积;卷		默认
+voluminous	adj.卷数多的;大量的		默认
+voluntarily	adv.自愿地;自动地		默认
+voluntary	adj.自愿的;自发的		默认
+volunteer	n.志愿者 v.自愿		默认
+voluptuous	adj.沉溺的;奢侈的		默认
+vomit	v.呕吐 n.呕吐物		默认
+voodoo	n.伏都教;巫术		默认
+voter	n.投票人;选举人		默认
+vouch	v.保证;担保		默认
+voucher	n.保证人;凭证		默认
+vow	n.誓约;誓言 v.发誓		默认
+vowel	n.元音;元音字母		默认
+voyage	n.航行;旅行		默认
+vulgar	adj.粗俗的;通俗的		默认
+vulnerable	adj.易受伤害的;脆弱的		默认
+vulpine	adj.狐狸的;狡猾的		默认
+wade	v.涉水;跋涉		默认
+wage	n.工资;报酬 v.进行		默认
+wager	n.赌注;赌物 v.打赌		默认
+wages	n.工资;报酬		默认
+wagon	n.四轮马车;运货汽车		默认
+wail	n.哀号;悲叹声		默认
+waist	n.腰;腰部		默认
+waive	v.放弃;让渡		默认
+waiver	n.放弃;弃权证书		默认
+wake	v.醒来;唤醒 n.守夜		默认
+waken	v.醒来;唤醒		默认
+walnut	n.胡桃;胡桃木		默认
+wander	v.漫游;偏离		默认
+wane	v.减少;衰微		默认
+waning	adj.衰弱的;临终的		默认
+wanton	adj.放纵的;不拘的		默认
+war	n.战争;斗争		默认
+warble	v.用柔和的声音唱歌		默认
+ward	n.病房;监护		默认
+warden	n.看守人;管理员		默认
+wardrobe	n.衣橱;全部服装		默认
+warehouse	n.仓库;货栈		默认
+warfare	n.战争;斗争		默认
+warlike	adj.好战的;战争的		默认
+warm	adj.温暖的;热情的		默认
+warmth	n.温暖;热情		默认
+warn	v.警告;提醒		默认
+warning	n.警告;预兆		默认
+warp	v.扭曲;弄歪 n.变形		默认
+warpath	n.战争		默认
+warrant	n.保证;根据 v.保证		默认
+warranty	n.保证;担保		默认
+warren	n.养兔场;兽穴		默认
+warrior	n.战士;勇士		默认
+wartime	n.战争时期		默认
+wary	adj.谨慎的;小心翼翼的		默认
+was	v.是（be的过去式）		默认
+wash	v.洗涤;冲刷		默认
+washout	n.冲刷;冲垮		默认
+wasp	n.黄蜂;胡蜂		默认
+waste	n.浪费 v.浪费		默认
+wasteful	adj.浪费的;无益的		默认
+wasteland	n.荒地;荒原		默认
+watch	v.观看;警戒 n.手表		默认
+watchdog	n.看门狗;监察人		默认
+watchful	adj.警惕的;注意的		默认
+watchmaker	n.钟表制造者		默认
+water	n.水 v.浇水		默认
+waterfront	n.码头;海滨		默认
+waterproof	adj.不透水的;防水的		默认
+watt	n.瓦特（电功率单位）		默认
+wave	n.波;波浪 v.挥手		默认
+wavelength	n.波长;波长		默认
+wavy	adj.波浪的;波动的		默认
+wax	n.蜡 v.增大		默认
+way	n.道路;方法		默认
+wayside	n.路边;路旁		默认
+weak	adj.弱的;淡的		默认
+weaken	v.削弱;变弱		默认
+weakness	n.弱点;软弱		默认
+wealth	n.财富;丰富		默认
+wealthy	adj.富有的 n.财富		默认
+weapon	n.武器;兵器		默认
+wear	v.穿着;磨损		默认
+weary	adj.疲倦的 v.使疲倦		默认
+weasel	n.黄鼠狼;鼬		默认
+weather	n.天气 v.风化		默认
+weave	v.织;编织		默认
+weaving	n.编织;织品		默认
+web	n.网;网状物		默认
+wed	v.结婚;娶		默认
+wedding	n.婚礼;结合		默认
+wedge	n.楔子;三角木		默认
+Wednesday	n.星期三		默认
+weed	n.杂草 v.除草		默认
+weeds	n.杂草;乱草		默认
+week	n.星期;周		默认
+weekday	n.平日;工作日		默认
+weekend	n.周末		默认
+weekly	adj.每周的		默认
+weep	v.哭泣;流泪		默认
+weigh	v.称...的重量		默认
+weight	n.重量;重压		默认
+weird	adj.古怪的;不寻常的		默认
+welcome	v.欢迎 n.欢迎		默认
+weld	v.焊接;使结合		默认
+welfare	n.福利;幸福		默认
+well	n.井;源泉		默认
+well-advised	adj.明智的;考虑周到的		默认
+went	v.去（go的过去式）		默认
+were	v.是（are的过去式）		默认
+west	n.西方 adj.西的		默认
+western	adj.西方的;西部的		默认
+wet	adj.湿的;下雨的		默认
+whack	n.重击;尝试		默认
+whale	n.鲸鱼		默认
+wharf	n.码头;停泊所		默认
+what	pron.什么;多么		默认
+whatever	pron.无论什么		默认
+whatsoever	adv.一点儿也不忘		默认
+wheat	n.小麦;小麦色		默认
+wheel	n.轮;车轮		默认
+where	adv.在哪里		默认
+whereabouts	adv.在哪里;大约		默认
+whereas	conj.然而;但是		默认
+whereby	adv.借以;靠哪个		默认
+wherefore	adv.为什么		默认
+wherein	adv.在哪里		默认
+whereupon	conj.于是;鉴于		默认
+wherever	conj.无论在哪里		默认
+wherewith	adv.用什么东西		默认
+wherewithal	n.手段;工具		默认
+whet	v.刺激;磨快		默认
+whether	conj.是否		默认
+which	pron.哪一个;哪一些		默认
+whichever	pron.无论哪一个		默认
+while	conj.当...的时候		默认
+whilst	conj.在...的时候		默认
+whip	n.鞭子 v.鞭打		默认
+whirl	v.旋转;急转		默认
+whisk	v.搅打;拂		默认
+whisper	v.耳语;低语		默认
+whistle	n.口哨;汽笛		默认
+white	n.白色 adj.白的		默认
+whiten	v.漂白;变白		默认
+whitewash	v.粉刷;掩饰		默认
+whittle	v.削;削减		默认
+whiz	v.呼呼声;疾驰而过		默认
+who	pron.谁		默认
+whoever	pron.无论谁		默认
+whole	adj.整个的 n.整体		默认
+wholesome	adj.有益健康的;有益的		默认
+wholly	adv.完全地;全部		默认
+whom	pron.谁（宾格）		默认
+whomever	pron.无论谁		默认
+whoop	v.大叫;欢呼		默认
+whose	adj.谁的;哪个人的		默认
+why	adv./conj.为什么		默认
+wick	n.灯芯;烛芯		默认
+wicked	adj.邪恶的;恶作剧的		默认
+wicker	n.柳条;编织篮		默认
+wide	adj.宽的;广泛的		默认
+widen	v.变宽;加宽		默认
+widespread	adj.广泛的;普遍的		默认
+widow	n.寡妇;孀妇		默认
+width	n.宽度;宽度		默认
+wield	v.挥动;行使		默认
+wife	n.妻子;太太		默认
+wig	n.假发;卷发		默认
+wild	adj.野生的;野蛮的		默认
+wilderness	n.荒野;荒地		默认
+wildly	adv.疯狂地;野蛮地		默认
+will	aux.将;会		默认
+willful	adj.故意的;任性的		默认
+willingly	adv.愿意地;自动地		默认
+willingness	n.愿意;意志		默认
+wilt	v.枯萎;凋谢		默认
+wily	adj.精明的;诡计多端的		默认
+win	v.赢得;获胜		默认
+wince	v.畏缩;皱眉		默认
+winch	v.绞车;绞痛		默认
+wind	n.风 v.缠绕		默认
+window	n.窗户;窗口		默认
+windy	adj.有风的;多风的		默认
+wine	n.葡萄酒;酒		默认
+wing	n.翅膀;翼		默认
+wink	v.眨眼;闪烁		默认
+winner	n.获胜者;成功者		默认
+winter	n.冬天;冬季		默认
+wipe	v.擦;擦净		默认
+wire	n.电线;金属线		默认
+wireless	adj.无线的		默认
+wisdom	n.智慧;明智		默认
+wise	adj.明智的;聪明的		默认
+wish	v.希望;祝愿		默认
+wishful	adj.希望的;渴望的		默认
+wit	n.智慧;才智		默认
+witch	n.女巫;巫术		默认
+with	prep.和...一起		默认
+withal	adv.和...一起		默认
+withdraw	v.撤退;提取		默认
+withdrawal	n.撤退;提款		默认
+withdrew	v.撤退（withdraw的过去式）		默认
+wither	v.枯萎;凋谢		默认
+withheld	v.保留;不给		默认
+withhold	v.保留;抑制		默认
+within	prep.在...之内		默认
+without	prep.没有		默认
+withstand	v.抵挡;经受		默认
+witness	n.证人;目击者		默认
+witty	adj.机智的;风趣的		默认
+wizened	adj.干瘪的;枯萎的		默认
+woe	n.悲哀;痛苦		默认
+wield	v.挥动;行使		默认
+wok	n.炒菜锅;铁锅		默认
+woke	v.唤醒（wake的过去式）		默认
+wolf	n.狼		默认
+woman	n.妇女;成年女子		默认
+womanhood	n.女性;妇女		默认
+wonder	n.惊奇;奇迹 v.想知道		默认
+wonderful	adj.极好的;极妙的		默认
+wont	n.习惯;嗜好		默认
+wood	n.木材;树林		默认
+wooden	adj.木制的;呆板的		默认
+woodland	n.林地;森林		默认
+woodwork	n.木工;木制品		默认
+wool	n.羊毛;毛线		默认
+woolen	adj.羊毛制的		默认
+woolen	n.羊毛衣服		默认
+word	n.词;话		默认
+wording	n.措辞;用字		默认
+work	n.工作 v.工作		默认
+worker	n.工人;工作者		默认
+workforce	n.劳动力;劳动大军		默认
+workhouse	n.感化院;工场		默认
+working	adj.工作的 n.工作		默认
+workman	n.工人;工匠		默认
+workmanship	n.手艺;工艺		默认
+world	n.世界;地球		默认
+worldly	adj.世俗的;世间的		默认
+worldwide	adj.全世界的		默认
+worm	n.虫;蠕虫		默认
+worn	adj.疲倦的;用旧的		默认
+worried	adj.担心的;焦虑的		默认
+worries	n.忧虑;烦恼		默认
+worry	v.担心;烦恼		默认
+worse	adj.更坏的 adv.更坏地		默认
+worship	n.崇拜 v.崇拜		默认
+worst	adj.最坏的 adv.最坏地		默认
+worth	adj.值得的 n.价值		默认
+worthless	adj.无价值的;无用的		默认
+worthwhile	adj.值得的;有益的		默认
+worthy	adj.值得的;可敬的		默认
+would	aux.将;愿意		默认
+wound	n.创伤 v.使受伤		默认
+wrap	v.包;裹		默认
+wrath	n.愤怒;激怒		默认
+wreak	v.发泄;报仇		默认
+wreath	n.花圈;圈状物		默认
+wreck	n.失事 v.破坏		默认
+wrench	v.拧;拧紧		默认
+wrest	v.扭伤;歪曲		默认
+wrestle	v.摔跤;斗争		默认
+wretched	adj.可怜的;不幸的		默认
+wrinkle	n.皱纹 v.起皱		默认
+wrist	n.腕;腕关节		默认
+writ	n.命令;令状		默认
+write	v.写;写作		默认
+writer	n.作家;作者		默认
+writing	n.写作;著作		默认
+written	adj.书面的;写的		默认
+wrong	adj.错误的 adv.错误地		默认
+wrought	v.使工作;锻造（work的过去式和过去分词）		默认
+wry	adj.干燥的;讽刺的		默认
+xenon	n.氙		默认
+yacht	n.游艇		默认
+yawn	v.打哈欠;裂开		默认
+year	n.年		默认
+yearbook	n.年鉴;年报		默认
+yearling	n.一年生动物		默认
+yearly	adj.每年的 adv.每年		默认
+yearn	v.渴望;向往		默认
+yeast	n.酵母;酵母菌		默认
+yell	v.大叫 n.大喊		默认
+yellow	adj.黄色的 n.黄色		默认
+yen	n.渴望;嗜好		默认
+yield	v.出产;屈服		默认
+yoke	n.轭;牛轭		默认
+yolk	n.蛋黄;核心		默认
+yonder	adv.那边;在远处		默认
+you	pron.你;你们		默认
+young	adj.年轻的 n.年轻人		默认
+your	pron.你的;你们的		默认
+yours	pron.你的;你们的		默认
+yourself	pron.你自己		默认
+yourselves	pron.你们自己		默认
+youth	n.青春;年轻人		默认
+youthful	adj.年轻的;青年的		默认
+zany	adj.滑稽的;古怪的		默认
+zeal	n.热情;热忱		默认
+zealous	adj.热心的;热情的		默认
+zebra	n.斑马		默认
+zenith	n.顶点;天顶		默认
+zest	n.风味;热心		默认
+zigzag	n.之字形;之字形图案		默认
+zip	n.拉链 v.压缩		默认
+zipper	n.拉链		默认
+zone	n.区域;地带		默认
+zoom	v.快速移动 n.急速上升		默认
+zigzag	n.之字形;之字形图案		默认
