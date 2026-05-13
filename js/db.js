@@ -1,262 +1,118 @@
-// IndexedDB wrapper for Anki Web
-// Stores: decks, notes, cards, revlog
+// File-based storage via local server
+// Data stored at: data/ankiweb.json
 
-const DB_NAME = 'ankiweb';
-const DB_VERSION = 1;
+const API = 'http://localhost:3456/api/data/ankiweb';
 
-let db = null;
+let DB = null;
 
-function openDB() {
-  return new Promise((resolve, reject) => {
-    if (db) return resolve(db);
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
-    req.onupgradeneeded = (e) => {
-      const d = e.target.result;
-      if (!d.objectStoreNames.contains('decks')) {
-        const ds = d.createObjectStore('decks', { keyPath: 'id', autoIncrement: true });
-        ds.createIndex('name', 'name', { unique: true });
-      }
-      if (!d.objectStoreNames.contains('notes')) {
-        const ns = d.createObjectStore('notes', { keyPath: 'id', autoIncrement: true });
-        ns.createIndex('nid', 'id');
-      }
-      if (!d.objectStoreNames.contains('cards')) {
-        const cs = d.createObjectStore('cards', { keyPath: 'id', autoIncrement: true });
-        cs.createIndex('did', 'did');
-        cs.createIndex('nid', 'nid');
-        cs.createIndex('queue', 'queue');
-        cs.createIndex('due', 'due');
-      }
-      if (!d.objectStoreNames.contains('revlog')) {
-        d.createObjectStore('revlog', { keyPath: 'id', autoIncrement: true });
-      }
-    };
-    req.onsuccess = (e) => { db = e.target.result; resolve(db); };
-    req.onerror = (e) => reject(e.target.error);
-  });
+async function loadDB() {
+  if (DB) return DB;
+  try {
+    const r = await fetch(API);
+    if (r.ok) {
+      const data = await r.json();
+      if (data && data.decks) { DB = data; return DB; }
+    }
+  } catch (e) { console.error('Load DB failed, start fresh'); }
+  DB = { decks: [], notes: [], cards: [], revlog: [], nextId: { decks: 1, notes: 1, cards: 1, revlog: 1 } };
+  return DB;
 }
 
-function tx(storeName, mode) {
-  return db.transaction(storeName, mode).objectStore(storeName);
+async function saveDB() {
+  try {
+    await fetch(API, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(DB),
+    });
+  } catch (e) { console.error('Save DB failed:', e); }
 }
 
 // ===== Decks =====
 const Deck = {
   async create(name) {
-    const d = await openDB();
-    const deck = { name, created: Date.now() };
-    return new Promise((resolve, reject) => {
-      const r = tx('decks', 'readwrite').add(deck);
-      r.onsuccess = () => resolve(r.result);
-      r.onerror = () => reject(r.error);
-    });
+    await loadDB();
+    const deck = { id: DB.nextId.decks++, name, created: Date.now() };
+    DB.decks.push(deck); await saveDB(); return deck.id;
   },
-  async getAll() {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('decks', 'readonly').getAll();
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
-  async get(id) {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('decks', 'readonly').get(id);
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
+  async getAll() { await loadDB(); return [...DB.decks]; },
+  async get(id) { await loadDB(); return DB.decks.find(d => d.id === id); },
   async update(deck) {
-    await openDB();
-    deck.modified = Date.now();
-    return new Promise((resolve, reject) => {
-      const r = tx('decks', 'readwrite').put(deck);
-      r.onsuccess = () => resolve(r.result);
-      r.onerror = () => reject(r.error);
-    });
+    await loadDB();
+    const idx = DB.decks.findIndex(d => d.id === deck.id);
+    if (idx >= 0) { deck.modified = Date.now(); DB.decks[idx] = deck; await saveDB(); }
   },
-  async remove(id) {
-    await openDB();
-    return new Promise((resolve) => {
-      tx('decks', 'readwrite').delete(id);
-      resolve();
-    });
-  },
-  async count() {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('decks', 'readonly').count();
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
-  async findByName(name) {
-    await openDB();
-    return new Promise((resolve, reject) => {
-      const r = tx('decks', 'readonly').index('name').get(name);
-      r.onsuccess = () => resolve(r.result);
-      r.onerror = () => reject(r.error);
-    });
-  }
+  async remove(id) { await loadDB(); DB.decks = DB.decks.filter(d => d.id !== id); await saveDB(); },
+  async count() { await loadDB(); return DB.decks.length; },
+  async findByName(name) { await loadDB(); return DB.decks.find(d => d.name === name); }
 };
 
 // ===== Notes =====
 const Note = {
   async create(fields, tags, notetypeId) {
-    const d = await openDB();
+    await loadDB();
     const note = {
-      guid: crypto.randomUUID(),
-      fields: fields || ['', ''],
-      tags: tags || [],
-      notetypeId: notetypeId || 0,
-      created: Date.now()
+      id: DB.nextId.notes++, guid: crypto.randomUUID(),
+      fields: fields || ['', ''], tags: tags || [],
+      notetypeId: notetypeId || 0, created: Date.now()
     };
-    return new Promise((resolve, reject) => {
-      const r = tx('notes', 'readwrite').add(note);
-      r.onsuccess = () => resolve(r.result);
-      r.onerror = () => reject(r.error);
-    });
+    DB.notes.push(note); await saveDB(); return note.id;
   },
-  async get(id) {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('notes', 'readonly').get(id);
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
-  async getAll() {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('notes', 'readonly').getAll();
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
+  async get(id) { await loadDB(); return DB.notes.find(n => n.id === id); },
+  async getAll() { await loadDB(); return [...DB.notes]; },
   async update(note) {
-    await openDB();
-    note.modified = Date.now();
-    return new Promise((resolve) => {
-      tx('notes', 'readwrite').put(note);
-      resolve();
-    });
+    await loadDB();
+    const idx = DB.notes.findIndex(n => n.id === note.id);
+    if (idx >= 0) { note.modified = Date.now(); DB.notes[idx] = note; await saveDB(); }
   },
-  async remove(id) {
-    await openDB();
-    return new Promise((resolve) => {
-      tx('notes', 'readwrite').delete(id);
-      resolve();
-    });
-  },
-  async removeMany(ids) {
-    await openDB();
-    const s = tx('notes', 'readwrite');
-    for (const id of ids) s.delete(id);
-    return new Promise((resolve) => { s.transaction.oncomplete = resolve; });
-  }
+  async remove(id) { await loadDB(); DB.notes = DB.notes.filter(n => n.id !== id); await saveDB(); },
+  async removeMany(ids) { await loadDB(); DB.notes = DB.notes.filter(n => !ids.includes(n.id)); await saveDB(); }
 };
 
 // ===== Cards =====
 const Card = {
-  // Create a card for a note
   async create(nid, did, ord) {
-    const d = await openDB();
+    await loadDB();
     const card = {
-      nid: nid,
-      did: did || 1,
-      ord: ord || 0,
-      queue: 0,       // 0=new, 1=learn, 2=review, -1=suspended
-      due: Date.now(), // for new: position (timestamp used as insertion order proxy)
-      ivl: 0,          // interval in days
-      factor: 2500,    // ease factor * 1000
-      reps: 0,         // number of reviews
-      lapses: 0,       // number of times forgotten
-      left: 0,         // remaining learning steps (0 = not in learning)
-      type: 0,         // 0=new, 1=learn, 2=review, 3=relearn
-      created: Date.now()
+      id: DB.nextId.cards++, nid, did: did || 1, ord: ord || 0,
+      queue: 0, due: Date.now(), ivl: 0, factor: 2500,
+      reps: 0, lapses: 0, left: 0, type: 0, created: Date.now()
     };
-    return new Promise((resolve, reject) => {
-      const r = tx('cards', 'readwrite').add(card);
-      r.onsuccess = () => resolve(r.result);
-      r.onerror = () => reject(r.error);
-    });
+    DB.cards.push(card); await saveDB(); return card.id;
   },
-  async get(id) {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('cards', 'readonly').get(id);
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
+  async get(id) { await loadDB(); return DB.cards.find(c => c.id === id); },
   async update(card) {
-    await openDB();
-    card.modified = Date.now();
-    return new Promise((resolve) => {
-      tx('cards', 'readwrite').put(card);
-      resolve();
-    });
+    await loadDB();
+    const idx = DB.cards.findIndex(c => c.id === card.id);
+    if (idx >= 0) { card.modified = Date.now(); DB.cards[idx] = card; await saveDB(); }
   },
-  async remove(id) {
-    await openDB();
-    return new Promise((resolve) => {
-      tx('cards', 'readwrite').delete(id);
-      resolve();
-    });
-  },
-  async removeByNid(nid) {
-    await openDB();
-    const cards = await Card.getByNid(nid);
-    for (const c of cards) await Card.remove(c.id);
-  },
-  async getByNid(nid) {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('cards', 'readonly').index('nid').getAll(nid);
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
-  async getByDeck(did) {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('cards', 'readonly').index('did').getAll(did);
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
-  async getAll() {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('cards', 'readonly').getAll();
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
-  // Get all cards due for review in a given deck
+  async remove(id) { await loadDB(); DB.cards = DB.cards.filter(c => c.id !== id); await saveDB(); },
+  async removeByNid(nid) { await loadDB(); DB.cards = DB.cards.filter(c => c.nid !== nid); await saveDB(); },
+  async getByNid(nid) { await loadDB(); return DB.cards.filter(c => c.nid === nid); },
+  async getByDeck(did) { await loadDB(); return DB.cards.filter(c => c.did === did); },
+  async getAll() { await loadDB(); return [...DB.cards]; },
   async getDueCards(did, now) {
-    await openDB();
-    const all = await Card.getByDeck(did);
+    await loadDB();
     const ts = now || Date.now();
-    return all.filter(c => {
-      if (c.queue === -1) return false; // suspended
-      if (c.queue === 0) return true;  // new
-      if (c.queue === 1) return c.due <= ts; // learning, due in seconds
-      if (c.queue === 2) {
-        // Review: due is a day number (days since collection creation)
-        const today = Math.floor(ts / 86400000);
-        return c.due <= today;
-      }
+    return DB.cards.filter(c => {
+      if (c.did !== did) return false;
+      if (c.queue === -1) return false;
+      if (c.queue === 0) return true;
+      if (c.queue === 1) return c.due <= ts;
+      if (c.queue === 2) { return c.due <= Math.floor(ts / 86400000); }
       return false;
     });
   },
-  // Count cards by state for a deck
   async countByDeck(did) {
-    await openDB();
-    const cards = await Card.getByDeck(did);
+    await loadDB();
+    const cards = DB.cards.filter(c => c.did === did);
     const now = Date.now();
     const today = Math.floor(now / 86400000);
     let n = 0, l = 0, r = 0;
     for (const c of cards) {
       if (c.queue === -1) continue;
       if (c.queue === 0) n++;
-      else if (c.queue === 1 || c.type === 3) {
-        if (c.due <= now) l++;
-      } else if (c.queue === 2) {
-        if (c.due <= today) r++;
-      }
+      else if (c.queue === 1 || c.type === 3) { if (c.due <= now) l++; }
+      else if (c.queue === 2) { if (c.due <= today) r++; }
     }
     return { new: n, learn: l, review: r, total: cards.length };
   }
@@ -265,86 +121,44 @@ const Card = {
 // ===== Revlog =====
 const Revlog = {
   async add(cid, rating, timeMs, ivl, factor, reps, lapses) {
-    await openDB();
+    await loadDB();
     const entry = {
-      cid, rating, timeMs, ivl, factor, reps, lapses,
+      id: DB.nextId.revlog++, cid, rating, timeMs, ivl, factor, reps, lapses,
       reviewTime: Date.now()
     };
-    return new Promise((resolve) => {
-      const r = tx('revlog', 'readwrite').add(entry);
-      r.onsuccess = () => resolve(r.result);
-    });
+    DB.revlog.push(entry); await saveDB(); return entry.id;
   },
-  async getByCard(cid) {
-    await openDB();
-    const all = await new Promise((resolve) => {
-      const r = tx('revlog', 'readonly').getAll();
-      r.onsuccess = () => resolve(r.result);
-    });
-    return all.filter(e => e.cid === cid);
-  },
-  async count() {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('revlog', 'readonly').count();
-      r.onsuccess = () => resolve(r.result);
-    });
-  },
-  async getAll() {
-    await openDB();
-    return new Promise((resolve) => {
-      const r = tx('revlog', 'readonly').getAll();
-      r.onsuccess = () => resolve(r.result);
-    });
-  }
+  async getByCard(cid) { await loadDB(); return DB.revlog.filter(e => e.cid === cid); },
+  async count() { await loadDB(); return DB.revlog.length; },
+  async getAll() { await loadDB(); return [...DB.revlog]; }
 };
 
 // ===== Stats =====
 const Stats = {
   async getOverview() {
-    await openDB();
-    const decks = await Deck.getAll();
-    const notes = await Note.getAll();
-    const cards = await Card.getAll();
-    const revlogCount = await Revlog.count();
-
+    await loadDB();
+    const today = Math.floor(Date.now() / 86400000);
     let dueCount = 0;
-    const now = Date.now();
-    const today = Math.floor(now / 86400000);
-    for (const c of cards) {
+    for (const c of DB.cards) {
       if (c.queue === -1) continue;
       if (c.queue === 0) { dueCount++; continue; }
-      if (c.queue === 1 && c.due <= now) { dueCount++; continue; }
+      if (c.queue === 1 && c.due <= Date.now()) { dueCount++; continue; }
       if (c.queue === 2 && c.due <= today) { dueCount++; }
     }
-
-    const todayReviews = (await Revlog.getAll()).filter(r => {
-      const rDay = Math.floor(r.reviewTime / 86400000);
-      return rDay === today;
-    }).length;
-
-    return { decks: decks.length, notes: notes.length, cards: cards.length,
-             due: dueCount, revlog: revlogCount, todayReviews };
+    const todayReviews = DB.revlog.filter(r => Math.floor(r.reviewTime / 86400000) === today).length;
+    return { decks: DB.decks.length, notes: DB.notes.length, cards: DB.cards.length,
+             due: dueCount, revlog: DB.revlog.length, todayReviews };
   }
 };
 
-// Clear all data
 async function clearAllDB() {
-  await openDB();
-  const stores = ['decks', 'notes', 'cards', 'revlog'];
-  for (const name of stores) {
-    await new Promise((resolve) => {
-      const r = tx(name, 'readwrite').clear();
-      r.onsuccess = resolve;
-    });
-  }
+  await loadDB();
+  DB.decks = []; DB.notes = []; DB.cards = []; DB.revlog = [];
+  DB.nextId = { decks: 1, notes: 1, cards: 1, revlog: 1 };
+  await saveDB();
 }
 
-// Initialize default deck
 async function ensureDefaultDeck() {
-  await openDB();
-  const decks = await Deck.getAll();
-  if (decks.length === 0) {
-    await Deck.create('默认');
-  }
+  await loadDB();
+  if (DB.decks.length === 0) await Deck.create('默认');
 }

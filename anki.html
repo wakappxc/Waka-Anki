@@ -26,12 +26,22 @@ tailwind.config = {
   @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
   .modal-overlay { background: rgba(0,0,0,0.4); }
   .progress-bar { transition: width 0.3s ease; }
+  #reviewFrontContent img, #reviewBackContent img,
+  #previewFront img, #previewBack img { cursor: pointer; }
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen font-sans text-gray-800">
 
 <!-- Toast -->
 <div id="toast" class="fixed top-4 right-4 z-50 hidden"></div>
+
+<!-- Lightbox for image zoom -->
+<div id="lightbox" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 hidden cursor-pointer" onclick="closeLightbox()">
+  <div class="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+    <img id="lightboxImg" class="max-w-full max-h-[90vh] object-contain rounded-lg cursor-default" onclick="event.stopPropagation()">
+    <button class="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full shadow-lg text-gray-600 hover:text-gray-900 flex items-center justify-center text-lg font-bold" onclick="closeLightbox()">×</button>
+  </div>
+</div>
 
 <!-- Header -->
 <header class="bg-white shadow-sm sticky top-0 z-30">
@@ -70,6 +80,8 @@ tailwind.config = {
   </div>
 </div>
 
+<input type="file" id="imageInput" accept="image/*" class="hidden">
+
 <script src="js/db.js"></script>
 <script src="js/scheduler.js"></script>
 <script>
@@ -82,6 +94,38 @@ const $$ = (s) => document.querySelectorAll(s);
 function genId() { return crypto.randomUUID?.() ?? Date.now().toString(36)+Math.random().toString(36).slice(2,11); }
 
 function escapeHTML(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+// ===== Image & HTML helpers =====
+function imageToDataURL(file) {
+  return new Promise((resolve) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.readAsDataURL(file);
+  });
+}
+
+function insertAtCursor(el, text) {
+  const start = el.selectionStart, end = el.selectionEnd;
+  el.value = el.value.substring(0, start) + text + el.value.substring(end);
+  el.selectionStart = el.selectionEnd = start + text.length;
+  el.focus();
+  el.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function safeHTML(html) {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+    .replace(/\bon\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(/href\s*=\s*(?:"javascript:[^"]*"|'javascript:[^']*')/gi, 'href="#"');
+}
+
+function stripHTML(html) {
+  const d = document.createElement('div');
+  d.innerHTML = html.replace(/<img\b[^>]*>/gi, '[图片]');
+  return d.textContent;
+}
 
 function showToast(msg, type='info') {
   const el=$('#toast'), colors={success:'bg-green-500',error:'bg-red-500',info:'bg-gray-700'};
@@ -224,18 +268,22 @@ function renderReviewCard() {
         `复习 · 间隔 ${card.ivl} 天 · 难度 ${(card.factor/1000).toFixed(1)}x`;
 
       $('#app').innerHTML = `
-        <div class="max-w-lg mx-auto">
+        <div class="max-w-xl mx-auto">
           <div class="text-center text-sm text-gray-400 mb-2">${escapeHTML(d?.name||'')} · ${dueInfo} · ${reviewState.idx+1}/${reviewState.cards.length}</div>
           <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div class="card-flip ${reviewState.showingBack?'flipped':''}" id="reviewCard" onclick="flipCard()">
-              <div class="card-flip-inner relative" style="min-height:300px">
-                <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 p-6 sm:p-8 flex flex-col justify-center items-center text-center">
-                  <p class="text-xs text-blue-400 mb-3 uppercase tracking-wide">问题</p>
-                  <p class="text-xl sm:text-2xl font-medium text-gray-800 whitespace-pre-wrap">${escapeHTML(front)}</p>
+              <div class="card-flip-inner relative" style="min-height:360px">
+                <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 p-8 overflow-y-auto">
+                  <div class="flex flex-col items-center justify-center min-h-full w-full">
+                    <p class="text-xs text-blue-400 mb-3 uppercase tracking-wide">问题</p>
+                    <p id="reviewFrontContent" class="text-2xl sm:text-3xl font-medium text-gray-800 whitespace-pre-wrap"></p>
+                  </div>
                 </div>
-                <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 p-6 sm:p-8 flex flex-col justify-center items-center text-center">
-                  <p class="text-xs text-green-400 mb-3 uppercase tracking-wide">答案</p>
-                  <p class="text-xl sm:text-2xl font-medium text-gray-800 whitespace-pre-wrap">${escapeHTML(back)}</p>
+                <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 p-8 overflow-y-auto">
+                  <div class="flex flex-col items-center justify-center min-h-full w-full">
+                    <p class="text-xs text-green-400 mb-3 uppercase tracking-wide">答案</p>
+                    <p id="reviewBackContent" class="text-2xl sm:text-3xl font-medium text-gray-800 whitespace-pre-wrap"></p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -263,6 +311,8 @@ function renderReviewCard() {
             <button onclick="location.hash='#dashboard'" class="text-xs text-gray-400 hover:text-gray-600 transition-colors">退出</button>
           </div>
         </div>`;
+        $('#reviewFrontContent').innerHTML = safeHTML(front);
+        $('#reviewBackContent').innerHTML = safeHTML(back);
     });
   });
 }
@@ -291,9 +341,19 @@ window.editCard = function(cid) {
       showModal(`
         <h3 class="text-lg font-bold mb-4">编辑卡片</h3>
         <label class="block text-xs text-gray-500 mb-1">正面</label>
-        <textarea id="editFront" rows="2" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-3">${escapeHTML(note.fields[0]||'')}</textarea>
+        <div class="flex gap-1 mb-3">
+          <textarea id="editFront" rows="2" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 resize-none">${escapeHTML(note.fields[0]||'')}</textarea>
+          <button type="button" class="img-btn self-end px-2 py-2 border border-gray-200 rounded-lg text-gray-400 hover:text-blue-500 hover:border-blue-300 transition-colors shrink-0" title="插入图片" data-target="editFront">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </button>
+        </div>
         <label class="block text-xs text-gray-500 mb-1">背面</label>
-        <textarea id="editBack" rows="2" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-3">${escapeHTML(note.fields[1]||'')}</textarea>
+        <div class="flex gap-1 mb-3">
+          <textarea id="editBack" rows="2" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 resize-none">${escapeHTML(note.fields[1]||'')}</textarea>
+          <button type="button" class="img-btn self-end px-2 py-2 border border-gray-200 rounded-lg text-gray-400 hover:text-blue-500 hover:border-blue-300 transition-colors shrink-0" title="插入图片" data-target="editBack">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </button>
+        </div>
         <label class="block text-xs text-gray-500 mb-1">标签（空格分隔）</label>
         <input id="editTags" value="${escapeHTML((note.tags||[]).join(' '))}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">
         <div class="flex gap-2">
@@ -349,11 +409,21 @@ async function renderAdd() {
         <form id="singleForm" class="space-y-3" onsubmit="addSingleCard(event)">
           <div>
             <label class="block text-xs font-medium text-gray-500 mb-1">正面 <span class="text-red-400">*</span></label>
-            <input type="text" name="front" required placeholder="输入问题或关键词" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+            <div class="flex gap-1">
+              <textarea name="front" rows="2" required placeholder="输入问题或关键词（可粘贴图片）" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50 resize-none"></textarea>
+              <button type="button" class="img-btn self-end px-2 py-2 border border-gray-200 rounded-lg text-gray-400 hover:text-blue-500 hover:border-blue-300 transition-colors shrink-0" title="插入图片" data-target="front">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </button>
+            </div>
           </div>
           <div>
             <label class="block text-xs font-medium text-gray-500 mb-1">背面 <span class="text-red-400">*</span></label>
-            <input type="text" name="back" required placeholder="输入答案或释义" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+            <div class="flex gap-1">
+              <textarea name="back" rows="2" required placeholder="输入答案或释义（可粘贴图片）" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50 resize-none"></textarea>
+              <button type="button" class="img-btn self-end px-2 py-2 border border-gray-200 rounded-lg text-gray-400 hover:text-blue-500 hover:border-blue-300 transition-colors shrink-0" title="插入图片" data-target="back">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              </button>
+            </div>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
@@ -397,15 +467,19 @@ async function renderAdd() {
           <p class="text-sm">填写内容后查看预览</p>
           <p class="text-xs text-gray-300 mt-1">点击卡片可翻转</p>
         </div>
-        <div id="previewCard" class="card-flip w-full max-w-sm hidden" onclick="this.classList.toggle('flipped')">
-          <div class="card-flip-inner relative w-full" style="min-height:220px">
-            <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-xl p-5 flex flex-col justify-center items-center text-center">
-              <p class="text-xs text-blue-400 mb-2 uppercase tracking-wide">正面 · 问题</p>
-              <p id="previewFront" class="text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+        <div id="previewCard" class="card-flip w-full max-w-md hidden" onclick="this.classList.toggle('flipped')">
+          <div class="card-flip-inner relative w-full" style="min-height:280px">
+            <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-xl p-6 sm:p-8 overflow-y-auto">
+              <div class="flex flex-col items-center justify-center min-h-full w-full">
+                <p class="text-xs text-blue-400 mb-3 uppercase tracking-wide">正面 · 问题</p>
+                <p id="previewFront" class="text-xl sm:text-2xl font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+              </div>
             </div>
-            <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-xl p-5 flex flex-col justify-center items-center text-center">
-              <p class="text-xs text-green-400 mb-2 uppercase tracking-wide">背面 · 答案</p>
-              <p id="previewBack" class="text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+            <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-xl p-6 sm:p-8 overflow-y-auto">
+              <div class="flex flex-col items-center justify-center min-h-full w-full">
+                <p class="text-xs text-green-400 mb-3 uppercase tracking-wide">背面 · 答案</p>
+                <p id="previewBack" class="text-xl sm:text-2xl font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+              </div>
             </div>
           </div>
         </div>
@@ -459,8 +533,8 @@ function updatePreview() {
   const flipEl = document.querySelector('.card-flip');
   if (flipEl) flipEl.classList.remove('flipped');
   const pf = $('#previewFront'), pb = $('#previewBack');
-  if (pf) pf.textContent = front || '(空)';
-  if (pb) pb.textContent = back || '(空)';
+  if (pf) pf.innerHTML = safeHTML(front) || '(空)';
+  if (pb) pb.innerHTML = safeHTML(back) || '(空)';
 }
 
 window.addSingleCard = async function(e) {
@@ -495,7 +569,8 @@ async function loadRecentCards() {
   for (const c of recent) {
     const note = await Note.get(c.nid);
     const deck = await Deck.get(c.did);
-    const f = (note?.fields[0]||'').substring(0, 40);
+    const plainF = stripHTML(note?.fields[0]||'');
+    const f = plainF.substring(0, 40);
     html += `<div class="flex items-center gap-2 py-1.5 border-b border-gray-50 text-sm">
       <span class="text-gray-700 truncate flex-1">${escapeHTML(f)}</span>
       <span class="text-xs text-gray-400 shrink-0">${escapeHTML(deck?.name||'')}</span>
@@ -590,8 +665,10 @@ async function renderBrowseList(cards, deckMap) {
   let html = '';
   for (const c of cards) {
     const note = await Note.get(c.nid);
-    const f = escapeHTML((note?.fields[0]||'').substring(0,60));
-    const b = escapeHTML((note?.fields[1]||'').substring(0,60));
+    const plainF = stripHTML(note?.fields[0]||'');
+    const f = escapeHTML(plainF.substring(0,60));
+    const plainB = stripHTML(note?.fields[1]||'');
+    const b = escapeHTML(plainB.substring(0,60));
     const tags = (note?.tags||[]).map(t=>`<span class="text-[10px] text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">${escapeHTML(t)}</span>`).join(' ');
     const status = c.queue===2 ? `<span class="text-xs text-green-600">间隔${c.ivl}天</span>` :
                    c.queue===1 ? `<span class="text-xs text-red-500">学习中</span>` :
@@ -913,20 +990,72 @@ window.clearAllData = async function() {
   });
 };
 
+// ===== Lightbox =====
+function openLightbox(src) {
+  $('#lightboxImg').src = src;
+  $('#lightbox').classList.remove('hidden');
+}
+function closeLightbox() {
+  $('#lightbox').classList.add('hidden');
+  $('#lightboxImg').src = '';
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+});
+document.addEventListener('click', (e) => {
+  const img = e.target.closest('#reviewFrontContent img, #reviewBackContent img, #previewFront img, #previewBack img');
+  if (img) { e.stopPropagation(); openLightbox(img.src); }
+}, true);
+
+// ===== Image event handlers =====
+document.addEventListener('paste', async (e) => {
+  const target = e.target.closest('textarea[name="front"], textarea[name="back"], #editFront, #editBack');
+  if (!target) return;
+  const items = e.clipboardData?.items;
+  if (!items) return;
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      e.preventDefault();
+      const file = item.getAsFile();
+      if (!file) continue;
+      const dataUrl = await imageToDataURL(file);
+      insertAtCursor(target, `<img src="${dataUrl}">`);
+    }
+  }
+});
+
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.img-btn');
+  if (!btn) return;
+  const input = $('#imageInput');
+  input._target = btn.dataset.target;
+  input.click();
+});
+
+$('#imageInput').addEventListener('change', async (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+  const targetId = e.target._target;
+  const target = document.getElementById(targetId) || document.querySelector(`[name="${targetId}"]`);
+  if (!target) return;
+  const dataUrl = await imageToDataURL(file);
+  insertAtCursor(target, `<img src="${dataUrl}">`);
+  e.target.value = '';
+});
+
 // ===== Init =====
 async function init() {
   try {
-    if (typeof indexedDB === 'undefined') {
-      throw new Error('浏览器不支持 IndexedDB，请使用 Chrome/Edge/Firefox 最新版');
-    }
+    const r = await fetch('http://localhost:3456/api/data/ankiweb');
+    if (!r.ok) throw new Error('服务器连接失败');
     await ensureDefaultDeck();
     navigate();
   } catch (e) {
     console.error('Init error:', e);
     $('#app').innerHTML = `<div class="text-center py-16">
       <div class="text-5xl mb-3">⚠️</div>
-      <p class="text-sm font-medium text-red-500">初始化失败</p>
-      <p class="text-xs text-gray-400 mt-1 max-w-md mx-auto">${escapeHTML(e.message || String(e))}</p>
+      <p class="text-sm font-medium text-red-500">服务器未启动</p>
+      <p class="text-xs text-gray-400 mt-1 max-w-md mx-auto">请在项目目录下运行 <code class="bg-gray-100 px-1 rounded">node server.js</code> 启动服务器，然后刷新此页面。</p>
       <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">重试</button>
     </div>`;
   }
