@@ -28,6 +28,7 @@ tailwind.config = {
   .progress-bar { transition: width 0.3s ease; }
   #reviewFrontContent img, #reviewBackContent img,
   #previewFront img, #previewBack img { cursor: pointer; }
+  #ctxMenu { z-index: 9999; }
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen font-sans text-gray-800">
@@ -41,6 +42,14 @@ tailwind.config = {
     <img id="lightboxImg" class="max-w-full max-h-[90vh] object-contain rounded-lg cursor-default" onclick="event.stopPropagation()">
     <button class="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full shadow-lg text-gray-600 hover:text-gray-900 flex items-center justify-center text-lg font-bold" onclick="closeLightbox()">×</button>
   </div>
+</div>
+
+<!-- Context menu -->
+<div id="ctxMenu" class="fixed z-50 hidden bg-white rounded-lg shadow-xl border border-gray-200 py-1 w-36" style="min-width:120px">
+  <button class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2" onclick="ctxAction()">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+    清空卡片
+  </button>
 </div>
 
 <!-- Header -->
@@ -170,7 +179,7 @@ async function renderDashboard() {
     const counts = await Card.countByDeck(d.id);
     dueTotal += counts.new + counts.learn + counts.review;
     html += `
-      <div class="bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow cursor-pointer" onclick="location.hash='#deck/${d.id}'">
+      <div class="deck-card bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow cursor-pointer" data-deck-id="${d.id}" onclick="location.hash='#deck/${d.id}'" oncontextmenu="event.preventDefault();showCtxMenu(event, ${d.id})">
         <div class="flex items-center justify-between">
           <div>
             <h3 class="font-medium text-gray-800">${escapeHTML(d.name)}</h3>
@@ -989,6 +998,47 @@ window.clearAllData = async function() {
     else if (location.hash.startsWith('#browse')) renderBrowse();
   });
 };
+
+// ===== Context menu =====
+let _ctxDeckId = null;
+
+function showCtxMenu(event, did) {
+  _ctxDeckId = did;
+  const menu = $('#ctxMenu');
+  menu.style.left = event.clientX + 'px';
+  menu.style.top = event.clientY + 'px';
+  menu.classList.remove('hidden');
+}
+
+function hideCtxMenu() {
+  $('#ctxMenu').classList.add('hidden');
+  _ctxDeckId = null;
+}
+
+function ctxAction() {
+  hideCtxMenu();
+  if (_ctxDeckId === null) return;
+  const did = _ctxDeckId;
+  showConfirm('确定要清空此卡组的所有卡片吗？此操作不可恢复。', async () => {
+    const cards = await Card.getByDeck(did);
+    const nids = [...new Set(cards.map(c => c.nid))];
+    for (const nid of nids) {
+      await Card.removeByNid(nid);
+      await Note.remove(nid);
+    }
+    showToast(`已清空 ${cards.length} 张卡片`, 'success');
+    renderDashboard();
+  });
+}
+
+// Close context menu on any click
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#ctxMenu')) hideCtxMenu();
+});
+
+document.addEventListener('contextmenu', (e) => {
+  if (!e.target.closest('.deck-card')) hideCtxMenu();
+});
 
 // ===== Lightbox =====
 function openLightbox(src) {
