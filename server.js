@@ -93,7 +93,7 @@ if (!fs.existsSync(path.join(DATA_DIR, 'ankiweb.json'))) {
 
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
-  console.log(`  index.html → http://localhost:${PORT}/`);
+  console.log(`  anki.html  → http://localhost:${PORT}/`);
   console.log(`  anki.html  → http://localhost:${PORT}/anki.html`);
   console.log(`  Data dir   → ${DATA_DIR}`);
 });
