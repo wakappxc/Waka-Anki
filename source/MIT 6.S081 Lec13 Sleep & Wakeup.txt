@@ -1,0 +1,24 @@
+#separator:tab
+#html:true
+XV6中线程切换时对锁有什么限制？<br>详情见反面。	① 调用switch函数时必须持有p->lock（进程自身的锁）<br>② 调用switch函数时<b>不能持有任何其他锁</b><br>③ sched函数中有检查代码确保除p->lock外不持有其他锁<br><br>原因：如果持有其他锁时出让CPU，可能导致死锁。	MIT6.S081 Lec13
+为什么XV6禁止在持有其他锁时调用switch？	假设进程P1持有锁（如磁盘锁），然后调用switch切换到P2。P2也想获取同一把锁，会在spinlock的循环中自旋等待。但P2的acquire不会返回（中断已关闭），锁只有P1能释放，而P1又不运行→<b>死锁</b>。即使有定时器中断，acquire函数会先关闭中断再自旋，所以中断也无法打破死锁。	MIT6.S081 Lec13
+什么是Coordination（协调）？为什么需要它？	当线程需要等待特定事件发生时（如Pipe有数据、磁盘读取完成、子进程退出），不想用busy-wait浪费CPU。Coordination让线程出让CPU，直到等待的事件发生再恢复执行。XV6使用<b>Sleep &amp; Wakeup</b>实现Coordination。	MIT6.S081 Lec13
+什么是busy-wait？什么时候适用？	通过循环不断检查条件是否满足。适用于等待时间极短（&lt;0.1微秒）的场景，如等待硬件完成快速操作。不适合等待时间不可预测的情况（如等待Pipe数据），因为会浪费CPU。	MIT6.S081 Lec13
+Sleep和Wakeup的基本接口是什么样的？	两者都接受一个<b>64bit的sleep channel</b>参数：<br>① sleep(channel, lock) - 出让CPU，在channel上等待<br>② wakeup(channel) - 唤醒所有在channel上等待的线程<br><br>channel只是一个数值，sleep和wakeup不关心它代表什么，只需匹配即可。	MIT6.S081 Lec13
+什么是Lost Wakeup问题？	在释放condition lock之后、调用sleep进入SLEEPING状态之前，存在一个<b>窗口时间</b>。如果在这个窗口内发生了中断并调用了wakeup，wakeup找不到任何SLEEPING的进程去唤醒。之后进程才进入SLEEPING，但wakeup已经发生过了→<b>这次wakeup丢失了</b>，进程永远不会被唤醒。	MIT6.S081 Lec13
+如何避免Lost Wakeup？核心规则是什么？	消除"释放锁"和"标记SLEEPING"之间的窗口。关键规则：<br>① 调用sleep时<b>必须持有condition lock</b>（传给sleep的第二个参数）<br>② sleep函数<b>原子性</b>地：先获取p-&gt;lock → 再释放condition lock → 设置SLEEPING → 调用sched<br>③ wakeup时必须<b>持有condition lock</b><br>④ wakeup查看进程状态前必须先<b>获取进程的锁</b>p-&gt;lock	MIT6.S081 Lec13
+sleep函数的实现流程是什么？	① 获取进程锁 p-&gt;lock（在释放condition lock之前）<br>② 释放condition lock（此时wakeup即使被调用，也无法查看进程状态，因为没有p-&gt;lock）<br>③ 设置进程状态为SLEEPING，记录sleep channel<br>④ 调用sched → switch（仍持有p-&gt;lock）<br>⑤ 调度器线程释放p-&gt;lock后，wakeup才能获取p-&gt;lock并唤醒进程<br>⑥ sleep返回前重新获取condition lock	MIT6.S081 Lec13
+wakeup函数的实现流程是什么？	遍历进程表单，对每个进程：<br>① 获取进程锁 p-&gt;lock<br>② 检查进程状态==SLEEPING &amp;&amp; channel匹配<br>③ 设为RUNNABLE<br>④ 释放进程锁<br><br>wakeup必须同时持有condition lock和p-&gt;lock才能查看和修改进程状态。	MIT6.S081 Lec13
+为什么几乎所有sleep调用都要包在while循环中？	因为被唤醒不等于等待的条件已满足。可能有多个进程在等待同一个事件：<br>① wakeup会唤醒所有等待同一channel的进程<br>② 只有一个幸运的进程能拿到数据<br>③ 其他进程醒来后发现条件不满足（数据已被取走），需要重新sleep<br>④ sleep返回时会重新获取condition lock，所以其他进程在acquire上排队	MIT6.S081 Lec13
+UART驱动中uartwrite和uartintr是如何协作的？	① uartwrite: 持有锁 → 检查tx_done → 若未完成则sleep(tx_channel, lock) → 醒来后写字符 → 设置tx_done=0 → 循环<br>② uartintr(中断): 获取锁 → 检查LSR_TX_IDLE标志 → 设置tx_done=1 → 调用wakeup(tx_channel) → 释放锁<br><br>每个字符都需要一次sleep/wakeup配对。	MIT6.S081 Lec13
+Pipe的piperead如何使用sleep/wakeup？	① 获取pi-&gt;lock（condition lock）<br>② while循环检查 pi-&gt;nwrite &gt; pi-&gt;nread（有数据可读）<br>③ 无数据则 sleep(&amp;pi-&gt;nread, &amp;pi-&gt;lock)<br>④ 被唤醒后重新检查条件<br>⑤ 唤醒原因：pipewrite向pipe写数据后调用wakeup(&amp;pi-&gt;nread)<br>⑥ 若被kill则返回-1	MIT6.S081 Lec13
+exit系统调用做了哪些事情？	① 关闭所有打开的文件<br>② 释放当前目录引用<br>③ 将子进程的父进程改为init进程(PID=1)<br>④ 调用wakeup唤醒父进程（父进程可能在wait）<br>⑤ 设置进程状态为ZOMBIE<br>⑥ 调用sched进入调度器（进程不再运行）<br><br>注意：exit不释放所有资源，资源的最终释放由父进程的wait完成。	MIT6.S081 Lec13
+为什么exit不能自己释放所有资源？	进程调用exit时还在运行代码，它仍在使用自己的栈、进程表位置等关键资源。不能在运行中释放自己正在使用的资源。所以exit只将状态设为ZOMBIE，由<b>父进程通过wait系统调用</b>完成最终资源释放。	MIT6.S081 Lec13
+wait系统调用做了什么？	① 循环扫描进程表单<br>② 找到父进程是自己且状态为ZOMBIE的子进程<br>③ 调用freeproc释放子进程资源（trapframe、page table等）<br>④ 将子进程状态设为UNUSED（可被fork重用）<br><br>每个退出的进程都必须有一个对应的wait调用。	MIT6.S081 Lec13
+为什么子进程退出时要将子进程的父进程改为init？	如果父进程先退出了，子进程就没有父进程来调用wait释放资源。init进程(PID=1)在无限循环中调用wait，它可以为所有孤儿进程完成资源释放。没有init进程系统会耗尽进程资源并崩溃，所以init进程本身<b>不允许退出</b>。	MIT6.S081 Lec13
+kill系统调用做了什么？为什么不直接停止目标进程？	kill只是将目标进程的<b>killed标志位设为1</b>，如果进程在SLEEPING则设为RUNNABLE。<br><br>不直接停止的原因：目标进程可能正在内核中更新文件系统、持有锁等。直接杀掉会导致数据不一致。进程会在<b>安全位置</b>（如trap.c的usertrap函数中执行系统调用前后）检查killed标志位，<b>自愿调用exit退出</b>。	MIT6.S081 Lec13
+kill系统调用中，如果目标进程在SLEEPING状态会怎样？	kill将进程设为RUNNABLE → 进程从sleep返回 → 在包装sleep的while循环中检查pr-&gt;killed → 返回-1 → 回到usertrap → 检查p-&gt;killed → 调用exit退出。<br><br>但有些sleep循环不检查killed（如磁盘驱动），优先完成文件系统操作后再退出。	MIT6.S081 Lec13
+ZOMBIE状态、RUNNABLE状态、SLEEPING状态分别表示什么？	① <b>RUNNABLE</b>: 进程准备好运行，调度器可以选择它<br>② <b>SLEEPING</b>: 进程在等待某个事件，不参与调度<br>③ <b>ZOMBIE</b>: 进程已调用exit，大部分已退出但不运行，等待父进程的wait回收资源<br>④ <b>UNUSED</b>: 进程资源已完全释放，进程表位置可被fork重用	MIT6.S081 Lec13
+为什么sleep/wakeup比semaphore更通用？	Sleep/wakeup不关心等待的具体条件是什么，只通过64bit channel匹配。semaphore基于计数器，更适合"等待计数"场景但不够通用。Sleep/wakeup需要传入锁来避免lost wakeup，接口稍复杂但适用范围更广。	MIT6.S081 Lec13
+UART驱动的done标志位(tx_done)的作用是什么？	用于uartwrite和uartintr之间通信：<br>① tx_done=0：UART正在传输，uartwrite需要等待<br>② tx_done=1：UART已完成传输，uartwrite可以写下一个字符<br><br>uartintr检测到传输完成中断后设置tx_done=1并调用wakeup。	MIT6.S081 Lec13
+在XV6中，中断处理程序可以打断内核代码吗？	可以。XV6允许在内核代码执行时触发中断（如定时器中断）。但<b>acquire函数在等待锁之前会关闭中断</b>（详见Lec10），所以自旋等待锁时不会响应中断，这是为了<b>防止死锁</b>。	MIT6.S081 Lec13
