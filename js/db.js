@@ -29,6 +29,11 @@ async function saveDB() {
 
 // ===== Decks =====
 const Deck = {
+  async clearCards(did) {
+    const r = await fetch(`http://localhost:3456/api/deck/${did}/clear`, { method: 'POST' });
+    DB = null; // invalidate cache so next loadDB re-fetches
+    return r.json();
+  },
   async create(name) {
     await loadDB();
     const deck = { id: DB.nextId.decks++, name, created: Date.now() };
@@ -70,6 +75,15 @@ const Note = {
 
 // ===== Cards =====
 const Card = {
+  async batchCreate(cards) {
+    const r = await fetch('http://localhost:3456/api/cards/batch-create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cards })
+    });
+    DB = null; // invalidate cache
+    return r.json();
+  },
   async create(nid, did, ord) {
     await loadDB();
     const card = {

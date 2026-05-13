@@ -910,24 +910,24 @@ window.doImport = async function() {
 
   await ensureDefaultDeck();
   const allDecks = await Deck.getAll();
-  let added = 0;
-  const totalToImport = cards.filter(c => groupTargetMap[c.deck || ''] !== undefined).length;
-  showProgressModalImport(0, totalToImport);
+  // Collect cards to import, grouped by target deck
+  const batchMap = {};
   for (const c of cards) {
     const groupName = c.deck || '';
     const targetDid = groupTargetMap[groupName];
-    if (targetDid === undefined) continue; // group not selected
-    try {
-      const deck = allDecks.find(d => d.id === targetDid);
-      if (!deck) continue;
-      const nid = await Note.create([c.front, c.back], c.tags, 0);
-      await Card.create(nid, deck.id, 0);
-      added++;
-      updateProgress(added, totalToImport);
-    } catch(e) { /* skip invalid cards */ }
+    if (targetDid === undefined) continue;
+    const deck = allDecks.find(d => d.id === targetDid);
+    if (!deck) continue;
+    if (!batchMap[targetDid]) batchMap[targetDid] = [];
+    batchMap[targetDid].push({ front: c.front, back: c.back, tags: c.tags, did: targetDid });
   }
+  const allBatchCards = Object.values(batchMap).flat();
+  if (!allBatchCards.length) { showToast('请至少选择一个分组', 'error'); return; }
+
+  showProgressModalImport(0, allBatchCards.length);
+  const result = await Card.batchCreate(allBatchCards);
   closeModal();
-  showToast(`已导入 ${added} 张卡片`, 'success');
+  showToast(`已导入 ${result.count || allBatchCards.length} 张卡片`, 'success');
   if (location.hash.startsWith('#browse')) renderBrowse();
   else if (location.hash.startsWith('#dashboard')) renderDashboard();
   window._importCards = null;
@@ -1087,15 +1087,10 @@ function ctxAction() {
   if (did === null) return;
   showConfirm('确定要清空此卡组的所有卡片吗？此操作不可恢复。', async () => {
     const cards = await Card.getByDeck(did);
-    const nids = [...new Set(cards.map(c => c.nid))];
-    showProgressModal(nids.length);
-    for (let i = 0; i < nids.length; i++) {
-      await Card.removeByNid(nids[i]);
-      await Note.remove(nids[i]);
-      updateProgress(i + 1, nids.length);
-    }
+    showProgressModal(cards.length);
+    const result = await Deck.clearCards(did);
     closeModal();
-    showToast(`已清空 ${cards.length} 张卡片`, 'success');
+    showToast(`已清空 ${result.count || cards.length} 张卡片`, 'success');
     renderDashboard();
   });
 }

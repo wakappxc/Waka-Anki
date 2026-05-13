@@ -71,6 +71,63 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // POST /api/deck/:id/clear — batch delete all cards in a deck
+  const clearMatch = req.method === 'POST' && req.url.match(/^\/api\/deck\/(\d+)\/clear$/);
+  if (clearMatch) {
+    const did = parseInt(clearMatch[1]);
+    try {
+      const filePath = path.join(DATA_DIR, 'ankiweb.json');
+      const raw = fs.readFileSync(filePath, 'utf-8');
+      const db = JSON.parse(raw);
+      const nids = new Set();
+      db.cards = db.cards.filter(c => {
+        if (c.did === did) { nids.add(c.nid); return false; }
+        return true;
+      });
+      db.notes = db.notes.filter(n => !nids.has(n.id));
+      fs.writeFileSync(filePath, JSON.stringify(db), 'utf-8');
+      sendJSON(res, 200, { success: true, count: nids.size });
+    } catch (e) {
+      sendJSON(res, 500, { error: e.message });
+    }
+    return;
+  }
+
+  // POST /api/cards/batch-create — batch create notes + cards
+  const batchCreateMatch = req.method === 'POST' && req.url === '/api/cards/batch-create';
+  if (batchCreateMatch) {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try {
+        const { cards } = JSON.parse(body);
+        const filePath = path.join(DATA_DIR, 'ankiweb.json');
+        const raw = fs.readFileSync(filePath, 'utf-8');
+        const db = JSON.parse(raw);
+        let added = 0;
+        for (const c of cards) {
+          const nid = db.nextId.notes++;
+          db.notes.push({
+            id: nid, guid: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36),
+            fields: [c.front || '', c.back || ''], tags: c.tags || [],
+            notetypeId: 0, created: Date.now()
+          });
+          db.cards.push({
+            id: db.nextId.cards++, nid, did: c.did || 1, ord: 0,
+            queue: 0, due: Date.now(), ivl: 0, factor: 2500,
+            reps: 0, lapses: 0, left: 0, type: 0, created: Date.now()
+          });
+          added++;
+        }
+        fs.writeFileSync(filePath, JSON.stringify(db), 'utf-8');
+        sendJSON(res, 200, { success: true, count: added });
+      } catch (e) {
+        sendJSON(res, 400, { error: 'Invalid JSON' });
+      }
+    });
+    return;
+  }
+
   // Serve static files
   let urlPath = req.url.split('?')[0];
   if (urlPath === '/') urlPath = '/anki.html';
