@@ -810,56 +810,120 @@ window.handleImport = async function(event) {
     const decks = await Deck.getAll();
     if (decks.length === 0) await ensureDefaultDeck();
 
-    // Count cards per deck
-    const deckCount = {};
+    // Group cards by deck
+    const deckGroups = {};
     for (const c of cards) {
-      const name = c.deck || '默认';
-      deckCount[name] = (deckCount[name] || 0) + 1;
+      const name = c.deck || '';
+      if (!deckGroups[name]) deckGroups[name] = [];
+      deckGroups[name].push(c);
     }
-    const deckSummary = Object.entries(deckCount)
-      .map(([name, count]) => `<span class="inline-block bg-blue-50 text-blue-700 rounded-full px-2 py-0.5 text-xs">${escapeHTML(name)}: ${count} 张</span>`)
-      .join(' ');
+    const deckNames = Object.keys(deckGroups);
+
+    // Build deck selector options; pre-select matching deck by name
+    const deckOpts = decks.map(d => `<option value="${d.id}">${escapeHTML(d.name)}</option>`).join('');
 
     showModal(`
       <h3 class="text-lg font-bold mb-4">导入卡片</h3>
       <p class="text-sm text-gray-500 mb-4">解析到 <span class="font-semibold text-gray-700">${cards.length}</span> 张卡片</p>
-      <div class="mb-4 max-h-40 overflow-y-auto border border-gray-100 rounded-lg">
-        ${cards.slice(0, 20).map((c,i)=>`<div class="flex gap-2 py-1.5 px-3 text-xs ${i%2?'bg-gray-50':''}"><span class="text-gray-400 w-5">${i+1}.</span><span class="text-gray-700 truncate flex-1">${escapeHTML(c.front)}</span><span class="text-gray-400">→</span><span class="text-gray-500 truncate flex-1">${escapeHTML(c.back||'(空)')}</span><span class="text-gray-300">|</span><span class="text-gray-400 truncate">${escapeHTML(c.deck || '默认')}</span></div>`).join('')}
+      <div class="mb-3 max-h-36 overflow-y-auto border border-gray-100 rounded-lg">
+        ${cards.slice(0, 20).map((c,i)=>`<div class="flex gap-2 py-1.5 px-3 text-xs ${i%2?'bg-gray-50':''}"><span class="text-gray-400 w-5">${i+1}.</span><span class="text-gray-700 truncate flex-1">${escapeHTML(c.front)}</span><span class="text-gray-400">→</span><span class="text-gray-500 truncate flex-1">${escapeHTML(c.back||'(空)')}</span><span class="text-gray-300">|</span><span class="text-gray-400 truncate">${escapeHTML(c.deck || '(无分组)')}</span></div>`).join('')}
         ${cards.length > 20 ? `<div class="text-center text-xs text-gray-400 py-1">…还有 ${cards.length - 20} 张</div>` : ''}
       </div>
-      <label class="block text-xs font-medium text-gray-500 mb-1">导入分组</label>
-      <div class="mb-4">${deckSummary || '<span class="text-xs text-gray-400">无</span>'}</div>
-      <p class="text-xs text-gray-400 mb-4">文件中有卡组名的将导入对应卡组（不存在则自动创建），无卡组名的进入「默认」卡组。</p>
+      <label class="block text-xs font-medium text-gray-500 mb-2">选择分组及导入目标卡组</label>
+      <div class="mb-3 space-y-1 max-h-48 overflow-y-auto">
+        <label class="flex items-center gap-2 px-2 py-1.5 bg-gray-50 rounded-lg text-sm cursor-pointer hover:bg-gray-100 transition-colors">
+          <input type="checkbox" id="selectAllDecks" checked onchange="toggleAllDecks(this.checked)">
+          <span class="font-medium text-gray-700">全选 / 取消全选</span>
+        </label>
+        ${deckNames.map((name, idx) => {
+          const isUnnamed = !name;
+          const label = isUnnamed ? '(无分组)' : name;
+          const matchedDeck = decks.find(d => d.name === name);
+          return `
+          <div class="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm hover:bg-gray-50 transition-colors import-deck-item">
+            <input type="checkbox" class="deck-checkbox" checked onchange="updateImportCount()">
+            <span class="flex-1 ${isUnnamed ? 'text-gray-400' : ''}">${escapeHTML(label)}</span>
+            <span class="text-xs text-gray-400">${deckGroups[name].length} 张</span>
+            <select class="import-deck-select ml-2 px-2 py-0.5 border border-gray-200 rounded text-xs bg-white" data-group-idx="${idx}">
+              ${decks.map(d => `<option value="${d.id}" ${matchedDeck?.id === d.id ? 'selected' : ''}>${escapeHTML(d.name)}</option>`).join('')}
+            </select>
+          </div>`;
+        }).join('')}
+      </div>
+      <p id="importSelectedCount" class="text-xs text-gray-400 mb-4"></p>
       <div class="flex gap-2">
-        <button onclick="doImport(${cards.length})" class="flex-1 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors">确认导入</button>
+        <button onclick="doImport()" class="flex-1 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors">确认导入</button>
         <button onclick="closeModal()" class="flex-1 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">取消</button>
       </div>`);
 
     window._importCards = cards;
+    window._importDeckGroups = deckGroups;
+    window._importDeckNames = deckNames;
+    updateImportCount();
   } catch (e) {
     showToast('文件读取失败: ' + (e.message || String(e)), 'error');
   }
   event.target.value = '';
 };
 
+window.toggleAllDecks = function(checked) {
+  $$('.deck-checkbox').forEach(cb => cb.checked = checked);
+  updateImportCount();
+};
+
+window.updateImportCount = function() {
+  const total = window._importCards?.length || 0;
+  let selected = 0;
+  if (window._importDeckGroups) {
+    const names = window._importDeckNames || Object.keys(window._importDeckGroups);
+    names.forEach((name, idx) => {
+      const item = document.querySelector(`.import-deck-item:nth-child(${idx + 2}) .deck-checkbox`);
+      if (item && item.checked) selected += window._importDeckGroups[name].length;
+    });
+  } else {
+    selected = total;
+  }
+  const el = $('#importSelectedCount');
+  if (el) el.textContent = `已选 ${selected} / ${total} 张卡片`;
+};
+
 window.doImport = async function() {
   const cards = window._importCards;
   if (!cards || !cards.length) return;
+  // Get selected groups and their target deck ids
+  const groups = window._importDeckGroups;
+  const names = window._importDeckNames || Object.keys(groups || {});
+  const selectedGroups = [];
+  names.forEach((name, idx) => {
+    const item = document.querySelector(`.import-deck-item:nth-child(${idx + 2})`);
+    const cb = item?.querySelector('.deck-checkbox');
+    if (cb && cb.checked) {
+      const sel = item?.querySelector('.import-deck-select');
+      selectedGroups.push({ name, targetDid: sel ? parseInt(sel.value) : null });
+    }
+  });
+  if (!selectedGroups.length) { showToast('请至少选择一个分组', 'error'); return; }
+
+  // Map group name → target deck id
+  const groupTargetMap = {};
+  for (const g of selectedGroups) groupTargetMap[g.name] = g.targetDid;
+
   await ensureDefaultDeck();
   const allDecks = await Deck.getAll();
   let added = 0;
+  const totalToImport = cards.filter(c => groupTargetMap[c.deck || ''] !== undefined).length;
+  showProgressModalImport(0, totalToImport);
   for (const c of cards) {
+    const groupName = c.deck || '';
+    const targetDid = groupTargetMap[groupName];
+    if (targetDid === undefined) continue; // group not selected
     try {
-      const deckName = c.deck || '默认';
-      let deck = allDecks.find(d => d.name === deckName);
-      if (!deck) {
-        const id = await Deck.create(deckName);
-        deck = { id, name: deckName };
-        allDecks.push(deck);
-      }
+      const deck = allDecks.find(d => d.id === targetDid);
+      if (!deck) continue;
       const nid = await Note.create([c.front, c.back], c.tags, 0);
       await Card.create(nid, deck.id, 0);
       added++;
+      updateProgress(added, totalToImport);
     } catch(e) { /* skip invalid cards */ }
   }
   closeModal();
@@ -867,6 +931,8 @@ window.doImport = async function() {
   if (location.hash.startsWith('#browse')) renderBrowse();
   else if (location.hash.startsWith('#dashboard')) renderDashboard();
   window._importCards = null;
+  window._importDeckGroups = null;
+  window._importSelectedDecks = null;
 };
 
 // ===== Stats =====
@@ -1016,19 +1082,51 @@ function hideCtxMenu() {
 }
 
 function ctxAction() {
-  hideCtxMenu();
-  if (_ctxDeckId === null) return;
   const did = _ctxDeckId;
+  hideCtxMenu();
+  if (did === null) return;
   showConfirm('确定要清空此卡组的所有卡片吗？此操作不可恢复。', async () => {
     const cards = await Card.getByDeck(did);
     const nids = [...new Set(cards.map(c => c.nid))];
-    for (const nid of nids) {
-      await Card.removeByNid(nid);
-      await Note.remove(nid);
+    showProgressModal(nids.length);
+    for (let i = 0; i < nids.length; i++) {
+      await Card.removeByNid(nids[i]);
+      await Note.remove(nids[i]);
+      updateProgress(i + 1, nids.length);
     }
+    closeModal();
     showToast(`已清空 ${cards.length} 张卡片`, 'success');
     renderDashboard();
   });
+}
+
+function showProgressModalImport(current, total) {
+  showModal(`
+    <div class="text-center" style="min-width:280px">
+      <h3 class="text-lg font-bold mb-4">正在导入卡片</h3>
+      <div class="w-full bg-gray-200 rounded-full h-4 mb-2 overflow-hidden">
+        <div id="progressFill" class="progress-bar h-4 rounded-full bg-green-500" style="width:0%"></div>
+      </div>
+      <p id="progressText" class="text-sm text-gray-500">0 / ${total}</p>
+    </div>`);
+}
+
+function showProgressModal(current, total) {
+  showModal(`
+    <div class="text-center" style="min-width:280px">
+      <h3 class="text-lg font-bold mb-4">正在清空卡片</h3>
+      <div id="progressWrapper" class="w-full bg-gray-200 rounded-full h-4 mb-2 overflow-hidden">
+        <div id="progressFill" class="progress-bar h-4 rounded-full bg-blue-500" style="width:0%"></div>
+      </div>
+      <p id="progressText" class="text-sm text-gray-500">0 / ${total}</p>
+    </div>`);
+}
+
+function updateProgress(current, total) {
+  const fill = $('#progressFill');
+  const text = $('#progressText');
+  if (fill) fill.style.width = Math.round((current / total) * 100) + '%';
+  if (text) text.textContent = current + ' / ' + total;
 }
 
 // Close context menu on any click
