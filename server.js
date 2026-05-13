@@ -73,7 +73,7 @@ const server = http.createServer((req, res) => {
 
   // Serve static files
   let urlPath = req.url.split('?')[0];
-  if (urlPath === '/') urlPath = '/index.html';
+  if (urlPath === '/') urlPath = '/anki.html';
   const filePath = path.normalize(path.join(ROOT, urlPath));
   if (!filePath.startsWith(ROOT)) return sendJSON(res, 403, { error: 'Forbidden' });
   sendFile(res, filePath);
