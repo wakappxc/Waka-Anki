@@ -566,7 +566,10 @@ window.saveEdit = async function(nid) {
   closeModal();
   showToast('卡片已更新', 'success');
   if (location.hash.startsWith('#deck/')) renderReviewCard();
-  else if (location.hash.startsWith('#browse')) renderBrowse();
+  else if (location.hash.startsWith('#browse')) {
+    if (_browseDeckId !== null) await _renderBrowseDeckCards(_browseDeckId);
+    else await _renderBrowseTree();
+  }
 };
 
 window.deleteCard = async function(cid) {
@@ -829,84 +832,301 @@ window.addBatchCards = async function() {
 };
 
 // ===== Browse =====
+let _browseExpandedFolders = new Set();
+let _browseDeckId = null;       // null = folder/deck tree; number = cards in deck
+let _browseDeckCache = null;    // { cards, notesMap } from /api/browse/deck/:id
+const _browsePageSize = 50;     // 每批渲染卡片数
+let _browseLoadedCount = 0;     // 当前已渲染到第几条
+let _browseObserver = null;     // IntersectionObserver 实例
+
 async function renderBrowse() {
-  const cards = await Card.getAll();
-  const decks = await Deck.getAll();
-  const deckMap = {}; decks.forEach(d=>deckMap[d.id]=d.name);
+  _browseDeckId = null;
+  _browseDeckCache = null;
+  await _renderBrowseTree();
+}
+
+// ---- Tree view (one HTTP call via /api/browse/tree) ----
+async function _renderBrowseTree() {
+  let treeData;
+  try {
+    const r = await fetch('http://localhost:3456/api/browse/tree');
+    treeData = await r.json();
+  } catch (e) {
+    // fallback: use cached DB
+    const decks = await Deck.getAll();
+    const folders = await Folder.getAll();
+    const deckStats = {};
+    for (const d of decks) deckStats[d.id] = await Card.countByDeck(d.id);
+    treeData = { decks, folders, deckStats };
+  }
+
+  const { decks, folders, deckStats } = treeData;
+  const rootDecks = decks.filter(d => !d.folderId);
+  const rootFolders = folders.filter(f => !f.parentId);
+
+  // Compute folder totals in one pass (no async needed, deckStats already built)
+  function folderTotal(fid) {
+    let t = decks.filter(d => d.folderId === fid).reduce((s, d) => s + (deckStats[d.id]?.total || 0), 0);
+    folders.filter(f => f.parentId === fid).forEach(f => { t += folderTotal(f.id); });
+    return t;
+  }
+
+  function renderDeckCardSync(d) {
+    const counts = deckStats[d.id] || { new: 0, learn: 0, review: 0, total: 0 };
+    return `
+      <div class="bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow cursor-pointer" onclick="browseOpenDeck(${d.id})">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-medium text-gray-800">${escapeHTML(d.name)}</h3>
+            <p class="text-xs text-gray-400 mt-0.5">共 ${counts.total} 张卡片</p>
+          </div>
+          <div class="flex gap-2 items-center">
+            ${counts.new ? `<span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">新 ${counts.new}</span>` : ''}
+            ${counts.learn ? `<span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">学 ${counts.learn}</span>` : ''}
+            ${counts.review ? `<span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">复 ${counts.review}</span>` : ''}
+            ${!counts.new&&!counts.learn&&!counts.review ? `<span class="text-xs bg-gray-100 text-gray-400 px-2 py-1 rounded-full">完成</span>` : ''}
+            <svg class="w-4 h-4 text-gray-300 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderFolderSync(folder) {
+    const children = folders.filter(f => f.parentId === folder.id);
+    const folderDecks = decks.filter(d => d.folderId === folder.id);
+    const isExpanded = _browseExpandedFolders.has(folder.id);
+    const total = folderTotal(folder.id);
+
+    let html = `<div class="browse-folder-section" data-folder-id="${folder.id}">`;
+    html += `<div class="flex items-center gap-2 py-2 px-1 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors" onclick="browseToggleFolder(${folder.id})">`;
+    html += `<svg class="w-3.5 h-3.5 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>`;
+    html += `<span class="text-base">📁</span>`;
+    html += `<span class="text-sm font-medium text-gray-700">${escapeHTML(folder.name)}</span>`;
+    html += `<span class="text-xs text-gray-400">(${total} 张)</span>`;
+    html += `</div>`;
+    if (isExpanded) {
+      html += `<div class="ml-4 pl-3 border-l-2 border-gray-100">`;
+      if (folderDecks.length > 0) {
+        html += `<div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 mt-2 mb-3">`;
+        folderDecks.forEach(d => { html += renderDeckCardSync(d); });
+        html += `</div>`;
+      }
+      if (folderDecks.length === 0 && children.length === 0) {
+        html += `<div class="text-center py-3 text-gray-400 text-xs">空文件夹</div>`;
+      }
+      children.forEach(c => { html += renderFolderSync(c); });
+      html += `</div>`;
+    }
+    html += `</div>`;
+    return html;
+  }
+
+  const allEmpty = decks.length === 0 && folders.length === 0;
+  const deckHtml = rootDecks.map(renderDeckCardSync).join('');
+  const folderHtml = rootFolders.map(renderFolderSync).join('');
 
   $('#app').innerHTML = `
     <div class="mb-4 flex items-center justify-between">
-      <h2 class="text-xl font-bold text-gray-800">浏览卡片</h2>
+      <h2 class="text-xl font-bold text-gray-800">浏览</h2>
       <div class="flex gap-2">
-        <input id="browseSearch" placeholder="搜索..." class="px-3 py-2 border border-gray-200 rounded-lg text-sm w-48" oninput="browseSearch()">
         <button onclick="exportCards()" class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">导出</button>
         <button onclick="document.getElementById('importFile').click()" class="px-4 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors">导入</button>
         <input type="file" id="importFile" accept=".txt,.csv,.tsv" class="hidden" onchange="handleImport(event)">
       </div>
     </div>
-    <div id="browseList" class="bg-white rounded-xl shadow-sm divide-y divide-gray-100"></div>`;
-
-  renderBrowseList(cards, deckMap);
+    ${allEmpty
+      ? `<div class="text-center py-16 text-gray-400"><div class="text-5xl mb-3">📚</div><p class="text-sm">还没有卡组，先去添加卡片吧</p></div>`
+      : `
+        ${deckHtml ? `<div class="mb-4"><h3 class="text-sm font-medium text-gray-400 mb-2">根目录</h3><div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">${deckHtml}</div></div>` : ''}
+        ${folderHtml}
+      `
+    }`;
 }
 
-async function renderBrowseList(cards, deckMap) {
-  const el = $('#browseList');
-  if (!el) return;
-  if (cards.length===0) {
-    el.innerHTML = '<div class="p-12 text-center text-gray-400 text-sm">暂无卡片</div>';
-    return;
-  }
-  let html = '';
-  for (const c of cards) {
-    const note = await Note.get(c.nid);
-    const plainF = stripHTML(note?.fields[0]||'');
-    const f = escapeHTML(plainF.substring(0,60));
-    const plainB = stripHTML(note?.fields[1]||'');
-    const b = escapeHTML(plainB.substring(0,60));
-    const tags = (note?.tags||[]).map(t=>`<span class="text-[10px] text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">${escapeHTML(t)}</span>`).join(' ');
-    const status = c.queue===2 ? `<span class="text-xs text-green-600">间隔${c.ivl}天</span>` :
-                   c.queue===1 ? `<span class="text-xs text-red-500">学习中</span>` :
-                   c.queue===0 ? `<span class="text-xs text-blue-500">新</span>` :
-                   `<span class="text-xs text-gray-400">暂停</span>`;
-    html += `<div class="flex items-center gap-3 p-3 hover:bg-gray-50 transition-colors">
-      <div class="flex-1 min-w-0">
-        <p class="text-sm font-medium text-gray-700 truncate">${f}</p>
-        <p class="text-xs text-gray-400 truncate">${b}</p>
-        <div class="flex gap-2 mt-1">${tags} ${status}</div>
-      </div>
-      <div class="flex gap-1 shrink-0">
-        <span class="text-xs text-gray-400">${escapeHTML(deckMap[c.did]||'')}</span>
-        <button onclick="browseEdit(${c.id})" class="text-gray-400 hover:text-blue-500 p-1 text-xs">编辑</button>
-        <button onclick="browseDelete(${c.id})" class="text-gray-400 hover:text-red-500 p-1 text-xs">删除</button>
-      </div>
-    </div>`;
-  }
-  el.innerHTML = html;
-}
+window.browseToggleFolder = function(fid) {
+  if (_browseExpandedFolders.has(fid)) _browseExpandedFolders.delete(fid);
+  else _browseExpandedFolders.add(fid);
+  _renderBrowseTree();
+};
+window._renderBrowseTree = _renderBrowseTree;
 
-window.browseSearch = async function() {
-  const q = ($('#browseSearch')?.value||'').toLowerCase();
-  const cards = await Card.getAll();
-  const decks = await Deck.getAll();
-  const deckMap = {}; decks.forEach(d=>deckMap[d.id]=d.name);
-  if (!q) { renderBrowseList(cards, deckMap); return; }
-  const filtered = [];
-  for (const c of cards) {
-    const note = await Note.get(c.nid);
-    const f = (note?.fields[0]||'').toLowerCase();
-    const b = (note?.fields[1]||'').toLowerCase();
-    const tags = (note?.tags||[]).join(' ').toLowerCase();
-    if (f.includes(q)||b.includes(q)||tags.includes(q)) filtered.push(c);
-  }
-  renderBrowseList(filtered, deckMap);
+// ---- Deck cards view (one HTTP call via /api/browse/deck/:id, paginated render) ----
+window.browseOpenDeck = async function(did) {
+  _browseDeckId = did;
+  _browseDeckCache = null;
+  _browseLoadedCount = 0;
+  await _renderBrowseDeckCards(did);
 };
 
-window.browseEdit = function(cid) { /* reuse editCard from reviewer */ window.editCard(cid); };
+async function _renderBrowseDeckCards(did) {
+  let cards, notesMap;
+  try {
+    const r = await fetch(`http://localhost:3456/api/browse/deck/${did}`);
+    const data = await r.json();
+    cards = data.cards;
+    notesMap = data.notesMap;
+  } catch (e) {
+    cards = await Card.getByDeck(did);
+    notesMap = {};
+    for (const c of cards) { const n = await Note.get(c.nid); if (n) notesMap[c.nid] = n; }
+  }
+  _browseDeckCache = { cards, notesMap };
+  _browseCurrentCards = cards;
+  _browseCurrentNotesMap = notesMap;
+  _browseSearchMode = false;
+
+  const deckName = (await Deck.get(did))?.name || '卡片组';
+
+  $('#app').innerHTML = `
+    <div class="mb-4 flex items-center gap-3">
+      <button onclick="_renderBrowseTree()" class="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors px-2 py-1.5 rounded-lg hover:bg-blue-50">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        浏览
+      </button>
+      <svg class="w-3.5 h-3.5 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+      <h2 class="text-xl font-bold text-gray-800">${escapeHTML(deckName)}</h2>
+      <span class="text-sm text-gray-400">(${cards.length} 张)</span>
+      <div class="ml-auto flex gap-2">
+        <input id="browseSearch" placeholder="搜索..." class="px-3 py-2 border border-gray-200 rounded-lg text-sm w-44" oninput="browseDeckSearch()">
+      </div>
+    </div>
+    <div id="browseList" class="bg-white rounded-xl shadow-sm divide-y divide-gray-100"></div>
+    <div id="browseSentinel" class="h-4"></div>
+    <div id="browseLoadMoreBox" class="mt-2 text-center"></div>`;
+
+  _browseLoadedCount = 0;
+  _browseAppendCards();
+  _setupBrowseObserver();
+}
+
+// 构建单行 HTML
+function _browseCardRow(c, notesMap) {
+  const note = notesMap[c.nid] || {};
+  const plainF = stripHTML(note.fields?.[0] || '');
+  const f = escapeHTML(plainF.substring(0, 60));
+  const plainB = stripHTML(note.fields?.[1] || '');
+  const b = escapeHTML(plainB.substring(0, 60));
+  const tags = (note.tags || []).map(t => `<span class="text-[10px] text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">${escapeHTML(t)}</span>`).join(' ');
+  const status = c.queue === 2 ? `<span class="text-xs text-green-600">间隔${c.ivl}天</span>` :
+                 c.queue === 1 ? `<span class="text-xs text-red-500">学习中</span>` :
+                 c.queue === 0 ? `<span class="text-xs text-blue-500">新</span>` :
+                 `<span class="text-xs text-gray-400">暂停</span>`;
+  return `<div class="flex items-center gap-3 p-3 hover:bg-gray-50 transition-colors">
+    <div class="flex-1 min-w-0">
+      <p class="text-sm font-medium text-gray-700 truncate">${f}</p>
+      <p class="text-xs text-gray-400 truncate">${b}</p>
+      <div class="flex gap-2 mt-1">${tags} ${status}</div>
+    </div>
+    <div class="flex gap-1 shrink-0 items-center">
+      <button onclick="browseEdit(${c.id})" class="text-gray-400 hover:text-blue-500 p-1 text-xs">编辑</button>
+      <button onclick="browseDelete(${c.id})" class="text-gray-400 hover:text-red-500 p-1 text-xs">删除</button>
+    </div>
+  </div>`;
+}
+
+// 追加下一批卡片（同步，DOM insertAdjacentHTML）
+let _browseCurrentCards = [];
+let _browseCurrentNotesMap = {};
+let _browseSearchMode = false;
+
+function _browseAppendCards() {
+  const el = $('#browseList');
+  const sentinel = $('#browseSentinel');
+  const loadMoreBox = $('#browseLoadMoreBox');
+  if (!el || !sentinel) return;
+
+  const cards = _browseCurrentCards;
+  const notesMap = _browseCurrentNotesMap;
+  const total = cards.length;
+  const start = _browseLoadedCount;
+  const end = Math.min(start + _browsePageSize, total);
+  const batch = cards.slice(start, end);
+
+  if (start === 0 && batch.length === 0) {
+    el.innerHTML = '<div class="p-12 text-center text-gray-400 text-sm">暂无卡片</div>';
+    sentinel.classList.add('hidden');
+    loadMoreBox.innerHTML = '';
+    return;
+  }
+
+  el.insertAdjacentHTML('beforeend', batch.map(c => _browseCardRow(c, notesMap)).join(''));
+  _browseLoadedCount = end;
+
+  if (end >= total) {
+    // 已全部加载
+    sentinel.classList.add('hidden');
+    loadMoreBox.innerHTML = `<p class="text-xs text-gray-300 py-2">— 已加载全部 ${total} 张 —</p>`;
+  } else {
+    sentinel.classList.remove('hidden');
+    loadMoreBox.innerHTML = `<button onclick="_browseLoadMore()" class="px-4 py-2 text-sm text-blue-500 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-colors">加载更多（${end}/${total}）</button>`;
+  }
+}
+
+function _browseLoadMore() {
+  _browseAppendCards();
+  // 保持滚动位置在加载按钮附近
+  const sentinel = $('#browseSentinel');
+  if (sentinel) sentinel.scrollIntoView({ behavior: 'instant', block: 'end' });
+}
+
+// IntersectionObserver：滑动到底部自动加载
+function _setupBrowseObserver() {
+  if (_browseObserver) { _browseObserver.disconnect(); _browseObserver = null; }
+  const sentinel = $('#browseSentinel');
+  if (!sentinel) return;
+  _browseObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && _browseLoadedCount < _browseCurrentCards.length) {
+      _browseAppendCards();
+    }
+  }, { rootMargin: '200px' });
+  _browseObserver.observe(sentinel);
+}
+
+// 搜索：重置为从头渲染
+window.browseDeckSearch = function() {
+  if (!_browseDeckCache) return;
+  const q = ($('#browseSearch')?.value || '').toLowerCase().trim();
+
+  if (!q) {
+    _browseSearchMode = false;
+    _browseCurrentCards = _browseDeckCache.cards;
+    _browseCurrentNotesMap = _browseDeckCache.notesMap;
+  } else {
+    _browseSearchMode = true;
+    const { cards, notesMap } = _browseDeckCache;
+    _browseCurrentCards = cards.filter(c => {
+      const n = notesMap[c.nid] || {};
+      return (n.fields?.[0] || '').toLowerCase().includes(q) ||
+             (n.fields?.[1] || '').toLowerCase().includes(q) ||
+             (n.tags || []).join(' ').toLowerCase().includes(q);
+    });
+    _browseCurrentNotesMap = notesMap;
+  }
+
+  const el = $('#browseList');
+  const loadMoreBox = $('#browseLoadMoreBox');
+  if (el) el.innerHTML = '';
+  if (loadMoreBox) loadMoreBox.innerHTML = '';
+  _browseLoadedCount = 0;
+
+  // 先加载第一批（或全部如果不足一页）
+  _browseAppendCards();
+  _setupBrowseObserver();
+};
+
+window.browseEdit = function(cid) { window.editCard(cid); };
 window.browseDelete = async function(cid) {
-  const card = await Card.get(cid);
-  await Card.removeByNid(card.nid);
-  await Note.remove(card.nid);
-  renderBrowse();
+  showConfirm('确定要删除这张卡片吗？', async () => {
+    const card = await Card.get(cid);
+    await Card.removeByNid(card.nid);
+    await Note.remove(card.nid);
+    if (_browseDeckId !== null) {
+      await _renderBrowseDeckCards(_browseDeckId);
+    } else {
+      await _renderBrowseTree();
+    }
+    showToast('卡片已删除', 'info');
+  });
 };
 
 // ===== Export =====

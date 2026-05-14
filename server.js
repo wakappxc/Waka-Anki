@@ -128,6 +128,62 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  // GET /api/browse/tree — folder tree with deck stats (one shot, no N+1)
+  if (req.method === 'GET' && req.url === '/api/browse/tree') {
+    try {
+      const filePath = path.join(DATA_DIR, 'ankiweb.json');
+      const db = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+      const now = Date.now();
+      const today = Math.floor(now / 86400000);
+
+      // Build deck stats map in one pass
+      const deckStats = {};
+      for (const d of db.decks) {
+        deckStats[d.id] = { new: 0, learn: 0, review: 0, total: 0 };
+      }
+      for (const c of db.cards) {
+        const s = deckStats[c.did];
+        if (!s) continue;
+        s.total++;
+        if (c.queue === -1) continue;
+        if (c.queue === 0) s.new++;
+        else if (c.queue === 1) { if (c.due <= now) s.learn++; }
+        else if (c.queue === 2) { if (c.due <= today) s.review++; }
+      }
+
+      sendJSON(res, 200, {
+        decks: db.decks,
+        folders: db.folders || [],
+        deckStats
+      });
+    } catch (e) {
+      sendJSON(res, 500, { error: e.message });
+    }
+    return;
+  }
+
+  // GET /api/browse/deck/:id — all cards+notes in a deck (one shot)
+  const browseDeckMatch = req.method === 'GET' && req.url.match(/^\/api\/browse\/deck\/(\d+)$/);
+  if (browseDeckMatch) {
+    try {
+      const did = parseInt(browseDeckMatch[1]);
+      const filePath = path.join(DATA_DIR, 'ankiweb.json');
+      const db = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+
+      const cards = db.cards.filter(c => c.did === did);
+      const nidSet = new Set(cards.map(c => c.nid));
+      const notesMap = {};
+      for (const n of db.notes) {
+        if (nidSet.has(n.id)) notesMap[n.id] = n;
+      }
+
+      sendJSON(res, 200, { cards, notesMap });
+    } catch (e) {
+      sendJSON(res, 500, { error: e.message });
+    }
+    return;
+  }
+
   // Serve static files
   let urlPath = req.url.split('?')[0];
   if (urlPath === '/') urlPath = '/anki.html';
