@@ -143,8 +143,8 @@ if (!fs.existsSync(path.join(DATA_DIR, 'fast-cards.json'))) {
 }
 if (!fs.existsSync(path.join(DATA_DIR, 'ankiweb.json'))) {
   fs.writeFileSync(path.join(DATA_DIR, 'ankiweb.json'), JSON.stringify({
-    decks: [], notes: [], cards: [], revlog: [],
-    nextId: { decks: 1, notes: 1, cards: 1, revlog: 1 }
+    decks: [], notes: [], cards: [], revlog: [], folders: [],
+    nextId: { decks: 1, notes: 1, cards: 1, revlog: 1, folders: 1 }
   }), 'utf-8');
 }
 

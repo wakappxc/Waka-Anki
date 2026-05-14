@@ -11,10 +11,15 @@ async function loadDB() {
     const r = await fetch(API);
     if (r.ok) {
       const data = await r.json();
-      if (data && data.decks) { DB = data; return DB; }
+      if (data && data.decks) {
+        DB = data;
+        if (!DB.folders) DB.folders = [];
+        if (!DB.nextId.folders) DB.nextId.folders = 1;
+        return DB;
+      }
     }
   } catch (e) { console.error('Load DB failed, start fresh'); }
-  DB = { decks: [], notes: [], cards: [], revlog: [], nextId: { decks: 1, notes: 1, cards: 1, revlog: 1 } };
+  DB = { decks: [], notes: [], cards: [], revlog: [], folders: [], nextId: { decks: 1, notes: 1, cards: 1, revlog: 1, folders: 1 } };
   return DB;
 }
 
@@ -34,9 +39,9 @@ const Deck = {
     DB = null; // invalidate cache so next loadDB re-fetches
     return r.json();
   },
-  async create(name) {
+  async create(name, folderId = null) {
     await loadDB();
-    const deck = { id: DB.nextId.decks++, name, created: Date.now() };
+    const deck = { id: DB.nextId.decks++, name, folderId, created: Date.now() };
     DB.decks.push(deck); await saveDB(); return deck.id;
   },
   async getAll() { await loadDB(); return [...DB.decks]; },
@@ -49,6 +54,49 @@ const Deck = {
   async remove(id) { await loadDB(); DB.decks = DB.decks.filter(d => d.id !== id); await saveDB(); },
   async count() { await loadDB(); return DB.decks.length; },
   async findByName(name) { await loadDB(); return DB.decks.find(d => d.name === name); }
+};
+
+// ===== Folders =====
+const Folder = {
+  async create(name, parentId = null) {
+    await loadDB();
+    const folder = { id: DB.nextId.folders++, name, parentId, created: Date.now() };
+    DB.folders.push(folder); await saveDB(); return folder.id;
+  },
+  async getAll() { await loadDB(); return [...DB.folders]; },
+  async get(id) { await loadDB(); return DB.folders.find(f => f.id === id); },
+  async update(folder) {
+    await loadDB();
+    const idx = DB.folders.findIndex(f => f.id === folder.id);
+    if (idx >= 0) { folder.modified = Date.now(); DB.folders[idx] = folder; await saveDB(); }
+  },
+  async remove(id) {
+    await loadDB();
+    const folder = DB.folders.find(f => f.id === id);
+    if (!folder) return;
+    const parentId = folder.parentId;
+    DB.folders.filter(f => f.parentId === id).forEach(f => f.parentId = parentId);
+    DB.decks.filter(d => d.folderId === id).forEach(d => d.folderId = parentId);
+    DB.folders = DB.folders.filter(f => f.id !== id);
+    await saveDB();
+  },
+  async removeDeep(id) {
+    await loadDB();
+    const collectIds = (fid) => {
+      const ids = [fid];
+      DB.folders.filter(f => f.parentId === fid).forEach(f => ids.push(...collectIds(f.id)));
+      return ids;
+    };
+    const ids = collectIds(id);
+    ids.forEach(fid => {
+      DB.decks = DB.decks.filter(d => d.folderId !== fid);
+    });
+    DB.folders = DB.folders.filter(f => !ids.includes(f.id));
+    await saveDB();
+    return ids.length;
+  },
+  async getChildren(id) { await loadDB(); return DB.folders.filter(f => f.parentId === id); },
+  async getDecks(id) { await loadDB(); return DB.decks.filter(d => d.folderId === id); }
 };
 
 // ===== Notes =====
@@ -167,8 +215,8 @@ const Stats = {
 
 async function clearAllDB() {
   await loadDB();
-  DB.decks = []; DB.notes = []; DB.cards = []; DB.revlog = [];
-  DB.nextId = { decks: 1, notes: 1, cards: 1, revlog: 1 };
+  DB.decks = []; DB.notes = []; DB.cards = []; DB.revlog = []; DB.folders = [];
+  DB.nextId = { decks: 1, notes: 1, cards: 1, revlog: 1, folders: 1 };
   await saveDB();
 }
 

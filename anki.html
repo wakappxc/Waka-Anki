@@ -29,6 +29,9 @@ tailwind.config = {
   #reviewFrontContent img, #reviewBackContent img,
   #previewFront img, #previewBack img { cursor: pointer; }
   #ctxMenu { z-index: 9999; }
+  .drop-zone { transition: background-color 0.2s, box-shadow 0.2s; }
+  .drop-active { background-color: #eff6ff !important; box-shadow: inset 0 0 0 2px #3b82f6; }
+  .deck-card.dragging { opacity: 0.4; }
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen font-sans text-gray-800">
@@ -45,11 +48,8 @@ tailwind.config = {
 </div>
 
 <!-- Context menu -->
-<div id="ctxMenu" class="fixed z-50 hidden bg-white rounded-lg shadow-xl border border-gray-200 py-1 w-36" style="min-width:120px">
-  <button class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2" onclick="ctxAction()">
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-    清空卡片
-  </button>
+<div id="ctxMenu" class="fixed z-50 hidden bg-white rounded-lg shadow-xl border border-gray-200 py-1 w-44" style="min-width:140px">
+  <div id="ctxMenuItems"></div>
 </div>
 
 <!-- Header -->
@@ -172,58 +172,243 @@ function navigate() {
 window.addEventListener('hashchange', navigate);
 
 // ===== Dashboard =====
+let _expandedFolders = new Set();
+
+function renderDeckCard(d, counts) {
+  return `
+    <div class="deck-card bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow cursor-pointer" draggable="true" data-deck-id="${d.id}" ondragstart="dragDeckStart(event, ${d.id})" ondragend="dragDeckEnd(event)" onclick="if(!_dragMoved)location.hash='#deck/${d.id}'" oncontextmenu="event.preventDefault();showDeckCtxMenu(event, ${d.id})">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="font-medium text-gray-800">${escapeHTML(d.name)}</h3>
+          <p class="text-xs text-gray-400 mt-0.5">共 ${counts.total} 张卡片</p>
+        </div>
+        <div class="flex gap-2">
+          ${counts.new ? `<span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">新 ${counts.new}</span>` : ''}
+          ${counts.learn ? `<span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">学 ${counts.learn}</span>` : ''}
+          ${counts.review ? `<span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">复 ${counts.review}</span>` : ''}
+          ${!counts.new&&!counts.learn&&!counts.review ? `<span class="text-xs bg-gray-100 text-gray-400 px-2 py-1 rounded-full">完成</span>` : ''}
+        </div>
+      </div>
+      ${counts.new+counts.learn+counts.review>0 ? `<div class="mt-3 bg-gray-100 rounded-full h-1.5"><div class="progress-bar bg-blue-500 h-1.5 rounded-full" style="width:${Math.max(5,((counts.new+counts.learn+counts.review)/Math.max(counts.total,1))*100)}%"></div></div>` : ''}
+    </div>`;
+}
+
+async function _getFolderTotalCards(fid, allDecks, allFolders) {
+  let total = 0;
+  for (const d of allDecks.filter(d => d.folderId === fid)) {
+    const counts = await Card.countByDeck(d.id);
+    total += counts.total;
+  }
+  for (const child of allFolders.filter(f => f.parentId === fid)) {
+    total += await _getFolderTotalCards(child.id, allDecks, allFolders);
+  }
+  return total;
+}
+
+async function renderFolderSection(folder, allDecks, allFolders) {
+  const children = allFolders.filter(f => f.parentId === folder.id);
+  const folderDecks = allDecks.filter(d => d.folderId === folder.id);
+  const isExpanded = _expandedFolders.has(folder.id);
+  const totalCards = await _getFolderTotalCards(folder.id, allDecks, allFolders);
+
+  let html = `<div class="folder-section" data-folder-id="${folder.id}">`;
+  html += `<div class="flex items-center gap-2 py-2 px-1 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors folder-header drop-zone" onclick="toggleFolder(${folder.id})" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, ${folder.id})" oncontextmenu="event.preventDefault();showFolderCtxMenu(event, ${folder.id})">`;
+  html += `<svg class="w-3.5 h-3.5 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>`;
+  html += `<span class="text-base">📁</span>`;
+  html += `<span class="text-sm font-medium text-gray-700">${escapeHTML(folder.name)}</span>`;
+  html += `<span class="text-xs text-gray-400">(${totalCards} 张)</span>`;
+  html += `</div>`;
+
+  if (isExpanded) {
+    html += `<div class="ml-4 pl-3 border-l-2 border-gray-100 folder-content drop-zone" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, ${folder.id})">`;
+    if (folderDecks.length > 0) {
+      html += `<div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 mt-2 mb-3">`;
+      for (const d of folderDecks) {
+        const counts = await Card.countByDeck(d.id);
+        html += renderDeckCard(d, counts);
+      }
+      html += `</div>`;
+    }
+    if (folderDecks.length === 0 && children.length === 0) {
+      html += `<div class="text-center py-3 text-gray-400 text-xs">空文件夹 · <button onclick="event.stopPropagation();showNewDeckModal(${folder.id})" class="text-blue-500 hover:underline">新建卡组</button></div>`;
+    }
+    for (const child of children) {
+      html += await renderFolderSection(child, allDecks, allFolders);
+    }
+    html += `</div>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
 async function renderDashboard() {
   const decks = await Deck.getAll();
-  let dueTotal=0, html='';
+  const folders = await Folder.getAll();
+  const rootDecks = decks.filter(d => !d.folderId);
+  const rootFolders = folders.filter(f => !f.parentId);
+
+  let dueTotal = 0;
   for (const d of decks) {
     const counts = await Card.countByDeck(d.id);
     dueTotal += counts.new + counts.learn + counts.review;
-    html += `
-      <div class="deck-card bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow cursor-pointer" data-deck-id="${d.id}" onclick="location.hash='#deck/${d.id}'" oncontextmenu="event.preventDefault();showCtxMenu(event, ${d.id})">
-        <div class="flex items-center justify-between">
-          <div>
-            <h3 class="font-medium text-gray-800">${escapeHTML(d.name)}</h3>
-            <p class="text-xs text-gray-400 mt-0.5">共 ${counts.total} 张卡片</p>
-          </div>
-          <div class="flex gap-2">
-            ${counts.new ? `<span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">新 ${counts.new}</span>` : ''}
-            ${counts.learn ? `<span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">学 ${counts.learn}</span>` : ''}
-            ${counts.review ? `<span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">复 ${counts.review}</span>` : ''}
-            ${!counts.new&&!counts.learn&&!counts.review ? `<span class="text-xs bg-gray-100 text-gray-400 px-2 py-1 rounded-full">完成</span>` : ''}
-          </div>
-        </div>
-        ${counts.new+counts.learn+counts.review>0 ? `<div class="mt-3 bg-gray-100 rounded-full h-1.5"><div class="progress-bar bg-blue-500 h-1.5 rounded-full" style="width:${Math.max(5,((counts.new+counts.learn+counts.review)/Math.max(counts.total,1))*100)}%"></div></div>` : ''}
-      </div>`;
   }
-  if (decks.length===0) html=`<div class="text-center py-16 text-gray-400"><div class="text-5xl mb-3">📚</div><p class="text-sm">还没有卡组，点击下方按钮创建</p></div>`;
+
+  let deckHtml = '';
+  for (const d of rootDecks) {
+    const counts = await Card.countByDeck(d.id);
+    deckHtml += renderDeckCard(d, counts);
+  }
+
+  let folderHtml = '';
+  for (const folder of rootFolders) {
+    folderHtml += await renderFolderSection(folder, decks, folders);
+  }
+
+  const allEmpty = decks.length === 0 && folders.length === 0;
+  if (allEmpty) deckHtml = `<div class="text-center py-16 text-gray-400 col-span-full"><div class="text-5xl mb-3">📚</div><p class="text-sm">还没有卡组或文件夹，点击上方按钮创建</p></div>`;
 
   $('#app').innerHTML = `
     <div class="mb-4 flex items-center justify-between">
       <h2 class="text-xl font-bold text-gray-800">仪表盘</h2>
-      <button onclick="showNewDeckModal()" class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">+ 新建卡组</button>
+      <div class="flex gap-2">
+        <button onclick="showNewFolderModal()" class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">+ 新建文件夹</button>
+        <button onclick="showNewDeckModal()" class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">+ 新建卡组</button>
+      </div>
     </div>
     ${dueTotal>0 ? `<div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-between">
       <p class="text-sm text-blue-700 font-medium">今天有 <span class="font-bold">${dueTotal}</span> 张卡片待复习</p>
-      ${decks.length===1 ? `<button onclick="location.hash='#deck/${decks[0].id}'" class="px-4 py-1.5 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">开始学习</button>` : ''}
+      ${decks.length===1 && folders.length===0 ? `<button onclick="location.hash='#deck/${decks[0].id}'" class="px-4 py-1.5 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">开始学习</button>` : ''}
     </div>` : (decks.length>0 ? `<div class="mb-4 p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-700 text-center font-medium">🎉 今天的任务全部完成！</div>` : '')}
-    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">${html}</div>`;
+    ${deckHtml && !allEmpty ? `<div class="mb-4"><h3 class="text-sm font-medium text-gray-400 mb-2">根目录</h3><div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 drop-zone rounded-lg" style="min-height:60px" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, null)">${deckHtml}</div></div>` : (allEmpty ? deckHtml : '')}
+    ${!allEmpty && !deckHtml && folders.length > 0 ? `<div class="mb-4"><h3 class="text-sm font-medium text-gray-400 mb-2">根目录</h3><div class="drop-zone rounded-lg text-center py-6 text-gray-400 text-sm" style="min-height:60px" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, null)">拖拽卡组到此处移至根目录</div></div>` : ''}
+    ${folderHtml}`;
 }
 
-function showNewDeckModal() {
-  showModal(`
-    <h3 class="text-lg font-bold mb-4">新建卡组</h3>
-    <input id="newDeckName" placeholder="输入卡组名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4" onkeydown="if(event.key==='Enter')createDeck()">
-    <button onclick="createDeck()" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">创建</button>`);
-  setTimeout(()=>$('#newDeckName')?.focus(), 100);
+window.toggleFolder = function(fid) {
+  if (_expandedFolders.has(fid)) _expandedFolders.delete(fid);
+  else _expandedFolders.add(fid);
+  renderDashboard();
+};
+
+// ===== Drag & Drop =====
+let _dragDeckId = null;
+let _dragMoved = false;
+
+window.dragDeckStart = function(e, did) {
+  _dragDeckId = did;
+  _dragMoved = false;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', String(did));
+  setTimeout(() => e.target.classList.add('dragging'), 0);
+};
+
+window.dragDeckEnd = function(e) {
+  e.target.classList.remove('dragging');
+  _dragDeckId = null;
+  document.querySelectorAll('.drop-active').forEach(el => el.classList.remove('drop-active'));
+};
+
+window.dragOver = function(e, el) {
+  e.preventDefault();
+  if (!el.classList.contains('drop-active')) el.classList.add('drop-active');
+};
+
+window.dragLeave = function(el) {
+  el.classList.remove('drop-active');
+};
+
+window.dropDeck = async function(e, folderId) {
+  e.preventDefault();
+  e.stopPropagation();
+  const el = e.currentTarget;
+  el.classList.remove('drop-active');
+  _dragMoved = true;
+
+  if (_dragDeckId === null) return;
+
+  const deck = await Deck.get(_dragDeckId);
+  if (!deck) return;
+  if (deck.folderId === folderId) return;
+  if (folderId === deck.id) return;
+
+  deck.folderId = folderId;
+  await Deck.update(deck);
+
+  if (folderId !== null && folderId !== undefined) {
+    _expandedFolders.add(folderId);
+  }
+
+  renderDashboard();
+};
+
+async function buildFolderOptions(parentId, depth, excludeId) {
+  const folders = await Folder.getAll();
+  const children = folders.filter(f => f.parentId === parentId && f.id !== excludeId);
+  let html = '';
+  for (const f of children) {
+    const indent = '  '.repeat(depth);
+    html += `<option value="${f.id}">${indent}${escapeHTML(f.name)}</option>`;
+    html += await buildFolderOptions(f.id, depth + 1, excludeId);
+  }
+  return html;
+}
+
+function showNewDeckModal(presetFolderId) {
+  buildFolderOptions(null, 0).then(folderOpts => {
+    showModal(`
+      <h3 class="text-lg font-bold mb-4">新建卡组</h3>
+      <input id="newDeckName" placeholder="输入卡组名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-3" onkeydown="if(event.key==='Enter')createDeck()">
+      <label class="block text-xs text-gray-500 mb-1">所属文件夹（可选）</label>
+      <select id="newDeckFolder" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">
+        <option value="">根目录（无文件夹）</option>
+        ${folderOpts}
+      </select>
+      <button onclick="createDeck()" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">创建</button>`);
+    if (presetFolderId) {
+      setTimeout(() => { const s = $('#newDeckFolder'); if (s) s.value = String(presetFolderId); }, 0);
+    }
+    setTimeout(() => $('#newDeckName')?.focus(), 100);
+  });
 }
 async function createDeck() {
   const name = $('#newDeckName').value.trim();
   if (!name) { showToast('请输入卡组名称', 'error'); return; }
-  try { await Deck.create(name); closeModal(); showToast('卡组已创建', 'success'); renderDashboard(); }
+  const folderSelect = $('#newDeckFolder');
+  const folderId = folderSelect ? (parseInt(folderSelect.value) || null) : null;
+  try { await Deck.create(name, folderId); closeModal(); showToast('卡组已创建', 'success'); renderDashboard(); }
   catch(e) { showToast('创建失败: ' + e.message, 'error'); }
 }
+
+function showNewFolderModal(presetParentId) {
+  buildFolderOptions(null, 0).then(folderOpts => {
+    showModal(`
+      <h3 class="text-lg font-bold mb-4">新建文件夹</h3>
+      <input id="newFolderName" placeholder="输入文件夹名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-3" onkeydown="if(event.key==='Enter')createFolder()">
+      <label class="block text-xs text-gray-500 mb-1">所属父文件夹（可选）</label>
+      <select id="newFolderParent" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">
+        <option value="">根目录</option>
+        ${folderOpts}
+      </select>
+      <button onclick="createFolder()" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">创建</button>`);
+    if (presetParentId) {
+      setTimeout(() => { const s = $('#newFolderParent'); if (s) s.value = String(presetParentId); }, 0);
+    }
+    setTimeout(() => $('#newFolderName')?.focus(), 100);
+  });
+}
+async function createFolder() {
+  const name = $('#newFolderName').value.trim();
+  if (!name) { showToast('请输入文件夹名称', 'error'); return; }
+  const parentSelect = $('#newFolderParent');
+  const parentId = parentSelect ? (parseInt(parentSelect.value) || null) : null;
+  try { await Folder.create(name, parentId); closeModal(); showToast('文件夹已创建', 'success'); renderDashboard(); }
+  catch(e) { showToast('创建失败: ' + e.message, 'error'); }
+}
+
 window.createDeck = createDeck;
+window.createFolder = createFolder;
 window.showNewDeckModal = showNewDeckModal;
+window.showNewFolderModal = showNewFolderModal;
 
 // ===== Review =====
 let reviewState = { cards: [], idx: 0, did: 0, showingBack: false, states: null };
@@ -285,13 +470,13 @@ function renderReviewCard() {
                 <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 p-8 overflow-y-auto">
                   <div class="flex flex-col items-center justify-center min-h-full w-full">
                     <p class="text-xs text-blue-400 mb-3 uppercase tracking-wide">问题</p>
-                    <p id="reviewFrontContent" class="text-2xl sm:text-3xl font-medium text-gray-800 whitespace-pre-wrap"></p>
+                    <p id="reviewFrontContent" class="text-lg sm:text-xl font-medium text-gray-800 whitespace-pre-wrap"></p>
                   </div>
                 </div>
                 <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 p-8 overflow-y-auto">
                   <div class="flex flex-col items-center justify-center min-h-full w-full">
                     <p class="text-xs text-green-400 mb-3 uppercase tracking-wide">答案</p>
-                    <p id="reviewBackContent" class="text-2xl sm:text-3xl font-medium text-gray-800 whitespace-pre-wrap"></p>
+                    <p id="reviewBackContent" class="text-lg sm:text-xl font-medium text-gray-800 whitespace-pre-wrap"></p>
                   </div>
                 </div>
               </div>
@@ -481,13 +666,13 @@ async function renderAdd() {
             <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-xl p-6 sm:p-8 overflow-y-auto">
               <div class="flex flex-col items-center justify-center min-h-full w-full">
                 <p class="text-xs text-blue-400 mb-3 uppercase tracking-wide">正面 · 问题</p>
-                <p id="previewFront" class="text-xl sm:text-2xl font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+                <p id="previewFront" class="text-base sm:text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
               </div>
             </div>
             <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-xl p-6 sm:p-8 overflow-y-auto">
               <div class="flex flex-col items-center justify-center min-h-full w-full">
                 <p class="text-xs text-green-400 mb-3 uppercase tracking-wide">背面 · 答案</p>
-                <p id="previewBack" class="text-xl sm:text-2xl font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+                <p id="previewBack" class="text-base sm:text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
               </div>
             </div>
           </div>
@@ -1066,31 +1251,188 @@ window.clearAllData = async function() {
 };
 
 // ===== Context menu =====
-let _ctxDeckId = null;
+let _ctxTarget = null;
 
-function showCtxMenu(event, did) {
-  _ctxDeckId = did;
+function showCtxMenu(html, event) {
+  document.getElementById('ctxMenuItems').innerHTML = html;
   const menu = $('#ctxMenu');
-  menu.style.left = event.clientX + 'px';
-  menu.style.top = event.clientY + 'px';
+  menu.style.left = Math.min(event.clientX, window.innerWidth - 180) + 'px';
+  menu.style.top = Math.min(event.clientY, window.innerHeight - 200) + 'px';
   menu.classList.remove('hidden');
 }
 
 function hideCtxMenu() {
   $('#ctxMenu').classList.add('hidden');
-  _ctxDeckId = null;
+  _ctxTarget = null;
 }
 
-function ctxAction() {
-  const did = _ctxDeckId;
+function showDeckCtxMenu(event, did) {
+  _ctxTarget = { type: 'deck', id: did };
+  showCtxMenu(`
+    <button class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2" onclick="ctxClearCards()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+      清空卡片
+    </button>
+    <button class="w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2" onclick="ctxMoveDeck()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+      移动到文件夹
+    </button>
+    <hr class="border-gray-100">
+    <button class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2" onclick="ctxDeleteDeck()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+      删除卡组
+    </button>`, event);
+}
+
+function showFolderCtxMenu(event, fid) {
+  _ctxTarget = { type: 'folder', id: fid };
+  showCtxMenu(`
+    <button class="w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2" onclick="ctxRenameFolder()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      重命名
+    </button>
+    <button class="w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2" onclick="ctxNewDeckInFolder()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      在此新建卡组
+    </button>
+    <button class="w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2" onclick="ctxNewSubFolder()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      新建子文件夹
+    </button>
+    <hr class="border-gray-100">
+    <button class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2" onclick="ctxDeleteFolder()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+      删除文件夹
+    </button>`, event);
+}
+
+async function ctxClearCards() {
+  const did = _ctxTarget.id;
   hideCtxMenu();
-  if (did === null) return;
   showConfirm('确定要清空此卡组的所有卡片吗？此操作不可恢复。', async () => {
     const cards = await Card.getByDeck(did);
     showProgressModal(cards.length);
     const result = await Deck.clearCards(did);
     closeModal();
     showToast(`已清空 ${result.count || cards.length} 张卡片`, 'success');
+    renderDashboard();
+  });
+}
+
+async function ctxMoveDeck() {
+  const did = _ctxTarget.id;
+  hideCtxMenu();
+  const folderOpts = await buildFolderOptions(null, 0);
+  showModal(`
+    <h3 class="text-lg font-bold mb-4">移动卡组到文件夹</h3>
+    <select id="moveDeckFolder" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">
+      <option value="">根目录（无文件夹）</option>
+      ${folderOpts}
+    </select>
+    <button onclick="doMoveDeck(${did})" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">移动</button>`);
+}
+
+async function doMoveDeck(did) {
+  const deck = await Deck.get(did);
+  if (!deck) return;
+  const folderSelect = $('#moveDeckFolder');
+  deck.folderId = folderSelect ? (parseInt(folderSelect.value) || null) : null;
+  await Deck.update(deck);
+  closeModal();
+  showToast('卡组已移动', 'success');
+  renderDashboard();
+}
+
+async function ctxDeleteDeck() {
+  const did = _ctxTarget.id;
+  hideCtxMenu();
+  const deck = await Deck.get(did);
+  if (!deck) return;
+  showConfirm(`确定要删除卡组"${escapeHTML(deck.name)}"吗？卡组内的卡片不会被删除，将保留为无卡组状态。`, async () => {
+    await Deck.remove(did);
+    showToast('卡组已删除', 'success');
+    renderDashboard();
+  });
+}
+
+async function ctxRenameFolder() {
+  const fid = _ctxTarget.id;
+  hideCtxMenu();
+  const folder = await Folder.get(fid);
+  if (!folder) return;
+  showModal(`
+    <h3 class="text-lg font-bold mb-4">重命名文件夹</h3>
+    <input id="renameFolderName" value="${escapeHTML(folder.name)}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4" onkeydown="if(event.key==='Enter')doRenameFolder(${fid})">
+    <button onclick="doRenameFolder(${fid})" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">保存</button>`);
+  setTimeout(() => $('#renameFolderName')?.select(), 100);
+}
+
+async function doRenameFolder(fid) {
+  const name = $('#renameFolderName').value.trim();
+  if (!name) { showToast('请输入名称', 'error'); return; }
+  const folder = await Folder.get(fid);
+  if (!folder) return;
+  folder.name = name;
+  await Folder.update(folder);
+  closeModal();
+  showToast('文件夹已重命名', 'success');
+  renderDashboard();
+}
+
+function ctxNewDeckInFolder() {
+  const fid = _ctxTarget.id;
+  hideCtxMenu();
+  showNewDeckModal(fid);
+}
+
+function ctxNewSubFolder() {
+  const fid = _ctxTarget.id;
+  hideCtxMenu();
+  showNewFolderModal(fid);
+}
+
+async function ctxDeleteFolder() {
+  const fid = _ctxTarget.id;
+  hideCtxMenu();
+  const folder = await Folder.get(fid);
+  if (!folder) return;
+  const subFolders = await Folder.getChildren(fid);
+  const decks = await Folder.getDecks(fid);
+  if (decks.length === 0 && subFolders.length === 0) {
+    showConfirm(`确定要删除空的文件夹"${escapeHTML(folder.name)}"吗？`, async () => {
+      await Folder.remove(fid);
+      showToast('文件夹已删除', 'success');
+      renderDashboard();
+    });
+  } else {
+    showModal(`
+      <h3 class="text-lg font-bold mb-3">删除文件夹</h3>
+      <p class="text-sm text-gray-600 mb-1">文件夹"${escapeHTML(folder.name)}"包含：</p>
+      <ul class="text-sm text-gray-500 mb-4 ml-4 list-disc">
+        ${decks.length > 0 ? `<li>${decks.length} 个卡组</li>` : ''}
+        ${subFolders.length > 0 ? `<li>${subFolders.length} 个子文件夹</li>` : ''}
+      </ul>
+      <p class="text-xs text-gray-400 mb-3">选择删除方式：</p>
+      <div class="flex gap-2 mb-2">
+        <button onclick="doDeleteFolderShallow(${fid})" class="flex-1 py-2 bg-yellow-500 text-white rounded-lg text-sm hover:bg-yellow-600 transition-colors">保留内容</button>
+        <button onclick="doDeleteFolderDeep(${fid})" class="flex-1 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors">全部删除</button>
+      </div>
+      <button onclick="closeModal()" class="w-full py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">取消</button>`);
+  }
+}
+
+async function doDeleteFolderShallow(fid) {
+  await Folder.remove(fid);
+  closeModal();
+  showToast('文件夹已删除，内容已移至上级', 'info');
+  renderDashboard();
+}
+
+async function doDeleteFolderDeep(fid) {
+  closeModal();
+  showConfirm('确定要永久删除此文件夹及其所有内容和卡片吗？此操作不可恢复！', async () => {
+    const count = await Folder.removeDeep(fid);
+    showToast(`已删除文件夹及其 ${count} 个子文件夹`, 'success');
     renderDashboard();
   });
 }
@@ -1130,7 +1472,7 @@ document.addEventListener('click', (e) => {
 });
 
 document.addEventListener('contextmenu', (e) => {
-  if (!e.target.closest('.deck-card')) hideCtxMenu();
+  if (!e.target.closest('.deck-card') && !e.target.closest('.folder-header')) hideCtxMenu();
 });
 
 // ===== Lightbox =====
