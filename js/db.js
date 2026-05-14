@@ -8,7 +8,7 @@ let DB = null;
 async function loadDB() {
   if (DB) return DB;
   try {
-    const r = await fetch(API);
+    const r = await fetch(API, { cache: 'no-store' });
     if (r.ok) {
       const data = await r.json();
       if (data && data.decks) {
