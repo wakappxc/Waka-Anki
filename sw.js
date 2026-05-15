@@ -1,4 +1,4 @@
-const CACHE = 'waka-anki-v1';
+const CACHE = 'waka-anki-v2';
 const ASSETS = [
   './',
   'anki.html',
@@ -25,22 +25,19 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  // Only cache GET, skip CDN and API calls
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
   if (url.origin !== self.location.origin) return;
 
-
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      const fetched = fetch(e.request).then(res => {
-        if (res.ok) {
-          const clone = res.clone();
-          caches.open(CACHE).then(cache => cache.put(e.request, clone));
-        }
-        return res;
-      });
-      return cached || fetched;
-    })
+    caches.open(CACHE).then(cache =>
+      cache.match(e.request).then(cached => {
+        const fetched = fetch(e.request).then(res => {
+          if (res.ok) cache.put(e.request, res.clone());
+          return res;
+        }).catch(() => cached);
+        return cached || fetched;
+      })
+    )
   );
 });
