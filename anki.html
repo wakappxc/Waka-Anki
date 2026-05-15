@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anki Web - 间隔重复记忆</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 tailwind.config = {
   theme: {
@@ -111,6 +112,77 @@ function imageToDataURL(file) {
     r.onload = () => resolve(r.result);
     r.readAsDataURL(file);
   });
+}
+
+async function uploadImage(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  const r = await fetch('http://localhost:3456/api/attachment/upload', { method: 'POST', body: fd });
+  if (!r.ok) throw new Error('上传失败');
+  const j = await r.json();
+  return j.name;
+}
+
+async function htmlToMD(html) {
+  let md = html || '';
+  const imgs = [];
+
+  // Find all img tags, replace with placeholder
+  md = md.replace(/<img\b[^>]*src\s*=\s*"([^"]*)"[^>]*>/gi, (m, src) => {
+    const alt = (m.match(/alt\s*=\s*"([^"]*)"/i) || [])[1] || 'image';
+    const idx = imgs.length;
+    imgs.push({ alt, src });
+    return `<<IMG_${idx}>>`;
+  });
+
+  // Strip remaining HTML tags and decode entities
+  md = md.replace(/<br\s*\/?>/gi, '\n');
+  md = md.replace(/<\/?(p|div|span|b|strong|i|em|u|ol|ul|li|h[1-6]|code|pre|blockquote|table|tr|td|th|thead|tbody|a|font|sub|sup|s|del|hr)\b[^>]*>/gi, '');
+  md = md.replace(/&nbsp;/gi, ' ');
+  md = md.replace(/&amp;/gi, '&');
+  md = md.replace(/&lt;/gi, '<');
+  md = md.replace(/&gt;/gi, '>');
+  md = md.replace(/&quot;/gi, '"');
+
+  // Resolve each image placeholder
+  for (let i = 0; i < imgs.length; i++) {
+    const img = imgs[i];
+    let fname;
+    if (img.src.startsWith('data:image/')) {
+      fname = await saveDataUriImage(img.src);
+    } else if (img.src.includes('附件/')) {
+      fname = img.src.split('附件/').pop();
+    } else {
+      fname = img.src.replace(/^.*[\\/]/, '');
+    }
+    md = md.replace(`<<IMG_${i}>>`, `![${img.alt}](附件/${fname})`);
+  }
+
+  md = md.replace(/\n{3,}/g, '\n\n').trim();
+  return md;
+}
+
+function mdToHTML(md) {
+  let html = md;
+  // Replace MD images with HTML img tags
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (m, alt, src) => {
+    const fname = src.replace(/^.*[\\/]/, '');
+    return `<img src="data/附件/${fname}">`;
+  });
+  // Convert newlines to <br>
+  html = html.replace(/\n/g, '<br>');
+  return html;
+}
+
+async function saveDataUriImage(dataUri) {
+  const m = dataUri.match(/^data:(image\/\w+);base64,(.+)$/);
+  if (!m) return null;
+  const ext = m[1] === 'image/png' ? '.png' : m[1] === 'image/jpeg' ? '.jpg' : m[1] === 'image/gif' ? '.gif' : '.png';
+  const binary = atob(m[2]);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  const file = new File([bytes], 'img' + ext, { type: m[1] });
+  return await uploadImage(file);
 }
 
 function insertAtCursor(el, text) {
@@ -575,8 +647,11 @@ window.saveEdit = async function(nid) {
 window.deleteCard = async function(cid) {
   showConfirm('确定要删除这张卡片吗？', async () => {
     const card = await Card.get(cid);
+    const cards = await Card.getByNid(card.nid);
+    const cids = cards.map(c => c.id);
     await Card.removeByNid(card.nid);
     await Note.remove(card.nid);
+    await Revlog.removeByCids(cids);
     reviewState.cards.splice(reviewState.idx, 1);
     if (reviewState.idx >= reviewState.cards.length) {
       renderReview(`#deck/${reviewState.did}`);
@@ -931,7 +1006,7 @@ async function _renderBrowseTree() {
       <div class="flex gap-2">
         <button onclick="exportCards()" class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">导出</button>
         <button onclick="document.getElementById('importFile').click()" class="px-4 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors">导入</button>
-        <input type="file" id="importFile" accept=".txt,.csv,.tsv" class="hidden" onchange="handleImport(event)">
+        <input type="file" id="importFile" accept=".md" class="hidden" onchange="handleImport(event)">
       </div>
     </div>
     ${allEmpty
@@ -1118,8 +1193,11 @@ window.browseEdit = function(cid) { window.editCard(cid); };
 window.browseDelete = async function(cid) {
   showConfirm('确定要删除这张卡片吗？', async () => {
     const card = await Card.get(cid);
+    const cards = await Card.getByNid(card.nid);
+    const cids = cards.map(c => c.id);
     await Card.removeByNid(card.nid);
     await Note.remove(card.nid);
+    await Revlog.removeByCids(cids);
     if (_browseDeckId !== null) {
       await _renderBrowseDeckCards(_browseDeckId);
     } else {
@@ -1129,75 +1207,128 @@ window.browseDelete = async function(cid) {
   });
 };
 
-// ===== Export =====
-function escapeTXTField(field) {
-  const s = String(field ?? '');
-  if (/[\t\n\r"]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
-  return s;
-}
-
+// ===== Export (Markdown format, zip with deck folders) =====
 window.exportCards = async function() {
   const cards = await Card.getAll();
   if (!cards.length) { showToast('没有可导出的卡片', 'error'); return; }
-  const lines = ['#separator:tab', '#html:true'];
+
+  // Group cards by deck name
+  const deckGroups = {}; // deckName → [{id, front, back}]
   for (const c of cards) {
     const note = await Note.get(c.nid);
-    const fields = note?.fields||['',''];
+    const fields = note?.fields || ['', ''];
     const deck = await Deck.get(c.did);
-    lines.push([fields[0]||'', fields[1]||'', (note?.tags||[]).join(' '), deck?.name||''].map(escapeTXTField).join('\t'));
+    const deckName = deck?.name || '默认';
+    if (!deckGroups[deckName]) deckGroups[deckName] = [];
+    deckGroups[deckName].push({
+      id: c.id,
+      front: fields[0] || '',
+      back: fields[1] || ''
+    });
   }
-  const blob = new Blob([lines.join('\n')], { type: 'text/tab-separated-values;charset=utf-8;' });
-  downloadBlob(blob, 'anki-cards.txt');
-  showToast(`已导出 ${cards.length} 张卡片为 Anki 格式`, 'success');
-};
 
-// ===== Import =====
-function parseTXTLine(line) {
-  const fields = [];
-  let i = 0;
-  while (i < line.length) {
-    if (line[i] === '\t') { fields.push(''); i++; continue; }
-    if (line[i] === '"') {
-      let val = ''; i++; // skip opening quote
-      while (i < line.length) {
-        if (line[i] === '"') {
-          if (i + 1 < line.length && line[i + 1] === '"') {
-            val += '"'; i += 2; // escaped quote
-          } else {
-            i++; break; // closing quote
-          }
-        } else {
-          val += line[i]; i++;
+  const zip = new JSZip();
+  const deckNames = Object.keys(deckGroups);
+  let totalImages = 0;
+
+  for (const deckName of deckNames) {
+    const deckCards = deckGroups[deckName];
+    // Sanitize deck name for filesystem
+    const safeName = deckName.replace(/[\\/:*?"<>|]/g, '_');
+    const deckFolder = zip.folder(safeName);
+    const attachFolder = deckFolder.folder('附件');
+
+    const mdLines = [];
+    const imageSet = new Set(); // filenames to include in this deck's 附件
+
+    for (const card of deckCards) {
+      const frontMD = await htmlToMD(card.front);
+      const backMD = await htmlToMD(card.back);
+
+      // Collect image filenames referenced in this card's MD
+      const imgRegex = /!\[[^\]]*\]\(附件\/([^)]+)\)/g;
+      for (const field of [frontMD, backMD]) {
+        let m;
+        while ((m = imgRegex.exec(field)) !== null) {
+          imageSet.add(m[1]);
         }
       }
-      fields.push(val);
-      if (i < line.length && line[i] === '\t') i++; // skip separator after closing quote
-    } else {
-      let val = '';
-      while (i < line.length && line[i] !== '\t') { val += line[i]; i++; }
-      fields.push(val);
-      if (i < line.length && line[i] === '\t') i++;
+
+      mdLines.push(`# ${card.id}`);
+      mdLines.push('');
+      mdLines.push(`Q:${frontMD}`);
+      mdLines.push('');
+      mdLines.push(`A:${backMD}`);
+      mdLines.push('');
+      mdLines.push(`GROUP:${deckName}`);
+      mdLines.push('');
+    }
+
+    // Add MD file to the deck folder
+    deckFolder.file(`${safeName}.md`, mdLines.join('\n'));
+
+    // Fetch and add images for this deck
+    for (const fname of imageSet) {
+      try {
+        const r = await fetch(`http://localhost:3456/data/附件/${encodeURIComponent(fname)}`);
+        if (r.ok) {
+          const blob = await r.blob();
+          attachFolder.file(fname, blob);
+          totalImages++;
+        }
+      } catch (e) { /* skip missing images */ }
     }
   }
-  // Handle trailing empty field (line ends with tab)
-  if (line.endsWith('\t')) fields.push('');
-  return fields;
-}
 
-async function parseImportFile(text) {
-  const lines = text.split(/\r?\n/).filter(l => {
-    const t = l.trim();
-    return t && !t.startsWith('#');
-  });
+  const zipBlob = await zip.generateAsync({ type: 'blob' });
+  downloadBlob(zipBlob, 'anki-export.zip');
+  showToast(`已导出 ${cards.length} 张卡片（${deckNames.length} 个卡组，${totalImages} 张图片）`, 'success');
+};
+
+// ===== Import (Markdown format) =====
+function parseMDFile(text) {
   const cards = [];
-  for (const line of lines) {
-    const fields = parseTXTLine(line);
-    if (fields.length >= 2 && fields[0].trim()) {
+  // Split by "# <id>" headers
+  const blocks = text.split(/\n(?=# \d+$)/m);
+  for (const block of blocks) {
+    const trimmed = block.trim();
+    if (!trimmed) continue;
+
+    const lines = trimmed.split(/\r?\n/);
+    let front = '';
+    let back = '';
+    let group = '';
+    let section = null; // 'Q' or 'A'
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      // Skip the # header line
+      if (/^# \d+$/.test(line.trim())) continue;
+
+      if (line.startsWith('Q:') || line.startsWith('Q：')) {
+        section = 'Q';
+        front = line.replace(/^Q[：:]\s*/, '');
+      } else if (line.startsWith('A:') || line.startsWith('A：')) {
+        section = 'A';
+        back = line.replace(/^A[：:]\s*/, '');
+      } else if (line.startsWith('GROUP:') || line.startsWith('GROUP：')) {
+        section = 'group';
+        group = line.replace(/^GROUP[：:]\s*/, '');
+      } else if (section === 'Q') {
+        front += '\n' + line;
+      } else if (section === 'A') {
+        back += '\n' + line;
+      }
+    }
+
+    front = front.trim();
+    back = back.trim();
+    if (front) {
       cards.push({
-        front: fields[0].trim(),
-        back: (fields[1] || '').trim(),
-        tags: fields.length >= 3 ? fields[2].trim().split(/[\s;；]+/).filter(Boolean) : [],
-        deck: fields.length >= 4 ? fields[3].trim() : '',
+        front: mdToHTML(front),
+        back: mdToHTML(back),
+        tags: [],
+        deck: group || '',
       });
     }
   }
@@ -1209,7 +1340,7 @@ window.handleImport = async function(event) {
   if (!file) return;
   try {
     const text = await file.text();
-    const cards = await parseImportFile(text);
+    const cards = parseMDFile(text);
     if (cards.length === 0) { showToast('未解析到有效卡片', 'error'); event.target.value = ''; return; }
 
     const decks = await Deck.getAll();
@@ -1229,9 +1360,9 @@ window.handleImport = async function(event) {
 
     showModal(`
       <h3 class="text-lg font-bold mb-4">导入卡片</h3>
-      <p class="text-sm text-gray-500 mb-4">解析到 <span class="font-semibold text-gray-700">${cards.length}</span> 张卡片</p>
+      <p class="text-sm text-gray-500 mb-4">解析到 <span class="font-semibold text-gray-700">${cards.length}</span> 张卡片（Markdown 格式）</p>
       <div class="mb-3 max-h-36 overflow-y-auto border border-gray-100 rounded-lg">
-        ${cards.slice(0, 20).map((c,i)=>`<div class="flex gap-2 py-1.5 px-3 text-xs ${i%2?'bg-gray-50':''}"><span class="text-gray-400 w-5">${i+1}.</span><span class="text-gray-700 truncate flex-1">${escapeHTML(c.front)}</span><span class="text-gray-400">→</span><span class="text-gray-500 truncate flex-1">${escapeHTML(c.back||'(空)')}</span><span class="text-gray-300">|</span><span class="text-gray-400 truncate">${escapeHTML(c.deck || '(无分组)')}</span></div>`).join('')}
+        ${cards.slice(0, 20).map((c,i)=>`<div class="flex gap-2 py-1.5 px-3 text-xs ${i%2?'bg-gray-50':''}"><span class="text-gray-400 w-5">${i+1}.</span><span class="text-gray-700 truncate flex-1">${escapeHTML(stripHTML(c.front))}</span><span class="text-gray-400">→</span><span class="text-gray-500 truncate flex-1">${escapeHTML(stripHTML(c.back||'(空)'))}</span><span class="text-gray-300">|</span><span class="text-gray-400 truncate">${escapeHTML(c.deck || '(无分组)')}</span></div>`).join('')}
         ${cards.length > 20 ? `<div class="text-center text-xs text-gray-400 py-1">…还有 ${cards.length - 20} 张</div>` : ''}
       </div>
       <label class="block text-xs font-medium text-gray-500 mb-2">选择分组及导入目标卡组</label>
@@ -1295,7 +1426,6 @@ window.updateImportCount = function() {
 window.doImport = async function() {
   const cards = window._importCards;
   if (!cards || !cards.length) return;
-  // Get selected groups and their target deck ids
   const groups = window._importDeckGroups;
   const names = window._importDeckNames || Object.keys(groups || {});
   const selectedGroups = [];
@@ -1309,13 +1439,11 @@ window.doImport = async function() {
   });
   if (!selectedGroups.length) { showToast('请至少选择一个分组', 'error'); return; }
 
-  // Map group name → target deck id
   const groupTargetMap = {};
   for (const g of selectedGroups) groupTargetMap[g.name] = g.targetDid;
 
   await ensureDefaultDeck();
   const allDecks = await Deck.getAll();
-  // Collect cards to import, grouped by target deck
   const batchMap = {};
   for (const c of cards) {
     const groupName = c.deck || '';
@@ -1685,7 +1813,7 @@ async function ctxDeleteDeck() {
   hideCtxMenu();
   const deck = await Deck.get(did);
   if (!deck) return;
-  showConfirm(`确定要删除卡组"${escapeHTML(deck.name)}"吗？卡组内的卡片不会被删除，将保留为无卡组状态。`, async () => {
+  showConfirm(`确定要删除卡组"${escapeHTML(deck.name)}"吗？该卡组内的所有卡片和学习记录也将被删除。`, async () => {
     await Deck.remove(did);
     showToast('卡组已删除', 'success');
     renderDashboard();
@@ -1840,8 +1968,12 @@ document.addEventListener('paste', async (e) => {
       e.preventDefault();
       const file = item.getAsFile();
       if (!file) continue;
-      const dataUrl = await imageToDataURL(file);
-      insertAtCursor(target, `<img src="${dataUrl}">`);
+      try {
+        const name = await uploadImage(file);
+        insertAtCursor(target, `<img src="data/附件/${name}">`);
+      } catch (err) {
+        showToast('图片上传失败: ' + (err.message || String(err)), 'error');
+      }
     }
   }
 });
@@ -1860,8 +1992,12 @@ $('#imageInput').addEventListener('change', async (e) => {
   const targetId = e.target._target;
   const target = document.getElementById(targetId) || document.querySelector(`[name="${targetId}"]`);
   if (!target) return;
-  const dataUrl = await imageToDataURL(file);
-  insertAtCursor(target, `<img src="${dataUrl}">`);
+  try {
+    const name = await uploadImage(file);
+    insertAtCursor(target, `<img src="data/附件/${name}">`);
+  } catch (err) {
+    showToast('图片上传失败: ' + (err.message || String(err)), 'error');
+  }
   e.target.value = '';
 });
 

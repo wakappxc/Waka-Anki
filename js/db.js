@@ -1,9 +1,38 @@
 // File-based storage via local server
-// Data stored at: data/ankiweb.json
+// Main data: data/ankiweb.json (decks, notes, cards, folders)
+// Revlog:     data/revlog.json  (review history)
 
 const API = 'http://localhost:3456/api/data/ankiweb';
+const REVLOG_API = 'http://localhost:3456/api/data/revlog';
 
 let DB = null;
+let REVLOG_DB = null;
+
+async function loadRevlogDB() {
+  if (REVLOG_DB) return REVLOG_DB;
+  try {
+    const r = await fetch(REVLOG_API, { cache: 'no-store' });
+    if (r.ok) {
+      const data = await r.json();
+      if (data && data.revlog) {
+        REVLOG_DB = data;
+        if (!REVLOG_DB.nextId) REVLOG_DB.nextId = { revlog: 1 };
+        return REVLOG_DB;
+      }
+    }
+  } catch (e) { console.error('Load revlog failed'); }
+  REVLOG_DB = { revlog: [], nextId: { revlog: 1 } };
+  return REVLOG_DB;
+}
+
+async function saveRevlogDB() {
+  try {
+    await fetch(REVLOG_API, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(REVLOG_DB),
+    });
+  } catch (e) { console.error('Save revlog failed:', e); }
+}
 
 async function loadDB() {
   if (DB) return DB;
@@ -14,20 +43,26 @@ async function loadDB() {
       if (data && data.decks) {
         DB = data;
         if (!DB.folders) DB.folders = [];
+        if (!DB.nextId) DB.nextId = { decks: 1, notes: 1, cards: 1, folders: 1 };
         if (!DB.nextId.folders) DB.nextId.folders = 1;
         return DB;
       }
     }
   } catch (e) { console.error('Load DB failed, start fresh'); }
-  DB = { decks: [], notes: [], cards: [], revlog: [], folders: [], nextId: { decks: 1, notes: 1, cards: 1, revlog: 1, folders: 1 } };
+  DB = { decks: [], notes: [], cards: [], folders: [], nextId: { decks: 1, notes: 1, cards: 1, folders: 1 } };
   return DB;
 }
 
 async function saveDB() {
+  const { revlog, ...mainDB } = DB;
+  if (mainDB.nextId) {
+    const { revlog: _, ...restNextId } = mainDB.nextId;
+    mainDB.nextId = restNextId;
+  }
   try {
     await fetch(API, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(DB),
+      body: JSON.stringify(mainDB),
     });
   } catch (e) { console.error('Save DB failed:', e); }
 }
@@ -36,7 +71,8 @@ async function saveDB() {
 const Deck = {
   async clearCards(did) {
     const r = await fetch(`http://localhost:3456/api/deck/${did}/clear`, { method: 'POST' });
-    DB = null; // invalidate cache so next loadDB re-fetches
+    DB = null;
+    REVLOG_DB = null;
     return r.json();
   },
   async create(name, folderId = null) {
@@ -51,7 +87,16 @@ const Deck = {
     const idx = DB.decks.findIndex(d => d.id === deck.id);
     if (idx >= 0) { deck.modified = Date.now(); DB.decks[idx] = deck; await saveDB(); }
   },
-  async remove(id) { await loadDB(); DB.decks = DB.decks.filter(d => d.id !== id); await saveDB(); },
+  async remove(id) {
+    await loadDB();
+    const cids = DB.cards.filter(c => c.did === id).map(c => c.id);
+    const nids = new Set(DB.cards.filter(c => c.did === id).map(c => c.nid));
+    DB.cards = DB.cards.filter(c => c.did !== id);
+    DB.notes = DB.notes.filter(n => !nids.has(n.id));
+    DB.decks = DB.decks.filter(d => d.id !== id);
+    await saveDB();
+    if (cids.length > 0) await Revlog.removeByCids(cids);
+  },
   async count() { await loadDB(); return DB.decks.length; },
   async findByName(name) { await loadDB(); return DB.decks.find(d => d.name === name); }
 };
@@ -183,22 +228,30 @@ const Card = {
 // ===== Revlog =====
 const Revlog = {
   async add(cid, rating, timeMs, ivl, factor, reps, lapses) {
-    await loadDB();
+    await loadRevlogDB();
     const entry = {
-      id: DB.nextId.revlog++, cid, rating, timeMs, ivl, factor, reps, lapses,
+      id: REVLOG_DB.nextId.revlog++, cid, rating, timeMs, ivl, factor, reps, lapses,
       reviewTime: Date.now()
     };
-    DB.revlog.push(entry); await saveDB(); return entry.id;
+    REVLOG_DB.revlog.push(entry); await saveRevlogDB(); return entry.id;
   },
-  async getByCard(cid) { await loadDB(); return DB.revlog.filter(e => e.cid === cid); },
-  async count() { await loadDB(); return DB.revlog.length; },
-  async getAll() { await loadDB(); return [...DB.revlog]; }
+  async getByCard(cid) { await loadRevlogDB(); return REVLOG_DB.revlog.filter(e => e.cid === cid); },
+  async count() { await loadRevlogDB(); return REVLOG_DB.revlog.length; },
+  async getAll() { await loadRevlogDB(); return [...REVLOG_DB.revlog]; },
+  async removeByCids(cids) {
+    await loadRevlogDB();
+    const cidSet = new Set(cids);
+    const before = REVLOG_DB.revlog.length;
+    REVLOG_DB.revlog = REVLOG_DB.revlog.filter(e => !cidSet.has(e.cid));
+    if (REVLOG_DB.revlog.length !== before) await saveRevlogDB();
+  }
 };
 
 // ===== Stats =====
 const Stats = {
   async getOverview() {
     await loadDB();
+    await loadRevlogDB();
     const today = Math.floor(Date.now() / 86400000);
     let dueCount = 0;
     for (const c of DB.cards) {
@@ -207,17 +260,22 @@ const Stats = {
       if (c.queue === 1 && c.due <= Date.now()) { dueCount++; continue; }
       if (c.queue === 2 && c.due <= today) { dueCount++; }
     }
-    const todayReviews = DB.revlog.filter(r => Math.floor(r.reviewTime / 86400000) === today).length;
+    const revlogArr = REVLOG_DB.revlog || [];
+    const todayReviews = revlogArr.filter(r => Math.floor(r.reviewTime / 86400000) === today).length;
     return { decks: DB.decks.length, notes: DB.notes.length, cards: DB.cards.length,
-             due: dueCount, revlog: DB.revlog.length, todayReviews };
+             due: dueCount, revlog: revlogArr.length, todayReviews };
   }
 };
 
 async function clearAllDB() {
   await loadDB();
-  DB.decks = []; DB.notes = []; DB.cards = []; DB.revlog = []; DB.folders = [];
-  DB.nextId = { decks: 1, notes: 1, cards: 1, revlog: 1, folders: 1 };
+  await loadRevlogDB();
+  DB.decks = []; DB.notes = []; DB.cards = []; DB.folders = [];
+  DB.nextId = { decks: 1, notes: 1, cards: 1, folders: 1 };
   await saveDB();
+  REVLOG_DB.revlog = [];
+  REVLOG_DB.nextId = { revlog: 1 };
+  await saveRevlogDB();
 }
 
 async function ensureDefaultDeck() {

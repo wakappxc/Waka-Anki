@@ -5,6 +5,7 @@ const path = require('path');
 const PORT = 3456;
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
+const ATTACH_DIR = path.join(DATA_DIR, '附件');
 
 const MIME = {
   '.html': 'text/html;charset=utf-8',
@@ -71,21 +72,63 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // POST /api/deck/:id/clear — batch delete all cards in a deck
+  // POST /api/deck/:id/clear — batch delete all cards in a deck (also removes revlog)
   const clearMatch = req.method === 'POST' && req.url.match(/^\/api\/deck\/(\d+)\/clear$/);
   if (clearMatch) {
     const did = parseInt(clearMatch[1]);
     try {
       const filePath = path.join(DATA_DIR, 'ankiweb.json');
+      const revlogPath = path.join(DATA_DIR, 'revlog.json');
       const raw = fs.readFileSync(filePath, 'utf-8');
       const db = JSON.parse(raw);
       const nids = new Set();
+      const removedCids = new Set();
       db.cards = db.cards.filter(c => {
-        if (c.did === did) { nids.add(c.nid); return false; }
+        if (c.did === did) { nids.add(c.nid); removedCids.add(c.id); return false; }
         return true;
       });
       db.notes = db.notes.filter(n => !nids.has(n.id));
       fs.writeFileSync(filePath, JSON.stringify(db), 'utf-8');
+
+      // Also remove revlog entries for the cleared cards
+      if (removedCids.size > 0 && fs.existsSync(revlogPath)) {
+        const revlogDB = JSON.parse(fs.readFileSync(revlogPath, 'utf-8'));
+        revlogDB.revlog = revlogDB.revlog.filter(e => !removedCids.has(e.cid));
+        fs.writeFileSync(revlogPath, JSON.stringify(revlogDB), 'utf-8');
+      }
+
+      sendJSON(res, 200, { success: true, count: nids.size });
+    } catch (e) {
+      sendJSON(res, 500, { error: e.message });
+    }
+    return;
+  }
+
+  // POST /api/deck/:id/delete — delete a deck and all its cards/notes/revlog
+  const deleteDeckMatch = req.method === 'POST' && req.url.match(/^\/api\/deck\/(\d+)\/delete$/);
+  if (deleteDeckMatch) {
+    const did = parseInt(deleteDeckMatch[1]);
+    try {
+      const filePath = path.join(DATA_DIR, 'ankiweb.json');
+      const revlogPath = path.join(DATA_DIR, 'revlog.json');
+      const raw = fs.readFileSync(filePath, 'utf-8');
+      const db = JSON.parse(raw);
+      const nids = new Set();
+      const removedCids = new Set();
+      db.cards = db.cards.filter(c => {
+        if (c.did === did) { nids.add(c.nid); removedCids.add(c.id); return false; }
+        return true;
+      });
+      db.notes = db.notes.filter(n => !nids.has(n.id));
+      db.decks = db.decks.filter(d => d.id !== did);
+      fs.writeFileSync(filePath, JSON.stringify(db), 'utf-8');
+
+      if (removedCids.size > 0 && fs.existsSync(revlogPath)) {
+        const revlogDB = JSON.parse(fs.readFileSync(revlogPath, 'utf-8'));
+        revlogDB.revlog = revlogDB.revlog.filter(e => !removedCids.has(e.cid));
+        fs.writeFileSync(revlogPath, JSON.stringify(revlogDB), 'utf-8');
+      }
+
       sendJSON(res, 200, { success: true, count: nids.size });
     } catch (e) {
       sendJSON(res, 500, { error: e.message });
@@ -123,6 +166,40 @@ const server = http.createServer((req, res) => {
         sendJSON(res, 200, { success: true, count: added });
       } catch (e) {
         sendJSON(res, 400, { error: 'Invalid JSON' });
+      }
+    });
+    return;
+  }
+
+  // POST /api/attachment/upload — save an image to data/附件/
+  if (req.method === 'POST' && req.url === '/api/attachment/upload') {
+    const chunks = [];
+    req.on('data', chunk => chunks.push(chunk));
+    req.on('end', () => {
+      try {
+        const raw = Buffer.concat(chunks).toString('binary');
+        const boundary = req.headers['content-type']?.match(/boundary=(.+)/)?.[1];
+        if (!boundary) return sendJSON(res, 400, { error: 'No boundary' });
+        const parts = raw.split('--' + boundary);
+        for (const part of parts) {
+          const headerEnd = part.indexOf('\r\n\r\n');
+          if (headerEnd === -1) continue;
+          const header = part.slice(0, headerEnd);
+          const body = part.slice(headerEnd + 4);
+          const fnMatch = header.match(/filename="(.+?)"/);
+          if (!fnMatch) continue;
+          const ext = path.extname(fnMatch[1]).toLowerCase();
+          const name = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8) + ext;
+          fs.mkdirSync(ATTACH_DIR, { recursive: true });
+          // Remove trailing \r\n before the boundary
+          const cleanBody = body.endsWith('\r\n') ? body.slice(0, -2) : body;
+          fs.writeFileSync(path.join(ATTACH_DIR, name), cleanBody, 'binary');
+          sendJSON(res, 200, { success: true, name });
+          return;
+        }
+        sendJSON(res, 400, { error: 'No file' });
+      } catch (e) {
+        sendJSON(res, 500, { error: e.message });
       }
     });
     return;
@@ -187,6 +264,7 @@ const server = http.createServer((req, res) => {
   // Serve static files
   let urlPath = req.url.split('?')[0];
   if (urlPath === '/') urlPath = '/anki.html';
+  try { urlPath = decodeURIComponent(urlPath); } catch (e) { /* keep as-is */ }
   const filePath = path.normalize(path.join(ROOT, urlPath));
   if (!filePath.startsWith(ROOT)) return sendJSON(res, 403, { error: 'Forbidden' });
   sendFile(res, filePath);
@@ -194,13 +272,48 @@ const server = http.createServer((req, res) => {
 
 // Init data files
 fs.mkdirSync(DATA_DIR, { recursive: true });
+fs.mkdirSync(ATTACH_DIR, { recursive: true });
 if (!fs.existsSync(path.join(DATA_DIR, 'fast-cards.json'))) {
   fs.writeFileSync(path.join(DATA_DIR, 'fast-cards.json'), '[]', 'utf-8');
 }
-if (!fs.existsSync(path.join(DATA_DIR, 'ankiweb.json'))) {
-  fs.writeFileSync(path.join(DATA_DIR, 'ankiweb.json'), JSON.stringify({
-    decks: [], notes: [], cards: [], revlog: [], folders: [],
-    nextId: { decks: 1, notes: 1, cards: 1, revlog: 1, folders: 1 }
+
+const ankiPath = path.join(DATA_DIR, 'ankiweb.json');
+const revlogPath = path.join(DATA_DIR, 'revlog.json');
+
+// Migrate: if revlog.json doesn't exist, extract revlog from ankiweb.json
+if (!fs.existsSync(revlogPath) && fs.existsSync(ankiPath)) {
+  try {
+    const raw = fs.readFileSync(ankiPath, 'utf-8');
+    const db = JSON.parse(raw);
+    if (db.revlog && Array.isArray(db.revlog)) {
+      const revlogDB = {
+        revlog: db.revlog,
+        nextId: { revlog: db.nextId?.revlog || 1 }
+      };
+      fs.writeFileSync(revlogPath, JSON.stringify(revlogDB), 'utf-8');
+      // Strip revlog from main DB
+      delete db.revlog;
+      if (db.nextId) delete db.nextId.revlog;
+      fs.writeFileSync(ankiPath, JSON.stringify(db), 'utf-8');
+      console.log('Migrated revlog to separate file');
+    }
+  } catch (e) {
+    console.error('Migration failed:', e.message);
+  }
+}
+
+// Initialize revlog.json if missing
+if (!fs.existsSync(revlogPath)) {
+  fs.writeFileSync(revlogPath, JSON.stringify({
+    revlog: [], nextId: { revlog: 1 }
+  }), 'utf-8');
+}
+
+// Initialize ankiweb.json if missing (no revlog field)
+if (!fs.existsSync(ankiPath)) {
+  fs.writeFileSync(ankiPath, JSON.stringify({
+    decks: [], notes: [], cards: [], folders: [],
+    nextId: { decks: 1, notes: 1, cards: 1, folders: 1 }
   }), 'utf-8');
 }
 
