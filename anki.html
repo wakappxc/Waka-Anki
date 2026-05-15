@@ -1148,7 +1148,7 @@ async function _renderBrowseTree() {
     ];
     const idx = d.id % gradientColors.length;
     return `
-      <div class="anime-card p-4 cursor-pointer" onclick="browseOpenDeck(${d.id})" style="background:${gradientColors[idx]};">
+      <div class="anime-card p-4 cursor-pointer" onclick="browseOpenDeck(${d.id})" oncontextmenu="event.preventDefault();event.stopPropagation();showDeckCtxMenu(event, ${d.id})" style="background:${gradientColors[idx]};">
         <div class="flex items-center justify-between">
           <div>
             <h3 class="font-medium" style="color:#4A3F6B;">${escapeHTML(d.name)}</h3>
@@ -1159,7 +1159,7 @@ async function _renderBrowseTree() {
             ${counts.learn ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#ffd0b0;color:#e67e22;">学 ${counts.learn}</span>` : ''}
             ${counts.review ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#c2e0f0;color:#2874a6;">复 ${counts.review}</span>` : ''}
             ${!counts.new&&!counts.learn&&!counts.review ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#e8e0f0;color:#8B7FA8;">完成</span>` : ''}
-            <svg class="w-4 h-4 ml-1" style="color:#c4b5fd;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <button onclick="event.stopPropagation();browseRenameDeck(${d.id})" class="p-1.5 rounded-full hover:bg-white/60 transition-colors" title="重命名" style="color:#B39DDB;"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button><svg class="w-4 h-4 ml-0.5" style="color:#c4b5fd;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </div>
         </div>
       </div>`;
@@ -1221,6 +1221,16 @@ window.browseToggleFolder = function(fid) {
   if (_browseExpandedFolders.has(fid)) _browseExpandedFolders.delete(fid);
   else _browseExpandedFolders.add(fid);
   _renderBrowseTree();
+};
+window.browseRenameDeck = async function(did) {
+  const deck = await Deck.get(did);
+  if (!deck) return;
+  showModal(`
+    <h3 class="text-lg font-bold mb-4 gradient-text">✦ 重命名卡组</h3>
+    <input id="renameDeckName" value="${escapeHTML(deck.name)}" class="anime-input w-full px-3 py-2.5 text-sm mb-4"
+      onkeydown="if(event.key==='Enter')doRenameDeck(${did})">
+    <button onclick="doRenameDeck(${did})" class="btn-primary w-full py-2.5 text-sm">保存</button>`);
+  setTimeout(() => $('#renameDeckName')?.select(), 100);
 };
 window._renderBrowseTree = _renderBrowseTree;
 
@@ -2066,7 +2076,11 @@ async function doRenameDeck(did) {
   await Deck.update(deck);
   closeModal();
   showToast('卡组已重命名', 'success');
-  renderDashboard();
+  if (location.hash.startsWith('#browse')) {
+    _renderBrowseTree();
+  } else {
+    renderDashboard();
+  }
 }
 
 function ctxNewDeckInFolder() {
