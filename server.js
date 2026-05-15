@@ -317,6 +317,12 @@ if (!fs.existsSync(ankiPath)) {
   }), 'utf-8');
 }
 
+// Initialize timehot.json — persistent daily review counts (independent of deck/card deletions)
+const timehotPath = path.join(DATA_DIR, 'timehot.json');
+if (!fs.existsSync(timehotPath)) {
+  fs.writeFileSync(timehotPath, JSON.stringify({ days: {} }), 'utf-8');
+}
+
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
   console.log(`  anki.html  → http://localhost:${PORT}/`);

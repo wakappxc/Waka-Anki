@@ -4,9 +4,11 @@
 
 const API = 'http://localhost:3456/api/data/ankiweb';
 const REVLOG_API = 'http://localhost:3456/api/data/revlog';
+const TIMEHOT_API = 'http://localhost:3456/api/data/timehot';
 
 let DB = null;
 let REVLOG_DB = null;
+let TIMEHOT_DB = null;
 
 async function loadRevlogDB() {
   if (REVLOG_DB) return REVLOG_DB;
@@ -32,6 +34,31 @@ async function saveRevlogDB() {
       body: JSON.stringify(REVLOG_DB),
     });
   } catch (e) { console.error('Save revlog failed:', e); }
+}
+
+async function loadTimehotDB() {
+  if (TIMEHOT_DB) return TIMEHOT_DB;
+  try {
+    const r = await fetch(TIMEHOT_API, { cache: 'no-store' });
+    if (r.ok) {
+      const data = await r.json();
+      if (data && data.days) {
+        TIMEHOT_DB = data;
+        return TIMEHOT_DB;
+      }
+    }
+  } catch (e) { console.error('Load timehot failed'); }
+  TIMEHOT_DB = { days: {} };
+  return TIMEHOT_DB;
+}
+
+async function saveTimehotDB() {
+  try {
+    await fetch(TIMEHOT_API, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(TIMEHOT_DB),
+    });
+  } catch (e) { console.error('Save timehot failed:', e); }
 }
 
 async function loadDB() {
@@ -233,7 +260,16 @@ const Revlog = {
       id: REVLOG_DB.nextId.revlog++, cid, rating, timeMs, ivl, factor, reps, lapses,
       reviewTime: Date.now()
     };
-    REVLOG_DB.revlog.push(entry); await saveRevlogDB(); return entry.id;
+    REVLOG_DB.revlog.push(entry); await saveRevlogDB();
+
+    // Also increment daily count in timehot (persists independently of deck/card deletions)
+    await loadTimehotDB();
+    const d = new Date(entry.reviewTime);
+    const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    TIMEHOT_DB.days[key] = (TIMEHOT_DB.days[key] || 0) + 1;
+    await saveTimehotDB();
+
+    return entry.id;
   },
   async getByCard(cid) { await loadRevlogDB(); return REVLOG_DB.revlog.filter(e => e.cid === cid); },
   async count() { await loadRevlogDB(); return REVLOG_DB.revlog.length; },
@@ -244,6 +280,20 @@ const Revlog = {
     const before = REVLOG_DB.revlog.length;
     REVLOG_DB.revlog = REVLOG_DB.revlog.filter(e => !cidSet.has(e.cid));
     if (REVLOG_DB.revlog.length !== before) await saveRevlogDB();
+    // Note: timehot.json is intentionally NOT cleared — review heatmap persists independently
+  }
+};
+
+// ===== Timehot =====
+// Persistent daily review counts, independent of deck/card deletions.
+// Format: { days: { "2026-05-15": 5, "2026-05-14": 12, ... } }
+const Timehot = {
+  async getAll() { await loadTimehotDB(); return { ...TIMEHOT_DB.days }; },
+  async getTotal() {
+    await loadTimehotDB();
+    let total = 0;
+    for (const v of Object.values(TIMEHOT_DB.days)) total += v;
+    return total;
   }
 };
 
@@ -276,6 +326,9 @@ async function clearAllDB() {
   REVLOG_DB.revlog = [];
   REVLOG_DB.nextId = { revlog: 1 };
   await saveRevlogDB();
+  await loadTimehotDB();
+  TIMEHOT_DB.days = {};
+  await saveTimehotDB();
 }
 
 async function ensureDefaultDeck() {

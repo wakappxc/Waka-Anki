@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anki Web - 间隔重复记忆</title>
+<title>Waka Anki - 二次元记忆卡片</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
@@ -13,58 +13,241 @@ tailwind.config = {
       fontFamily: {
         sans: ['-apple-system','BlinkMacSystemFont','"Segoe UI"','"PingFang SC"','"Hiragino Sans GB"','"Microsoft YaHei"','"Helvetica Neue"','Helvetica','Arial','sans-serif'],
       },
+      colors: {
+        sakura: { 50:'#fff0f5', 100:'#ffe0ec', 200:'#ffc2d9', 300:'#ff9ec4', 400:'#ff7eb3', 500:'#f85e9f', 600:'#e83e8c', 700:'#d42e78' },
+        sky:    { 50:'#f0f9ff', 100:'#e0f2fe', 200:'#bae6fd', 300:'#7dd3fc', 400:'#7EC8E3', 500:'#38bdf8' },
+        dreamy: { 50:'#f5f3ff', 100:'#ede9fe', 200:'#ddd6fe', 300:'#c4b5fd', 400:'#B39DDB', 500:'#a78bfa' },
+      },
     },
   },
 }
 </script>
 <style>
+  /* ===== Anime Theme ===== */
+  :root {
+    --sakura: #FF7EB3;
+    --sakura-light: #ffe0ec;
+    --sky: #7EC8E3;
+    --sky-light: #e0f2fe;
+    --dreamy: #B39DDB;
+    --dreamy-light: #ede9fe;
+    --card-bg: #ffffff;
+    --text-primary: #4A3F6B;
+    --text-secondary: #8B7FA8;
+    --shadow-soft: 0 2px 16px rgba(180,140,200,0.12);
+    --shadow-md: 0 4px 24px rgba(180,140,200,0.18);
+    --radius-lg: 1.25rem;
+    --radius-xl: 1.5rem;
+  }
+
+  body {
+    background: linear-gradient(135deg, #fff5f9 0%, #f8f4ff 30%, #f0f8ff 60%, #fff5f9 100%);
+    background-attachment: fixed;
+    position: relative;
+    min-height: 100vh;
+  }
+
+  /* Sakura petal animation */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse at 15% 20%, rgba(255,158,196,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 60%, rgba(179,157,219,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 85%, rgba(126,200,227,0.06) 0%, transparent 50%);
+    animation: bgShift 20s ease-in-out infinite alternate;
+  }
+  @keyframes bgShift {
+    0%   { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+
+  /* Floating petals */
+  .petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    animation: petalFall linear infinite;
+    opacity: 0.35;
+    font-size: 1.2rem;
+  }
+  @keyframes petalFall {
+    0%   { transform: translateY(-10vh) rotate(0deg) translateX(0px); opacity: 0; }
+    5%   { opacity: 0.4; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(105vh) rotate(720deg) translateX(80px); opacity: 0; }
+  }
+
   .card-flip { perspective: 800px; }
   .card-flip-inner { transition: transform 0.5s; transform-style: preserve-3d; }
   .card-flip.flipped .card-flip-inner { transform: rotateY(180deg); }
   .card-front, .card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
   .card-back { transform: rotateY(180deg); }
+
   .toast { animation: slideDown 0.3s ease; }
   @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-  .modal-overlay { background: rgba(0,0,0,0.4); }
+  @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 70% { transform: scale(1.03); } 100% { transform: scale(1); opacity: 1; } }
+
+  .modal-overlay { background: rgba(60,30,60,0.45); backdrop-filter: blur(2px); }
   .progress-bar { transition: width 0.3s ease; }
   #reviewFrontContent img, #reviewBackContent img,
-  #previewFront img, #previewBack img { cursor: pointer; }
+  #previewFront img, #previewBack img { cursor: pointer; border-radius: 0.75rem; }
   #ctxMenu { z-index: 9999; }
   .drop-zone { transition: background-color 0.2s, box-shadow 0.2s; }
-  .drop-active { background-color: #eff6ff !important; box-shadow: inset 0 0 0 2px #3b82f6; }
-  .deck-card.dragging { opacity: 0.4; }
+  .drop-active { background-color: #ffe0ec !important; box-shadow: inset 0 0 0 2px #ff9ec4; }
+
+  /* Anime card styles */
+  .anime-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(200,180,220,0.15);
+    position: relative;
+    z-index: 1;
+  }
+  .anime-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(255,158,196,0.3);
+  }
+  .anime-card.dragging { opacity: 0.4; }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #f85e9f, #B39DDB, #7EC8E3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Primary button with gradient */
+  .btn-primary {
+    background: linear-gradient(135deg, #ff7eb3, #f85e9f);
+    color: white;
+    border-radius: 9999px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.25s;
+    box-shadow: 0 2px 12px rgba(248,94,159,0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(248,94,159,0.45);
+  }
+
+  /* Secondary button */
+  .btn-secondary {
+    background: linear-gradient(135deg, #7EC8E3, #38bdf8);
+    color: white;
+    border-radius: 9999px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.25s;
+    box-shadow: 0 2px 12px rgba(56,189,248,0.25);
+  }
+  .btn-secondary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(56,189,248,0.4);
+  }
+
+  /* Accent button */
+  .btn-accent {
+    background: linear-gradient(135deg, #B39DDB, #a78bfa);
+    color: white;
+    border-radius: 9999px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.25s;
+    box-shadow: 0 2px 12px rgba(167,139,250,0.25);
+  }
+  .btn-accent:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(167,139,250,0.4);
+  }
+
+  /* Input fields */
+  .anime-input {
+    border: 1.5px solid #e8d5f0;
+    border-radius: 0.75rem;
+    background: #fefcff;
+    transition: all 0.2s;
+  }
+  .anime-input:focus {
+    border-color: #ff9ec4;
+    box-shadow: 0 0 0 3px rgba(255,158,196,0.12);
+    outline: none;
+  }
+
+  /* Nav link active */
+  .nav-link.active {
+    background: linear-gradient(135deg, rgba(255,126,179,0.12), rgba(179,157,219,0.12));
+    color: #e83e8c !important;
+    font-weight: 600;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #e0c8e8; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #c8a8d8; }
+
+  /* Card shine effect */
+  .shine {
+    position: relative;
+    overflow: hidden;
+  }
+  .shine::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+    animation: shineSweep 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes shineSweep {
+    0%   { transform: translateX(-100%) translateY(-100%); }
+    100% { transform: translateX(100%) translateY(100%); }
+  }
 </style>
 </head>
-<body class="bg-gray-50 min-h-screen font-sans text-gray-800">
+<body class="min-h-screen font-sans" style="color:#4A3F6B;position:relative;z-index:1;">
+
+<!-- Floating sakura petals -->
+<div id="petalsContainer" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
 
 <!-- Toast -->
 <div id="toast" class="fixed top-4 right-4 z-50 hidden"></div>
 
 <!-- Lightbox for image zoom -->
-<div id="lightbox" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 hidden cursor-pointer" onclick="closeLightbox()">
+<div id="lightbox" class="fixed inset-0 z-50 flex items-center justify-center hidden" style="background:rgba(30,10,40,0.78);cursor:pointer;backdrop-filter:blur(4px)" onclick="closeLightbox()">
   <div class="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center">
-    <img id="lightboxImg" class="max-w-full max-h-[90vh] object-contain rounded-lg cursor-default" onclick="event.stopPropagation()">
-    <button class="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full shadow-lg text-gray-600 hover:text-gray-900 flex items-center justify-center text-lg font-bold" onclick="closeLightbox()">×</button>
+    <img id="lightboxImg" class="max-w-full max-h-[90vh] object-contain rounded-2xl cursor-default" onclick="event.stopPropagation()">
+    <button class="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-lg font-bold" style="color:#e83e8c" onclick="closeLightbox()">×</button>
   </div>
 </div>
 
 <!-- Context menu -->
-<div id="ctxMenu" class="fixed z-50 hidden bg-white rounded-lg shadow-xl border border-gray-200 py-1 w-44" style="min-width:140px">
+<div id="ctxMenu" class="fixed z-50 hidden rounded-2xl shadow-xl border py-1 w-44" style="min-width:140px;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-color:rgba(200,180,220,0.25);">
   <div id="ctxMenuItems"></div>
 </div>
 
 <!-- Header -->
-<header class="bg-white shadow-sm sticky top-0 z-30">
+<header class="sticky top-0 z-30" style="background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(200,170,210,0.2);">
   <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white text-lg">🃟</div>
-      <h1 class="text-lg font-bold text-gray-800">Anki Web</h1>
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center text-white text-lg shine" style="background:linear-gradient(135deg,#ff7eb3,#B39DDB,#7EC8E3);">🌸</div>
+      <h1 class="text-lg font-bold gradient-text">Waka Anki</h1>
     </div>
     <nav class="flex gap-1 text-sm">
-      <a href="#dashboard" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-colors" data-route="dashboard">仪表盘</a>
-      <a href="#add" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-colors" data-route="add">添加</a>
-      <a href="#browse" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-colors" data-route="browse">浏览</a>
-      <a href="#stats" class="nav-link px-3 py-1.5 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50 transition-colors" data-route="stats">统计</a>
+      <a href="#dashboard" class="nav-link px-3 py-1.5 rounded-full transition-all duration-200" style="color:#8B7FA8;" data-route="dashboard">仪表盘</a>
+      <a href="#add" class="nav-link px-3 py-1.5 rounded-full transition-all duration-200" style="color:#8B7FA8;" data-route="add">添加</a>
+      <a href="#browse" class="nav-link px-3 py-1.5 rounded-full transition-all duration-200" style="color:#8B7FA8;" data-route="browse">浏览</a>
+      <a href="#stats" class="nav-link px-3 py-1.5 rounded-full transition-all duration-200" style="color:#8B7FA8;" data-route="stats">统计</a>
     </nav>
   </div>
 </header>
@@ -75,17 +258,17 @@ tailwind.config = {
 <!-- Modal container -->
 <div id="modal" class="fixed inset-0 z-40 flex items-center justify-center hidden">
   <div class="modal-overlay absolute inset-0" onclick="closeModal()"></div>
-  <div id="modalContent" class="bg-white rounded-2xl shadow-xl p-6 max-w-md mx-4 relative z-10 max-h-[85vh] overflow-y-auto"></div>
+  <div id="modalContent" class="p-6 max-w-md mx-4 relative z-10 max-h-[85vh] overflow-y-auto anime-card" style="background:rgba(255,255,255,0.97);border-radius:1.5rem;"></div>
 </div>
 
 <!-- Confirm modal -->
 <div id="confirmModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
   <div class="modal-overlay absolute inset-0" onclick="closeConfirm()"></div>
-  <div class="bg-white rounded-2xl shadow-xl p-6 max-w-sm mx-4 relative z-10">
-    <p id="confirmMsg" class="text-gray-700 mb-5"></p>
+  <div class="p-6 max-w-sm mx-4 relative z-10" style="background:rgba(255,255,255,0.97);border-radius:1.5rem;box-shadow:0 8px 40px rgba(180,140,200,0.25);">
+    <p id="confirmMsg" class="mb-5" style="color:#4A3F6B;"></p>
     <div class="flex gap-3 justify-end">
-      <button onclick="closeConfirm()" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">取消</button>
-      <button id="confirmBtn" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors">确认</button>
+      <button onclick="closeConfirm()" class="px-5 py-2 rounded-full transition-all duration-200" style="background:#f3f0f8;color:#8B7FA8;">取消</button>
+      <button id="confirmBtn" class="px-5 py-2 text-white rounded-full transition-all duration-200" style="background:linear-gradient(135deg,#e83e8c,#f85e9f);box-shadow:0 2px 12px rgba(232,62,140,0.3);">确认</button>
     </div>
   </div>
 </div>
@@ -209,8 +392,13 @@ function stripHTML(html) {
 }
 
 function showToast(msg, type='info') {
-  const el=$('#toast'), colors={success:'bg-green-500',error:'bg-red-500',info:'bg-gray-700'};
-  el.className=`toast fixed top-4 right-4 z-50 ${colors[type]} text-white px-4 py-2 rounded-lg shadow-lg text-sm`;
+  const el=$('#toast'), colors={
+    success:'background:linear-gradient(135deg,#81C784,#66BB6A);box-shadow:0 4px 16px rgba(129,199,132,0.4)',
+    error:'background:linear-gradient(135deg,#EF9A9A,#E57373);box-shadow:0 4px 16px rgba(229,115,115,0.4)',
+    info:'background:linear-gradient(135deg,#B39DDB,#a78bfa);box-shadow:0 4px 16px rgba(167,139,250,0.4)'};
+  el.style.cssText = colors[type] || colors.info;
+  el.className='toast fixed top-4 right-4 z-50 text-white px-4 py-2 text-sm font-medium';
+  el.style.borderRadius='9999px';
   el.textContent=msg; el.classList.remove('hidden');
   clearTimeout(el._t); el._t=setTimeout(()=>el.classList.add('hidden'),2500);
 }
@@ -231,7 +419,10 @@ function formatTime(ts){const d=new Date(ts);return `${String(d.getHours()).padS
 function navigate() {
   const hash = location.hash || '#dashboard';
   const route = hash.split('/')[0].replace('#','');
-  $$('.nav-link').forEach(l=>{l.classList.toggle('text-blue-600',l.dataset.route===route);l.classList.toggle('bg-blue-50',l.dataset.route===route);});
+  $$('.nav-link').forEach(l=>{
+    if (l.dataset.route===route) { l.classList.add('active'); }
+    else { l.classList.remove('active'); }
+  });
   switch(route) {
     case 'dashboard': renderDashboard(); break;
     case 'deck': renderReview(hash); break;
@@ -247,21 +438,26 @@ window.addEventListener('hashchange', navigate);
 let _expandedFolders = new Set();
 
 function renderDeckCard(d, counts) {
+  const gradientColors = [
+    'linear-gradient(135deg,#ffe0ec,#fff0f5)', 'linear-gradient(135deg,#e0f2fe,#f0f9ff)',
+    'linear-gradient(135deg,#ede9fe,#f5f3ff)', 'linear-gradient(135deg,#fff5f9,#fefcff)'
+  ];
+  const idx = d.id % gradientColors.length;
   return `
-    <div class="deck-card bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow cursor-pointer" draggable="true" data-deck-id="${d.id}" ondragstart="dragDeckStart(event, ${d.id})" ondragend="dragDeckEnd(event)" onclick="if(!_dragMoved)location.hash='#deck/${d.id}'" oncontextmenu="event.preventDefault();showDeckCtxMenu(event, ${d.id})">
+    <div class="deck-card anime-card p-4 cursor-pointer" draggable="true" data-deck-id="${d.id}" ondragstart="dragDeckStart(event, ${d.id})" ondragend="dragDeckEnd(event)" onclick="if(!_dragMoved)location.hash='#deck/${d.id}'" oncontextmenu="event.preventDefault();showDeckCtxMenu(event, ${d.id})" style="background:${gradientColors[idx]};">
       <div class="flex items-center justify-between">
         <div>
-          <h3 class="font-medium text-gray-800">${escapeHTML(d.name)}</h3>
-          <p class="text-xs text-gray-400 mt-0.5">共 ${counts.total} 张卡片</p>
+          <h3 class="font-medium" style="color:#4A3F6B;">${escapeHTML(d.name)}</h3>
+          <p class="text-xs mt-0.5" style="color:#8B7FA8;">共 ${counts.total} 张卡片</p>
         </div>
-        <div class="flex gap-2">
-          ${counts.new ? `<span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">新 ${counts.new}</span>` : ''}
-          ${counts.learn ? `<span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">学 ${counts.learn}</span>` : ''}
-          ${counts.review ? `<span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">复 ${counts.review}</span>` : ''}
-          ${!counts.new&&!counts.learn&&!counts.review ? `<span class="text-xs bg-gray-100 text-gray-400 px-2 py-1 rounded-full">完成</span>` : ''}
+        <div class="flex gap-1.5">
+          ${counts.new ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#ffc2d9;color:#d42e78;">新 ${counts.new}</span>` : ''}
+          ${counts.learn ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#ffd0b0;color:#e67e22;">学 ${counts.learn}</span>` : ''}
+          ${counts.review ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#c2e0f0;color:#2874a6;">复 ${counts.review}</span>` : ''}
+          ${!counts.new&&!counts.learn&&!counts.review ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#e8e0f0;color:#8B7FA8;">完成</span>` : ''}
         </div>
       </div>
-      ${counts.new+counts.learn+counts.review>0 ? `<div class="mt-3 bg-gray-100 rounded-full h-1.5"><div class="progress-bar bg-blue-500 h-1.5 rounded-full" style="width:${Math.max(5,((counts.new+counts.learn+counts.review)/Math.max(counts.total,1))*100)}%"></div></div>` : ''}
+      ${counts.new+counts.learn+counts.review>0 ? `<div class="mt-3 rounded-full h-1.5" style="background:#e8e0f0;"><div class="progress-bar h-1.5 rounded-full" style="width:${Math.max(5,((counts.new+counts.learn+counts.review)/Math.max(counts.total,1))*100)}%;background:linear-gradient(90deg,#ff7eb3,#B39DDB,#7EC8E3);"></div></div>` : ''}
     </div>`;
 }
 
@@ -284,15 +480,15 @@ async function renderFolderSection(folder, allDecks, allFolders) {
   const totalCards = await _getFolderTotalCards(folder.id, allDecks, allFolders);
 
   let html = `<div class="folder-section" data-folder-id="${folder.id}">`;
-  html += `<div class="flex items-center gap-2 py-2 px-1 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors folder-header drop-zone" onclick="toggleFolder(${folder.id})" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, ${folder.id})" oncontextmenu="event.preventDefault();showFolderCtxMenu(event, ${folder.id})">`;
-  html += `<svg class="w-3.5 h-3.5 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>`;
+  html += `<div class="flex items-center gap-2 py-2 px-2 rounded-xl cursor-pointer transition-all duration-200 folder-header drop-zone" onclick="toggleFolder(${folder.id})" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, ${folder.id})" oncontextmenu="event.preventDefault();showFolderCtxMenu(event, ${folder.id})" style="border:1px solid transparent;">`;
+  html += `<svg class="w-3.5 h-3.5 transition-transform ${isExpanded ? 'rotate-90' : ''}" style="color:#B39DDB;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>`;
   html += `<span class="text-base">📁</span>`;
-  html += `<span class="text-sm font-medium text-gray-700">${escapeHTML(folder.name)}</span>`;
-  html += `<span class="text-xs text-gray-400">(${totalCards} 张)</span>`;
+  html += `<span class="text-sm font-medium" style="color:#4A3F6B;">${escapeHTML(folder.name)}</span>`;
+  html += `<span class="text-xs" style="color:#8B7FA8;">(${totalCards} 张)</span>`;
   html += `</div>`;
 
   if (isExpanded) {
-    html += `<div class="ml-4 pl-3 border-l-2 border-gray-100 folder-content drop-zone" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, ${folder.id})">`;
+    html += `<div class="ml-4 pl-3 folder-content drop-zone" style="border-left:2px solid #e0c8e8;" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, ${folder.id})">`;
     if (folderDecks.length > 0) {
       html += `<div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 mt-2 mb-3">`;
       for (const d of folderDecks) {
@@ -337,22 +533,24 @@ async function renderDashboard() {
   }
 
   const allEmpty = decks.length === 0 && folders.length === 0;
-  if (allEmpty) deckHtml = `<div class="text-center py-16 text-gray-400 col-span-full"><div class="text-5xl mb-3">📚</div><p class="text-sm">还没有卡组或文件夹，点击上方按钮创建</p></div>`;
+  if (allEmpty) deckHtml = `<div class="text-center py-16 col-span-full"><div class="text-5xl mb-3">🌸</div><p class="text-sm" style="color:#8B7FA8;">还没有卡组或文件夹，点击上方按钮创建吧~</p></div>`;
 
   $('#app').innerHTML = `
     <div class="mb-4 flex items-center justify-between">
-      <h2 class="text-xl font-bold text-gray-800">仪表盘</h2>
+      <h2 class="text-xl font-bold gradient-text">✦ 仪表盘</h2>
       <div class="flex gap-2">
-        <button onclick="showNewFolderModal()" class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">+ 新建文件夹</button>
-        <button onclick="showNewDeckModal()" class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">+ 新建卡组</button>
+        <button onclick="showNewFolderModal()" class="px-4 py-2 text-sm rounded-full transition-all duration-200" style="background:#f3f0f8;color:#8B7FA8;">+ 新建文件夹</button>
+        <button onclick="showNewDeckModal()" class="btn-primary text-sm">+ 新建卡组</button>
       </div>
     </div>
-    ${dueTotal>0 ? `<div class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-between">
-      <p class="text-sm text-blue-700 font-medium">今天有 <span class="font-bold">${dueTotal}</span> 张卡片待复习</p>
-      ${decks.length===1 && folders.length===0 ? `<button onclick="location.hash='#deck/${decks[0].id}'" class="px-4 py-1.5 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">开始学习</button>` : ''}
-    </div>` : (decks.length>0 ? `<div class="mb-4 p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-700 text-center font-medium">🎉 今天的任务全部完成！</div>` : '')}
-    ${deckHtml && !allEmpty ? `<div class="mb-4"><h3 class="text-sm font-medium text-gray-400 mb-2">根目录</h3><div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 drop-zone rounded-lg" style="min-height:60px" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, null)">${deckHtml}</div></div>` : (allEmpty ? deckHtml : '')}
-    ${!allEmpty && !deckHtml && folders.length > 0 ? `<div class="mb-4"><h3 class="text-sm font-medium text-gray-400 mb-2">根目录</h3><div class="drop-zone rounded-lg text-center py-6 text-gray-400 text-sm" style="min-height:60px" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, null)">拖拽卡组到此处移至根目录</div></div>` : ''}
+    ${dueTotal>0 ? `<div class="mb-4 p-4 rounded-2xl flex items-center justify-between anime-card" style="background:linear-gradient(135deg,#fff0f5,#ffe0ec);border:1px solid #ffc2d9;">
+      <p class="text-sm" style="color:#d42e78;">今天有 <span class="font-bold text-lg">${dueTotal}</span> 张卡片待复习~ 加油！✨</p>
+      ${decks.length===1 && folders.length===0 ? `<button onclick="location.hash='#deck/${decks[0].id}'" class="btn-primary text-sm px-6">开始学习</button>` : ''}
+    </div>` : (decks.length>0 ? `<div class="mb-4 p-4 rounded-2xl text-center anime-card" style="background:linear-gradient(135deg,#e0f8f0,#d4f1e4);border:1px solid #b7e4cf;">
+      <p class="text-sm font-medium" style="color:#2d8a6e;">🎉 今天的任务全部完成！好厉害~</p>
+    </div>` : '')}
+    ${deckHtml && !allEmpty ? `<div class="mb-4"><h3 class="text-sm font-medium mb-2" style="color:#B39DDB;">📌 根目录</h3><div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 drop-zone rounded-2xl" style="min-height:60px" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, null)">${deckHtml}</div></div>` : (allEmpty ? deckHtml : '')}
+    ${!allEmpty && !deckHtml && folders.length > 0 ? `<div class="mb-4"><h3 class="text-sm font-medium mb-2" style="color:#B39DDB;">📌 根目录</h3><div class="drop-zone rounded-2xl text-center py-6 text-sm" style="min-height:60px;color:#8B7FA8;border:2px dashed #e0c8e8;" ondragover="dragOver(event, this)" ondragleave="dragLeave(this)" ondrop="dropDeck(event, null)">拖拽卡组到此处移至根目录</div></div>` : ''}
     ${folderHtml}`;
 }
 
@@ -428,14 +626,14 @@ async function buildFolderOptions(parentId, depth, excludeId) {
 function showNewDeckModal(presetFolderId) {
   buildFolderOptions(null, 0).then(folderOpts => {
     showModal(`
-      <h3 class="text-lg font-bold mb-4">新建卡组</h3>
-      <input id="newDeckName" placeholder="输入卡组名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-3" onkeydown="if(event.key==='Enter')createDeck()">
-      <label class="block text-xs text-gray-500 mb-1">所属文件夹（可选）</label>
-      <select id="newDeckFolder" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">
+      <h3 class="text-lg font-bold mb-4 gradient-text">✦ 新建卡组</h3>
+      <input id="newDeckName" placeholder="输入卡组名称" class="anime-input w-full px-3 py-2.5 text-sm mb-3" onkeydown="if(event.key==='Enter')createDeck()">
+      <label class="block text-xs mb-1" style="color:#8B7FA8;">所属文件夹（可选）</label>
+      <select id="newDeckFolder" class="anime-input w-full px-3 py-2.5 text-sm mb-4">
         <option value="">根目录（无文件夹）</option>
         ${folderOpts}
       </select>
-      <button onclick="createDeck()" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">创建</button>`);
+      <button onclick="createDeck()" class="btn-primary w-full py-2.5 text-sm">创建</button>`);
     if (presetFolderId) {
       setTimeout(() => { const s = $('#newDeckFolder'); if (s) s.value = String(presetFolderId); }, 0);
     }
@@ -454,14 +652,14 @@ async function createDeck() {
 function showNewFolderModal(presetParentId) {
   buildFolderOptions(null, 0).then(folderOpts => {
     showModal(`
-      <h3 class="text-lg font-bold mb-4">新建文件夹</h3>
-      <input id="newFolderName" placeholder="输入文件夹名称" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-3" onkeydown="if(event.key==='Enter')createFolder()">
-      <label class="block text-xs text-gray-500 mb-1">所属父文件夹（可选）</label>
-      <select id="newFolderParent" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">
+      <h3 class="text-lg font-bold mb-4 gradient-text">✦ 新建文件夹</h3>
+      <input id="newFolderName" placeholder="输入文件夹名称" class="anime-input w-full px-3 py-2.5 text-sm mb-3" onkeydown="if(event.key==='Enter')createFolder()">
+      <label class="block text-xs mb-1" style="color:#8B7FA8;">所属父文件夹（可选）</label>
+      <select id="newFolderParent" class="anime-input w-full px-3 py-2.5 text-sm mb-4">
         <option value="">根目录</option>
         ${folderOpts}
       </select>
-      <button onclick="createFolder()" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">创建</button>`);
+      <button onclick="createFolder()" class="btn-accent w-full py-2.5 text-sm">创建</button>`);
     if (presetParentId) {
       setTimeout(() => { const s = $('#newFolderParent'); if (s) s.value = String(presetParentId); }, 0);
     }
@@ -535,46 +733,46 @@ function renderReviewCard() {
 
       $('#app').innerHTML = `
         <div class="max-w-xl mx-auto">
-          <div class="text-center text-sm text-gray-400 mb-2">${escapeHTML(d?.name||'')} · ${dueInfo} · ${reviewState.idx+1}/${reviewState.cards.length}</div>
-          <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div class="text-center text-sm mb-2" style="color:#B39DDB;">${escapeHTML(d?.name||'')} · ${dueInfo} · ${reviewState.idx+1}/${reviewState.cards.length}</div>
+          <div class="anime-card overflow-hidden" style="border-radius:1.5rem;">
             <div class="card-flip ${reviewState.showingBack?'flipped':''}" id="reviewCard" onclick="flipCard()">
               <div class="card-flip-inner relative" style="min-height:360px">
-                <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 p-8 overflow-y-auto">
+                <div class="card-front absolute inset-0 p-8 overflow-y-auto" style="background:linear-gradient(135deg,#fff0f5,#ffe0ec);">
                   <div class="flex flex-col items-center justify-center min-h-full w-full">
-                    <p class="text-xs text-blue-400 mb-3 uppercase tracking-wide">问题</p>
-                    <p id="reviewFrontContent" class="text-lg sm:text-xl font-medium text-gray-800 whitespace-pre-wrap"></p>
+                    <p class="text-xs mb-3" style="color:#ff7eb3;">✦ 问 题 ✦</p>
+                    <p id="reviewFrontContent" class="text-lg sm:text-xl font-medium whitespace-pre-wrap" style="color:#4A3F6B;"></p>
                   </div>
                 </div>
-                <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 p-8 overflow-y-auto">
+                <div class="card-back absolute inset-0 p-8 overflow-y-auto" style="background:linear-gradient(135deg,#f0f8ff,#e0f2fe);">
                   <div class="flex flex-col items-center justify-center min-h-full w-full">
-                    <p class="text-xs text-green-400 mb-3 uppercase tracking-wide">答案</p>
-                    <p id="reviewBackContent" class="text-lg sm:text-xl font-medium text-gray-800 whitespace-pre-wrap"></p>
+                    <p class="text-xs mb-3" style="color:#7EC8E3;">✦ 答 案 ✦</p>
+                    <p id="reviewBackContent" class="text-lg sm:text-xl font-medium whitespace-pre-wrap" style="color:#4A3F6B;"></p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="flex justify-center mt-4">
-            <p class="text-xs text-gray-400">点击卡片翻转</p>
+            <p class="text-xs" style="color:#B39DDB;">💡 点击卡片翻转查看答案</p>
           </div>
           <div id="answerButtons" class="grid grid-cols-4 gap-2 mt-4 ${reviewState.showingBack?'':'hidden'}">
-            <button onclick="answerCard('again')" class="py-3 px-2 bg-red-500 text-white rounded-xl text-sm font-medium hover:bg-red-600 transition-colors">
-              忘记<div class="text-xs opacity-70">${Scheduler.formatInterval(states.again)}</div>
+            <button onclick="answerCard('again')" class="py-3 px-2 text-white rounded-2xl text-sm font-medium transition-all duration-200" style="background:linear-gradient(135deg,#EF9A9A,#E57373);box-shadow:0 2px 12px rgba(229,115,115,0.3);">
+              忘记<div class="text-xs opacity-80">${Scheduler.formatInterval(states.again)}</div>
             </button>
-            <button onclick="answerCard('hard')" class="py-3 px-2 bg-orange-400 text-white rounded-xl text-sm font-medium hover:bg-orange-500 transition-colors">
-              困难<div class="text-xs opacity-70">${Scheduler.formatInterval(states.hard)}</div>
+            <button onclick="answerCard('hard')" class="py-3 px-2 text-white rounded-2xl text-sm font-medium transition-all duration-200" style="background:linear-gradient(135deg,#FFB74D,#FF9800);box-shadow:0 2px 12px rgba(255,152,0,0.3);">
+              困难<div class="text-xs opacity-80">${Scheduler.formatInterval(states.hard)}</div>
             </button>
-            <button onclick="answerCard('good')" class="py-3 px-2 bg-blue-500 text-white rounded-xl text-sm font-medium hover:bg-blue-600 transition-colors">
-              良好<div class="text-xs opacity-70">${Scheduler.formatInterval(states.good)}</div>
+            <button onclick="answerCard('good')" class="py-3 px-2 text-white rounded-2xl text-sm font-medium transition-all duration-200" style="background:linear-gradient(135deg,#7EC8E3,#38bdf8);box-shadow:0 2px 12px rgba(56,189,248,0.3);">
+              良好<div class="text-xs opacity-80">${Scheduler.formatInterval(states.good)}</div>
             </button>
-            <button onclick="answerCard('easy')" class="py-3 px-2 bg-green-500 text-white rounded-xl text-sm font-medium hover:bg-green-600 transition-colors">
-              简单<div class="text-xs opacity-70">${Scheduler.formatInterval(states.easy)}</div>
+            <button onclick="answerCard('easy')" class="py-3 px-2 text-white rounded-2xl text-sm font-medium transition-all duration-200" style="background:linear-gradient(135deg,#81C784,#66BB6A);box-shadow:0 2px 12px rgba(102,187,106,0.3);">
+              简单<div class="text-xs opacity-80">${Scheduler.formatInterval(states.easy)}</div>
             </button>
           </div>
           <div class="flex justify-center mt-3 gap-3">
-            <button onclick="editCard(${card.id})" class="text-xs text-gray-400 hover:text-blue-500 transition-colors">编辑</button>
-            <button onclick="deleteCard(${card.id})" class="text-xs text-gray-400 hover:text-red-500 transition-colors">删除</button>
-            <button onclick="location.hash='#dashboard'" class="text-xs text-gray-400 hover:text-gray-600 transition-colors">退出</button>
+            <button onclick="editCard(${card.id})" class="text-xs transition-colors" style="color:#B39DDB;">编辑</button>
+            <button onclick="deleteCard(${card.id})" class="text-xs transition-colors" style="color:#EF9A9A;">删除</button>
+            <button onclick="location.hash='#dashboard'" class="text-xs transition-colors" style="color:#8B7FA8;">退出</button>
           </div>
         </div>`;
         $('#reviewFrontContent').innerHTML = safeHTML(front);
@@ -605,26 +803,26 @@ window.editCard = function(cid) {
   Card.get(cid).then(card => {
     Note.get(card.nid).then(note => {
       showModal(`
-        <h3 class="text-lg font-bold mb-4">编辑卡片</h3>
-        <label class="block text-xs text-gray-500 mb-1">正面</label>
+        <h3 class="text-lg font-bold mb-4 gradient-text">✦ 编辑卡片</h3>
+        <label class="block text-xs mb-1" style="color:#8B7FA8;">正面</label>
         <div class="flex gap-1 mb-3">
-          <textarea id="editFront" rows="2" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 resize-none">${escapeHTML(note.fields[0]||'')}</textarea>
-          <button type="button" class="img-btn self-end px-2 py-2 border border-gray-200 rounded-lg text-gray-400 hover:text-blue-500 hover:border-blue-300 transition-colors shrink-0" title="插入图片" data-target="editFront">
+          <textarea id="editFront" rows="2" class="anime-input flex-1 px-3 py-2 text-sm resize-none">${escapeHTML(note.fields[0]||'')}</textarea>
+          <button type="button" class="img-btn self-end px-2 py-2 rounded-xl transition-colors shrink-0" style="border:1.5px solid #e8d5f0;color:#B39DDB;" title="插入图片" data-target="editFront">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
           </button>
         </div>
-        <label class="block text-xs text-gray-500 mb-1">背面</label>
+        <label class="block text-xs mb-1" style="color:#8B7FA8;">背面</label>
         <div class="flex gap-1 mb-3">
-          <textarea id="editBack" rows="2" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 resize-none">${escapeHTML(note.fields[1]||'')}</textarea>
-          <button type="button" class="img-btn self-end px-2 py-2 border border-gray-200 rounded-lg text-gray-400 hover:text-blue-500 hover:border-blue-300 transition-colors shrink-0" title="插入图片" data-target="editBack">
+          <textarea id="editBack" rows="2" class="anime-input flex-1 px-3 py-2 text-sm resize-none">${escapeHTML(note.fields[1]||'')}</textarea>
+          <button type="button" class="img-btn self-end px-2 py-2 rounded-xl transition-colors shrink-0" style="border:1.5px solid #e8d5f0;color:#B39DDB;" title="插入图片" data-target="editBack">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
           </button>
         </div>
-        <label class="block text-xs text-gray-500 mb-1">标签（空格分隔）</label>
-        <input id="editTags" value="${escapeHTML((note.tags||[]).join(' '))}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">
+        <label class="block text-xs mb-1" style="color:#8B7FA8;">标签（空格分隔）</label>
+        <input id="editTags" value="${escapeHTML((note.tags||[]).join(' '))}" class="anime-input w-full px-3 py-2 text-sm mb-4">
         <div class="flex gap-2">
-          <button onclick="saveEdit(${card.nid})" class="flex-1 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">保存</button>
-          <button onclick="closeModal()" class="flex-1 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">取消</button>
+          <button onclick="saveEdit(${card.nid})" class="btn-primary flex-1 py-2 text-sm">保存</button>
+          <button onclick="closeModal()" class="flex-1 py-2 rounded-full text-sm transition-all duration-200" style="background:#f3f0f8;color:#8B7FA8;">取消</button>
         </div>`);
     });
   });
@@ -670,97 +868,97 @@ async function renderAdd() {
   const deckOpts = d.map(dk=>`<option value="${dk.id}">${escapeHTML(dk.name)}</option>`).join('');
 
   $('#app').innerHTML = `
-    <h2 class="text-xl font-bold text-gray-800 mb-4">添加卡片</h2>
+    <h2 class="text-xl font-bold mb-4 gradient-text">✦ 添加卡片</h2>
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
       <!-- Left: Form -->
-      <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-4 sm:p-5">
-        <div class="flex border-b border-gray-200 mb-4">
-          <button id="modeSingle" class="flex-1 py-2 text-sm font-medium border-b-2 border-blue-500 text-blue-600 transition-colors" onclick="switchAddMode('single')">单张制卡</button>
-          <button id="modeBatch" class="flex-1 py-2 text-sm font-medium border-b-2 border-transparent text-gray-400 transition-colors" onclick="switchAddMode('batch')">批量制卡</button>
+      <div class="lg:col-span-1 p-4 sm:p-5 anime-card">
+        <div class="flex mb-4" style="border-bottom:1px solid #e8d5f0;">
+          <button id="modeSingle" class="flex-1 py-2 text-sm font-medium transition-colors" style="border-bottom:2px solid #ff7eb3;color:#e83e8c;" onclick="switchAddMode('single')">单张制卡</button>
+          <button id="modeBatch" class="flex-1 py-2 text-sm font-medium transition-colors" style="border-bottom:2px solid transparent;color:#8B7FA8;" onclick="switchAddMode('batch')">批量制卡</button>
         </div>
         <form id="singleForm" class="space-y-3" onsubmit="addSingleCard(event)">
           <div>
-            <label class="block text-xs font-medium text-gray-500 mb-1">正面 <span class="text-red-400">*</span></label>
+            <label class="block text-xs font-medium mb-1" style="color:#8B7FA8;">正面 <span style="color:#ff7eb3;">*</span></label>
             <div class="flex gap-1">
-              <textarea name="front" rows="2" required placeholder="输入问题或关键词（可粘贴图片）" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50 resize-none"></textarea>
-              <button type="button" class="img-btn self-end px-2 py-2 border border-gray-200 rounded-lg text-gray-400 hover:text-blue-500 hover:border-blue-300 transition-colors shrink-0" title="插入图片" data-target="front">
+              <textarea name="front" rows="2" required placeholder="输入问题或关键词（可粘贴图片）" class="anime-input flex-1 px-3 py-2 text-sm resize-none"></textarea>
+              <button type="button" class="img-btn self-end px-2 py-2 rounded-xl transition-colors shrink-0" style="border:1.5px solid #e8d5f0;color:#B39DDB;" title="插入图片" data-target="front">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               </button>
             </div>
           </div>
           <div>
-            <label class="block text-xs font-medium text-gray-500 mb-1">背面 <span class="text-red-400">*</span></label>
+            <label class="block text-xs font-medium mb-1" style="color:#8B7FA8;">背面 <span style="color:#ff7eb3;">*</span></label>
             <div class="flex gap-1">
-              <textarea name="back" rows="2" required placeholder="输入答案或释义（可粘贴图片）" class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50 resize-none"></textarea>
-              <button type="button" class="img-btn self-end px-2 py-2 border border-gray-200 rounded-lg text-gray-400 hover:text-blue-500 hover:border-blue-300 transition-colors shrink-0" title="插入图片" data-target="back">
+              <textarea name="back" rows="2" required placeholder="输入答案或释义（可粘贴图片）" class="anime-input flex-1 px-3 py-2 text-sm resize-none"></textarea>
+              <button type="button" class="img-btn self-end px-2 py-2 rounded-xl transition-colors shrink-0" style="border:1.5px solid #e8d5f0;color:#B39DDB;" title="插入图片" data-target="back">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               </button>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-medium text-gray-500 mb-1">标签</label>
-              <input type="text" name="tags" placeholder="如：英语 单词" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50">
+              <label class="block text-xs font-medium mb-1" style="color:#8B7FA8;">标签</label>
+              <input type="text" name="tags" placeholder="如：英语 单词" class="anime-input w-full px-3 py-2 text-sm">
             </div>
             <div>
-              <label class="block text-xs font-medium text-gray-500 mb-1">卡组</label>
-              <select name="deck" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:border-blue-400">${deckOpts}</select>
+              <label class="block text-xs font-medium mb-1" style="color:#8B7FA8;">卡组</label>
+              <select name="deck" class="anime-input w-full px-3 py-2 text-sm">${deckOpts}</select>
             </div>
           </div>
-          <button type="submit" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">添加卡片</button>
+          <button type="submit" class="btn-primary w-full py-2 text-sm font-medium">添加卡片</button>
         </form>
         <div id="batchForm" class="space-y-3 hidden">
           <div>
-            <label class="block text-xs font-medium text-gray-500 mb-1">粘贴内容</label>
-            <textarea id="batchText" rows="5" placeholder="每行一张卡片，用逗号、Tab 或 | 分隔正面和背面&#10;&#10;例如：&#10;你好,Hello&#10;苹果,Apple" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-blue-400 bg-gray-50 resize-none"></textarea>
+            <label class="block text-xs font-medium mb-1" style="color:#8B7FA8;">粘贴内容</label>
+            <textarea id="batchText" rows="5" placeholder="每行一张卡片，用逗号、Tab 或 | 分隔正面和背面&#10;&#10;例如：&#10;你好,Hello&#10;苹果,Apple" class="anime-input w-full px-3 py-2 text-sm resize-none"></textarea>
           </div>
           <div>
-            <label class="block text-xs font-medium text-gray-500 mb-1">分隔符</label>
-            <select id="delimiter" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50 focus:border-blue-400" onchange="previewBatch()">
+            <label class="block text-xs font-medium mb-1" style="color:#8B7FA8;">分隔符</label>
+            <select id="delimiter" class="anime-input w-full px-3 py-2 text-sm" onchange="previewBatch()">
               <option value="auto">自动检测</option><option value=",">逗号 (,)</option><option value="\t">Tab</option><option value="|">竖线 (|)</option><option value="none">每行=正面（背面为空）</option>
             </select>
           </div>
           <div class="grid grid-cols-2 gap-3">
-            <div><label class="block text-xs font-medium text-gray-500 mb-1">标签</label><input type="text" id="batchTags" placeholder="应用于所有卡片" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50"></div>
-            <div><label class="block text-xs font-medium text-gray-500 mb-1">卡组</label><select id="batchDeck" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-gray-50">${deckOpts}</select></div>
+            <div><label class="block text-xs font-medium mb-1" style="color:#8B7FA8;">标签</label><input type="text" id="batchTags" placeholder="应用于所有卡片" class="anime-input w-full px-3 py-2 text-sm"></div>
+            <div><label class="block text-xs font-medium mb-1" style="color:#8B7FA8;">卡组</label><select id="batchDeck" class="anime-input w-full px-3 py-2 text-sm">${deckOpts}</select></div>
           </div>
           <div id="batchPreview" class="hidden">
-            <p class="text-xs font-medium text-gray-500 mb-2">解析预览（共 <span id="batchCount">0</span> 张）</p>
+            <p class="text-xs font-medium mb-2" style="color:#8B7FA8;">解析预览（共 <span id="batchCount">0</span> 张）</p>
             <div id="batchPreviewList" class="max-h-32 overflow-y-auto space-y-1 text-xs"></div>
           </div>
-          <button onclick="addBatchCards()" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">批量生成卡片</button>
+          <button onclick="addBatchCards()" class="btn-primary w-full py-2 text-sm font-medium">批量生成卡片</button>
         </div>
       </div>
       <!-- Center: Preview -->
-      <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-4 sm:p-5 flex flex-col items-center justify-center min-h-[280px]">
-        <p class="text-xs font-medium text-gray-400 mb-3 uppercase tracking-wide">卡片预览</p>
-        <div id="previewPlaceholder" class="text-center text-gray-300">
-          <div class="text-5xl mb-3">🃟</div>
-          <p class="text-sm">填写内容后查看预览</p>
-          <p class="text-xs text-gray-300 mt-1">点击卡片可翻转</p>
+      <div class="lg:col-span-1 p-4 sm:p-5 flex flex-col items-center justify-center min-h-[280px] anime-card">
+        <p class="text-xs font-medium mb-3" style="color:#B39DDB;">✦ 卡片预览 ✦</p>
+        <div id="previewPlaceholder" class="text-center">
+          <div class="text-5xl mb-3">🌸</div>
+          <p class="text-sm" style="color:#B39DDB;">填写内容后查看预览</p>
+          <p class="text-xs mt-1" style="color:#d0c4e8;">点击卡片可翻转</p>
         </div>
         <div id="previewCard" class="card-flip w-full max-w-md hidden" onclick="this.classList.toggle('flipped')">
           <div class="card-flip-inner relative w-full" style="min-height:280px">
-            <div class="card-front absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-xl p-6 sm:p-8 overflow-y-auto">
+            <div class="card-front absolute inset-0 p-6 sm:p-8 overflow-y-auto" style="background:linear-gradient(135deg,#fff0f5,#ffe0ec);border:2px solid #ffc2d9;border-radius:1rem;">
               <div class="flex flex-col items-center justify-center min-h-full w-full">
-                <p class="text-xs text-blue-400 mb-3 uppercase tracking-wide">正面 · 问题</p>
-                <p id="previewFront" class="text-base sm:text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+                <p class="text-xs mb-3" style="color:#ff7eb3;">正面 · 问题</p>
+                <p id="previewFront" class="text-base sm:text-lg font-medium whitespace-pre-wrap break-words w-full" style="color:#4A3F6B;"></p>
               </div>
             </div>
-            <div class="card-back absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-xl p-6 sm:p-8 overflow-y-auto">
+            <div class="card-back absolute inset-0 p-6 sm:p-8 overflow-y-auto" style="background:linear-gradient(135deg,#f0f8ff,#e0f2fe);border:2px solid #bae6fd;border-radius:1rem;">
               <div class="flex flex-col items-center justify-center min-h-full w-full">
-                <p class="text-xs text-green-400 mb-3 uppercase tracking-wide">背面 · 答案</p>
-                <p id="previewBack" class="text-base sm:text-lg font-medium text-gray-800 whitespace-pre-wrap break-words w-full"></p>
+                <p class="text-xs mb-3" style="color:#7EC8E3;">背面 · 答案</p>
+                <p id="previewBack" class="text-base sm:text-lg font-medium whitespace-pre-wrap break-words w-full" style="color:#4A3F6B;"></p>
               </div>
             </div>
           </div>
         </div>
       </div>
       <!-- Right: Recent cards -->
-      <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-4 sm:p-5">
-        <p class="text-xs font-medium text-gray-400 uppercase tracking-wide mb-3">最近添加</p>
+      <div class="lg:col-span-1 p-4 sm:p-5 anime-card">
+        <p class="text-xs font-medium mb-3" style="color:#B39DDB;">✦ 最近添加 ✦</p>
         <div id="recentCards" class="space-y-2 max-h-[400px] overflow-y-auto">
-          <p class="text-sm text-gray-300 text-center py-8">暂无卡片</p>
+          <p class="text-sm text-center py-8" style="color:#d0c4e8;">暂无卡片</p>
         </div>
       </div>
     </div>`;
@@ -771,16 +969,20 @@ async function renderAdd() {
 }
 
 window.switchAddMode = function(mode) {
-  $('#modeSingle').classList.toggle('border-blue-500',mode==='single');
-  $('#modeSingle').classList.toggle('text-blue-600',mode==='single');
-  $('#modeSingle').classList.toggle('border-transparent',mode!=='single');
-  $('#modeSingle').classList.toggle('text-gray-400',mode!=='single');
-  $('#modeBatch').classList.toggle('border-blue-500',mode==='batch');
-  $('#modeBatch').classList.toggle('text-blue-600',mode==='batch');
-  $('#modeBatch').classList.toggle('border-transparent',mode!=='batch');
-  $('#modeBatch').classList.toggle('text-gray-400',mode!=='batch');
-  $('#singleForm').classList.toggle('hidden',mode!=='single');
-  $('#batchForm').classList.toggle('hidden',mode!=='batch');
+  const singleEl = $('#modeSingle'), batchEl = $('#modeBatch');
+  const activeStyle = 'border-bottom:2px solid #ff7eb3;color:#e83e8c;';
+  const inactiveStyle = 'border-bottom:2px solid transparent;color:#8B7FA8;';
+  if (mode === 'single') {
+    singleEl.style.cssText = activeStyle;
+    batchEl.style.cssText = inactiveStyle;
+    $('#singleForm').classList.remove('hidden');
+    $('#batchForm').classList.add('hidden');
+  } else {
+    batchEl.style.cssText = activeStyle;
+    singleEl.style.cssText = inactiveStyle;
+    $('#batchForm').classList.remove('hidden');
+    $('#singleForm').classList.add('hidden');
+  }
 };
 
 function setupPreviewListeners() {
@@ -948,19 +1150,24 @@ async function _renderBrowseTree() {
 
   function renderDeckCardSync(d) {
     const counts = deckStats[d.id] || { new: 0, learn: 0, review: 0, total: 0 };
+    const gradientColors = [
+      'linear-gradient(135deg,#ffe0ec,#fff0f5)', 'linear-gradient(135deg,#e0f2fe,#f0f9ff)',
+      'linear-gradient(135deg,#ede9fe,#f5f3ff)', 'linear-gradient(135deg,#fff5f9,#fefcff)'
+    ];
+    const idx = d.id % gradientColors.length;
     return `
-      <div class="bg-white rounded-xl shadow-sm p-4 hover:shadow-md transition-shadow cursor-pointer" onclick="browseOpenDeck(${d.id})">
+      <div class="anime-card p-4 cursor-pointer" onclick="browseOpenDeck(${d.id})" style="background:${gradientColors[idx]};">
         <div class="flex items-center justify-between">
           <div>
-            <h3 class="font-medium text-gray-800">${escapeHTML(d.name)}</h3>
-            <p class="text-xs text-gray-400 mt-0.5">共 ${counts.total} 张卡片</p>
+            <h3 class="font-medium" style="color:#4A3F6B;">${escapeHTML(d.name)}</h3>
+            <p class="text-xs mt-0.5" style="color:#8B7FA8;">共 ${counts.total} 张卡片</p>
           </div>
-          <div class="flex gap-2 items-center">
-            ${counts.new ? `<span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">新 ${counts.new}</span>` : ''}
-            ${counts.learn ? `<span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">学 ${counts.learn}</span>` : ''}
-            ${counts.review ? `<span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">复 ${counts.review}</span>` : ''}
-            ${!counts.new&&!counts.learn&&!counts.review ? `<span class="text-xs bg-gray-100 text-gray-400 px-2 py-1 rounded-full">完成</span>` : ''}
-            <svg class="w-4 h-4 text-gray-300 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          <div class="flex gap-1.5 items-center">
+            ${counts.new ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#ffc2d9;color:#d42e78;">新 ${counts.new}</span>` : ''}
+            ${counts.learn ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#ffd0b0;color:#e67e22;">学 ${counts.learn}</span>` : ''}
+            ${counts.review ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#c2e0f0;color:#2874a6;">复 ${counts.review}</span>` : ''}
+            ${!counts.new&&!counts.learn&&!counts.review ? `<span class="text-xs px-2 py-1 rounded-full" style="background:#e8e0f0;color:#8B7FA8;">完成</span>` : ''}
+            <svg class="w-4 h-4 ml-1" style="color:#c4b5fd;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
           </div>
         </div>
       </div>`;
@@ -973,21 +1180,21 @@ async function _renderBrowseTree() {
     const total = folderTotal(folder.id);
 
     let html = `<div class="browse-folder-section" data-folder-id="${folder.id}">`;
-    html += `<div class="flex items-center gap-2 py-2 px-1 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors" onclick="browseToggleFolder(${folder.id})">`;
-    html += `<svg class="w-3.5 h-3.5 text-gray-400 transition-transform ${isExpanded ? 'rotate-90' : ''}" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>`;
+    html += `<div class="flex items-center gap-2 py-2 px-2 rounded-xl cursor-pointer transition-all duration-200" onclick="browseToggleFolder(${folder.id})">`;
+    html += `<svg class="w-3.5 h-3.5 transition-transform ${isExpanded ? 'rotate-90' : ''}" style="color:#B39DDB;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>`;
     html += `<span class="text-base">📁</span>`;
-    html += `<span class="text-sm font-medium text-gray-700">${escapeHTML(folder.name)}</span>`;
-    html += `<span class="text-xs text-gray-400">(${total} 张)</span>`;
+    html += `<span class="text-sm font-medium" style="color:#4A3F6B;">${escapeHTML(folder.name)}</span>`;
+    html += `<span class="text-xs" style="color:#8B7FA8;">(${total} 张)</span>`;
     html += `</div>`;
     if (isExpanded) {
-      html += `<div class="ml-4 pl-3 border-l-2 border-gray-100">`;
+      html += `<div class="ml-4 pl-3" style="border-left:2px solid #e0c8e8;">`;
       if (folderDecks.length > 0) {
         html += `<div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 mt-2 mb-3">`;
         folderDecks.forEach(d => { html += renderDeckCardSync(d); });
         html += `</div>`;
       }
       if (folderDecks.length === 0 && children.length === 0) {
-        html += `<div class="text-center py-3 text-gray-400 text-xs">空文件夹</div>`;
+        html += `<div class="text-center py-3 text-xs" style="color:#d0c4e8;">空文件夹</div>`;
       }
       children.forEach(c => { html += renderFolderSync(c); });
       html += `</div>`;
@@ -1002,17 +1209,17 @@ async function _renderBrowseTree() {
 
   $('#app').innerHTML = `
     <div class="mb-4 flex items-center justify-between">
-      <h2 class="text-xl font-bold text-gray-800">浏览</h2>
+      <h2 class="text-xl font-bold gradient-text">✦ 浏览</h2>
       <div class="flex gap-2">
-        <button onclick="exportCards()" class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">导出</button>
-        <button onclick="document.getElementById('importFile').click()" class="px-4 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors">导入</button>
+        <button onclick="exportCards()" class="btn-primary text-sm">导出</button>
+        <button onclick="document.getElementById('importFile').click()" class="btn-secondary text-sm">导入</button>
         <input type="file" id="importFile" accept=".md" class="hidden" onchange="handleImport(event)">
       </div>
     </div>
     ${allEmpty
-      ? `<div class="text-center py-16 text-gray-400"><div class="text-5xl mb-3">📚</div><p class="text-sm">还没有卡组，先去添加卡片吧</p></div>`
+      ? `<div class="text-center py-16"><div class="text-5xl mb-3">🌸</div><p class="text-sm" style="color:#8B7FA8;">还没有卡组，先去添加卡片吧~</p></div>`
       : `
-        ${deckHtml ? `<div class="mb-4"><h3 class="text-sm font-medium text-gray-400 mb-2">根目录</h3><div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">${deckHtml}</div></div>` : ''}
+        ${deckHtml ? `<div class="mb-4"><h3 class="text-sm font-medium mb-2" style="color:#B39DDB;">📌 根目录</h3><div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">${deckHtml}</div></div>` : ''}
         ${folderHtml}
       `
     }`;
@@ -1054,18 +1261,18 @@ async function _renderBrowseDeckCards(did) {
 
   $('#app').innerHTML = `
     <div class="mb-4 flex items-center gap-3">
-      <button onclick="_renderBrowseTree()" class="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors px-2 py-1.5 rounded-lg hover:bg-blue-50">
+      <button onclick="_renderBrowseTree()" class="flex items-center gap-1 text-sm transition-all duration-200 px-2 py-1.5 rounded-full" style="color:#8B7FA8;">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         浏览
       </button>
-      <svg class="w-3.5 h-3.5 text-gray-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
-      <h2 class="text-xl font-bold text-gray-800">${escapeHTML(deckName)}</h2>
-      <span class="text-sm text-gray-400">(${cards.length} 张)</span>
+      <svg class="w-3.5 h-3.5" style="color:#d0c4e8;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+      <h2 class="text-xl font-bold gradient-text">${escapeHTML(deckName)}</h2>
+      <span class="text-sm" style="color:#8B7FA8;">(${cards.length} 张)</span>
       <div class="ml-auto flex gap-2">
-        <input id="browseSearch" placeholder="搜索..." class="px-3 py-2 border border-gray-200 rounded-lg text-sm w-44" oninput="browseDeckSearch()">
+        <input id="browseSearch" placeholder="搜索..." class="anime-input px-3 py-2 text-sm w-44" oninput="browseDeckSearch()">
       </div>
     </div>
-    <div id="browseList" class="bg-white rounded-xl shadow-sm divide-y divide-gray-100"></div>
+    <div id="browseList" class="anime-card divide-y" style="border-color:#f0e6f6;"></div>
     <div id="browseSentinel" class="h-4"></div>
     <div id="browseLoadMoreBox" class="mt-2 text-center"></div>`;
 
@@ -1081,20 +1288,20 @@ function _browseCardRow(c, notesMap) {
   const f = escapeHTML(plainF.substring(0, 60));
   const plainB = stripHTML(note.fields?.[1] || '');
   const b = escapeHTML(plainB.substring(0, 60));
-  const tags = (note.tags || []).map(t => `<span class="text-[10px] text-blue-500 bg-blue-50 px-1.5 py-0.5 rounded">${escapeHTML(t)}</span>`).join(' ');
-  const status = c.queue === 2 ? `<span class="text-xs text-green-600">间隔${c.ivl}天</span>` :
-                 c.queue === 1 ? `<span class="text-xs text-red-500">学习中</span>` :
-                 c.queue === 0 ? `<span class="text-xs text-blue-500">新</span>` :
-                 `<span class="text-xs text-gray-400">暂停</span>`;
-  return `<div class="flex items-center gap-3 p-3 hover:bg-gray-50 transition-colors">
+  const tags = (note.tags || []).map(t => `<span class="text-[10px] px-1.5 py-0.5 rounded-full" style="background:#ede9fe;color:#7c6faa;">${escapeHTML(t)}</span>`).join(' ');
+  const status = c.queue === 2 ? `<span class="text-xs" style="color:#66BB6A;">间隔${c.ivl}天</span>` :
+                 c.queue === 1 ? `<span class="text-xs" style="color:#FF9800;">学习中</span>` :
+                 c.queue === 0 ? `<span class="text-xs" style="color:#ff7eb3;">新</span>` :
+                 `<span class="text-xs" style="color:#B39DDB;">暂停</span>`;
+  return `<div class="flex items-center gap-3 p-3 transition-colors" style="border-color:#f0e6f6;">
     <div class="flex-1 min-w-0">
-      <p class="text-sm font-medium text-gray-700 truncate">${f}</p>
-      <p class="text-xs text-gray-400 truncate">${b}</p>
+      <p class="text-sm font-medium truncate" style="color:#4A3F6B;">${f}</p>
+      <p class="text-xs truncate" style="color:#8B7FA8;">${b}</p>
       <div class="flex gap-2 mt-1">${tags} ${status}</div>
     </div>
     <div class="flex gap-1 shrink-0 items-center">
-      <button onclick="browseEdit(${c.id})" class="text-gray-400 hover:text-blue-500 p-1 text-xs">编辑</button>
-      <button onclick="browseDelete(${c.id})" class="text-gray-400 hover:text-red-500 p-1 text-xs">删除</button>
+      <button onclick="browseEdit(${c.id})" class="p-1 text-xs transition-colors" style="color:#B39DDB;">编辑</button>
+      <button onclick="browseDelete(${c.id})" class="p-1 text-xs transition-colors" style="color:#EF9A9A;">删除</button>
     </div>
   </div>`;
 }
@@ -1474,34 +1681,32 @@ async function renderStats() {
   DB = null;
   const overview = await Stats.getOverview();
   const cards = await Card.getAll();
-  const revlogs = await Revlog.getAll();
-
-  let totalReviews = revlogs.length;
+  const timehotDays = await Timehot.getAll();
+  let totalReviews = 0;
+  const countMap = {};
+  for (const [key, count] of Object.entries(timehotDays)) {
+    const [y, m, d] = key.split('-').map(Number);
+    const dayNum = Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+    countMap[dayNum] = (countMap[dayNum] || 0) + count;
+    totalReviews += count;
+  }
   let avgInterval = 0; let reviewCards = 0;
   for (const c of cards) {
     if (c.type===2) { avgInterval += c.ivl; reviewCards++; }
   }
   avgInterval = reviewCards > 0 ? Math.round(avgInterval / reviewCards) : 0;
 
-  let heatmapDays = 30;
-  const countMap = {};
-  for (const r of revlogs) {
-    const d = Math.floor(r.reviewTime / 86400000);
-    countMap[d] = (countMap[d] || 0) + 1;
-  }
+  let heatmapDays = 180;
 
-  // Color levels: empty → light → medium → strong → max (red scale)
-  function heatColor(count, max) {
-    if (count === 0 || max === 0) return '#f6f0f0';
-    const t = count / max;
-    if (t <= 0.2) return '#ffd5d5';
-    if (t <= 0.4) return '#ff8a8a';
-    if (t <= 0.6) return '#ff5252';
-    if (t <= 0.8) return '#e53935';
-    return '#b71c1c';
+  // Density intervals: 1, 10, 20, 30, 50
+  function heatColor(count) {
+    if (count === 0) return '#f5f0f8';
+    if (count < 10) return '#ffe0ec';
+    if (count < 20) return '#ffc2d9';
+    if (count < 30) return '#ff9ec4';
+    if (count < 50) return '#ff7eb3';
+    return '#f85e9f';
   }
-
-  window._heatmapData = countMap;
 
   window._renderHeatmap = function(days) {
     heatmapDays = days;
@@ -1513,17 +1718,6 @@ async function renderStats() {
     const dayOfWeek = (firstDay.getDay() + 6) % 7; // 周一=0
     firstDay.setDate(firstDay.getDate() - dayOfWeek - (days - 1));
     const totalWeeks = Math.ceil((days + dayOfWeek) / 7);
-
-    // 计算最大值
-    let max = 0;
-    for (let w = 0; w < totalWeeks; w++) {
-      for (let d = 0; d < 7; d++) {
-        const date = new Date(firstDay);
-        date.setDate(firstDay.getDate() + w * 7 + d);
-        const dayNum = Math.floor(date.getTime() / 86400000);
-        if (dayNum <= todayDay) max = Math.max(max, countMap[dayNum] || 0);
-      }
-    }
 
     const DAY_LABELS = ['', '周一', '', '周三', '', '周五', ''];
     const MONTH_NAMES = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
@@ -1568,7 +1762,7 @@ async function renderStats() {
         if (!cell.inRange) continue;
         const x = w * (CELL + GAP);
         const y = 18 + d * (CELL + GAP);
-        const color = heatColor(cell.count, max);
+        const color = heatColor(cell.count);
         const label = `${cell.date.getMonth()+1}月${cell.date.getDate()}日 · ${cell.count}次复习`;
         svgParts.push(`<rect x="${x}" y="${y}" width="${CELL}" height="${CELL}" rx="3" fill="${color}" data-tip="${label}"/>`);
       }
@@ -1595,17 +1789,21 @@ async function renderStats() {
         </div>
         <div id="${svgId}" class="select-none" style="overflow-x:auto;min-width:0">${svgParts.join('')}</div>
       </div>
-      <div class="flex items-center gap-1.5 mt-4 text-[11px] text-gray-400">
-        <span>无</span>
-        <div style="width:13px;height:13px;border-radius:3px;background:#f6f0f0"></div>
-        <div style="width:13px;height:13px;border-radius:3px;background:#ffd5d5"></div>
-        <div style="width:13px;height:13px;border-radius:3px;background:#ff8a8a"></div>
-        <div style="width:13px;height:13px;border-radius:3px;background:#ff5252"></div>
-        <div style="width:13px;height:13px;border-radius:3px;background:#e53935"></div>
-        <div style="width:13px;height:13px;border-radius:3px;background:#b71c1c"></div>
-        <span>密集</span>
-        <div class="ml-3 text-gray-300">·</div>
-        <span class="text-gray-300">共 ${totalReviews} 次复习记录</span>
+      <div class="flex items-center gap-1.5 mt-4 text-[11px]" style="color:#8B7FA8;">
+        <span>0</span>
+        <div style="width:13px;height:13px;border-radius:3px;background:#f5f0f8"></div>
+        <span>1-9</span>
+        <div style="width:13px;height:13px;border-radius:3px;background:#ffe0ec"></div>
+        <span>10-19</span>
+        <div style="width:13px;height:13px;border-radius:3px;background:#ffc2d9"></div>
+        <span>20-29</span>
+        <div style="width:13px;height:13px;border-radius:3px;background:#ff9ec4"></div>
+        <span>30-49</span>
+        <div style="width:13px;height:13px;border-radius:3px;background:#ff7eb3"></div>
+        <span>50+</span>
+        <div style="width:13px;height:13px;border-radius:3px;background:#f85e9f"></div>
+        <div class="ml-3" style="color:#d0c4e8;">·</div>
+        <span style="color:#B39DDB;">共 ${totalReviews} 次复习记录</span>
       </div>`;
 
     // Tooltip 交互
@@ -1627,61 +1825,71 @@ async function renderStats() {
     });
     svgEl.addEventListener('mouseleave', function() { tooltipEl.style.display = 'none'; });
 
+    // Auto-scroll to right edge for year view
+    if (days >= 180) {
+      requestAnimationFrame(function() {
+        var scrollContainer = svgEl.parentElement;
+        if (scrollContainer) scrollContainer.scrollLeft = scrollContainer.scrollWidth;
+      });
+    }
+
     // 更新切换按钮样式
     $$('.hm-btn').forEach(function(b) {
       var v = parseInt(b.dataset.days);
-      b.classList.toggle('bg-blue-500', v === days);
-      b.classList.toggle('text-white', v === days);
-      b.classList.toggle('bg-gray-100', v !== days);
-      b.classList.toggle('text-gray-500', v !== days);
+      if (v === days) {
+        b.style.cssText = 'background:linear-gradient(135deg,#ff7eb3,#f85e9f);color:#fff;border-radius:9999px;';
+      } else {
+        b.style.cssText = 'background:#f3f0f8;color:#8B7FA8;border-radius:9999px;';
+      }
     });
   };
 
-  const rangeOptions = [{label:'近7天',v:7},{label:'近30天',v:30},{label:'近一年',v:365}].map(function(o) {
-    return '<button data-days="'+o.v+'" onclick="window._renderHeatmap('+o.v+')" class="hm-btn px-3 py-1 text-xs rounded-lg '+(heatmapDays===o.v?'bg-blue-500 text-white':'bg-gray-100 text-gray-500')+' hover:bg-gray-200 transition-colors">'+o.label+'</button>';
+  const rangeOptions = [{label:'近7天',v:7},{label:'近30天',v:30},{label:'近半年',v:180}].map(function(o) {
+    var active = heatmapDays===o.v;
+    return '<button data-days="'+o.v+'" onclick="window._renderHeatmap('+o.v+')" class="hm-btn px-3 py-1 text-xs rounded-full transition-all duration-200" style="'+(active?'background:linear-gradient(135deg,#ff7eb3,#f85e9f);color:#fff;':'background:#f3f0f8;color:#8B7FA8;')+'">'+o.label+'</button>';
   }).join('');
 
-  $('#app').innerHTML = '<h2 class="text-xl font-bold text-gray-800 mb-4">统计</h2>' +
+  $('#app').innerHTML = '<h2 class="text-xl font-bold mb-4 gradient-text">✦ 统计</h2>' +
     '<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">' +
-      '<div class="bg-white rounded-xl shadow-sm p-4 text-center"><div class="text-2xl font-bold text-blue-500">' + overview.decks + '</div><div class="text-xs text-gray-400 mt-1">卡组</div></div>' +
-      '<div class="bg-white rounded-xl shadow-sm p-4 text-center"><div class="text-2xl font-bold text-green-500">' + overview.cards + '</div><div class="text-xs text-gray-400 mt-1">卡片</div></div>' +
-      '<div class="bg-white rounded-xl shadow-sm p-4 text-center"><div class="text-2xl font-bold text-orange-500">' + overview.due + '</div><div class="text-xs text-gray-400 mt-1">待复习</div></div>' +
-      '<div class="bg-white rounded-xl shadow-sm p-4 text-center"><div class="text-2xl font-bold text-purple-500">' + totalReviews + '</div><div class="text-xs text-gray-400 mt-1">总复习数</div></div>' +
+      '<div class="anime-card p-4 text-center"><div class="text-2xl font-bold" style="color:#ff7eb3;">' + overview.decks + '</div><div class="text-xs mt-1" style="color:#8B7FA8;">卡组</div></div>' +
+      '<div class="anime-card p-4 text-center"><div class="text-2xl font-bold" style="color:#7EC8E3;">' + overview.cards + '</div><div class="text-xs mt-1" style="color:#8B7FA8;">卡片</div></div>' +
+      '<div class="anime-card p-4 text-center"><div class="text-2xl font-bold" style="color:#FF9800;">' + overview.due + '</div><div class="text-xs mt-1" style="color:#8B7FA8;">待复习</div></div>' +
+      '<div class="anime-card p-4 text-center"><div class="text-2xl font-bold" style="color:#B39DDB;">' + totalReviews + '</div><div class="text-xs mt-1" style="color:#8B7FA8;">总复习数</div></div>' +
     '</div>' +
-    '<div class="mb-4"><button onclick="clearAllData()" class="px-4 py-2 bg-red-50 text-red-500 border border-red-200 rounded-lg text-sm hover:bg-red-100 transition-colors">清除所有数据</button></div>' +
+    '<div class="mb-4"><button onclick="clearAllData()" class="px-4 py-2 rounded-full text-sm transition-all duration-200" style="background:#fff0f5;color:#e83e8c;border:1px solid #ffc2d9;">清除所有数据</button></div>' +
     '<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">' +
-      '<div class="bg-white rounded-xl shadow-sm p-5 lg:col-span-2">' +
+      '<div class="anime-card p-5 lg:col-span-2">' +
         '<div class="flex items-center justify-between mb-4">' +
           '<div>' +
-            '<h3 class="text-sm font-semibold text-gray-700">复习热度</h3>' +
-            '<p class="text-xs text-gray-400 mt-0.5">每日复习次数分布</p>' +
+            '<h3 class="text-sm font-semibold" style="color:#4A3F6B;">✦ 复习热度</h3>' +
+            '<p class="text-xs mt-0.5" style="color:#8B7FA8;">每日复习次数分布</p>' +
           '</div>' +
           '<div class="flex gap-1">' + rangeOptions + '</div>' +
         '</div>' +
         '<div id="heatmapContainer"></div>' +
       '</div>' +
-      '<div class="bg-white rounded-xl shadow-sm p-5">' +
-        '<h3 class="text-sm font-semibold text-gray-700 mb-4">学习概况</h3>' +
+      '<div class="anime-card p-5">' +
+        '<h3 class="text-sm font-semibold mb-4" style="color:#4A3F6B;">✦ 学习概况</h3>' +
         '<div class="space-y-4">' +
           '<div class="flex items-center gap-3">' +
-            '<div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>' +
-            '<div><div class="text-base font-semibold text-gray-800">' + overview.notes + '</div><div class="text-xs text-gray-400">笔记数</div></div>' +
+            '<div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#ffe0ec;"><svg class="w-4 h-4" style="color:#ff7eb3;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>' +
+            '<div><div class="text-base font-semibold" style="color:#4A3F6B;">' + overview.notes + '</div><div class="text-xs" style="color:#8B7FA8;">笔记数</div></div>' +
           '</div>' +
           '<div class="flex items-center gap-3">' +
-            '<div class="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>' +
-            '<div><div class="text-base font-semibold text-gray-800">' + overview.cards + '</div><div class="text-xs text-gray-400">总卡片数</div></div>' +
+            '<div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#e0f2fe;"><svg class="w-4 h-4" style="color:#7EC8E3;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>' +
+            '<div><div class="text-base font-semibold" style="color:#4A3F6B;">' + overview.cards + '</div><div class="text-xs" style="color:#8B7FA8;">总卡片数</div></div>' +
           '</div>' +
           '<div class="flex items-center gap-3">' +
-            '<div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>' +
-            '<div><div class="text-base font-semibold text-gray-800">' + overview.todayReviews + '</div><div class="text-xs text-gray-400">今日已复习</div></div>' +
+            '<div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#fff0e0;"><svg class="w-4 h-4" style="color:#FF9800;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>' +
+            '<div><div class="text-base font-semibold" style="color:#4A3F6B;">' + overview.todayReviews + '</div><div class="text-xs" style="color:#8B7FA8;">今日已复习</div></div>' +
           '</div>' +
           '<div class="flex items-center gap-3">' +
-            '<div class="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>' +
-            '<div><div class="text-base font-semibold text-gray-800">' + avgInterval + ' 天</div><div class="text-xs text-gray-400">平均记忆间隔</div></div>' +
+            '<div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#ede9fe;"><svg class="w-4 h-4" style="color:#B39DDB;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>' +
+            '<div><div class="text-base font-semibold" style="color:#4A3F6B;">' + avgInterval + ' 天</div><div class="text-xs" style="color:#8B7FA8;">平均记忆间隔</div></div>' +
           '</div>' +
           '<div class="flex items-center gap-3">' +
-            '<div class="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0"><svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>' +
-            '<div><div class="text-base font-semibold text-gray-800">' + totalReviews + '</div><div class="text-xs text-gray-400">复习记录总数</div></div>' +
+            '<div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background:#f5f3ff;"><svg class="w-4 h-4" style="color:#a78bfa;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>' +
+            '<div><div class="text-base font-semibold" style="color:#4A3F6B;">' + totalReviews + '</div><div class="text-xs" style="color:#8B7FA8;">复习记录总数</div></div>' +
           '</div>' +
         '</div>' +
       '</div>' +
@@ -1734,16 +1942,20 @@ function hideCtxMenu() {
 function showDeckCtxMenu(event, did) {
   _ctxTarget = { type: 'deck', id: did };
   showCtxMenu(`
-    <button class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2" onclick="ctxClearCards()">
+    <button class="w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors" style="color:#8B7FA8;" onclick="ctxRenameDeck()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      重命名
+    </button>
+    <button class="w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors" style="color:#E57373;" onclick="ctxClearCards()">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
       清空卡片
     </button>
-    <button class="w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2" onclick="ctxMoveDeck()">
+    <button class="w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors" style="color:#8B7FA8;" onclick="ctxMoveDeck()">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
       移动到文件夹
     </button>
-    <hr class="border-gray-100">
-    <button class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2" onclick="ctxDeleteDeck()">
+    <hr style="border-color:#f0e6f6;">
+    <button class="w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors" style="color:#E57373;" onclick="ctxDeleteDeck()">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
       删除卡组
     </button>`, event);
@@ -1752,20 +1964,20 @@ function showDeckCtxMenu(event, did) {
 function showFolderCtxMenu(event, fid) {
   _ctxTarget = { type: 'folder', id: fid };
   showCtxMenu(`
-    <button class="w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2" onclick="ctxRenameFolder()">
+    <button class="w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors" style="color:#8B7FA8;" onclick="ctxRenameFolder()">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
       重命名
     </button>
-    <button class="w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2" onclick="ctxNewDeckInFolder()">
+    <button class="w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors" style="color:#8B7FA8;" onclick="ctxNewDeckInFolder()">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
       在此新建卡组
     </button>
-    <button class="w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-2" onclick="ctxNewSubFolder()">
+    <button class="w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors" style="color:#8B7FA8;" onclick="ctxNewSubFolder()">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
       新建子文件夹
     </button>
-    <hr class="border-gray-100">
-    <button class="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2" onclick="ctxDeleteFolder()">
+    <hr style="border-color:#f0e6f6;">
+    <button class="w-full px-4 py-2 text-left text-sm flex items-center gap-2 transition-colors" style="color:#E57373;" onclick="ctxDeleteFolder()">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
       删除文件夹
     </button>`, event);
@@ -1789,12 +2001,12 @@ async function ctxMoveDeck() {
   hideCtxMenu();
   const folderOpts = await buildFolderOptions(null, 0);
   showModal(`
-    <h3 class="text-lg font-bold mb-4">移动卡组到文件夹</h3>
-    <select id="moveDeckFolder" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4">
+    <h3 class="text-lg font-bold mb-4 gradient-text">✦ 移动卡组到文件夹</h3>
+    <select id="moveDeckFolder" class="anime-input w-full px-3 py-2.5 text-sm mb-4">
       <option value="">根目录（无文件夹）</option>
       ${folderOpts}
     </select>
-    <button onclick="doMoveDeck(${did})" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">移动</button>`);
+    <button onclick="doMoveDeck(${did})" class="btn-primary w-full py-2.5 text-sm">移动</button>`);
 }
 
 async function doMoveDeck(did) {
@@ -1826,9 +2038,9 @@ async function ctxRenameFolder() {
   const folder = await Folder.get(fid);
   if (!folder) return;
   showModal(`
-    <h3 class="text-lg font-bold mb-4">重命名文件夹</h3>
-    <input id="renameFolderName" value="${escapeHTML(folder.name)}" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-4" onkeydown="if(event.key==='Enter')doRenameFolder(${fid})">
-    <button onclick="doRenameFolder(${fid})" class="w-full py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">保存</button>`);
+    <h3 class="text-lg font-bold mb-4 gradient-text">✦ 重命名文件夹</h3>
+    <input id="renameFolderName" value="${escapeHTML(folder.name)}" class="anime-input w-full px-3 py-2.5 text-sm mb-4" onkeydown="if(event.key==='Enter')doRenameFolder(${fid})">
+    <button onclick="doRenameFolder(${fid})" class="btn-primary w-full py-2.5 text-sm">保存</button>`);
   setTimeout(() => $('#renameFolderName')?.select(), 100);
 }
 
@@ -1841,6 +2053,30 @@ async function doRenameFolder(fid) {
   await Folder.update(folder);
   closeModal();
   showToast('文件夹已重命名', 'success');
+  renderDashboard();
+}
+
+async function ctxRenameDeck() {
+  const did = _ctxTarget.id;
+  hideCtxMenu();
+  const deck = await Deck.get(did);
+  if (!deck) return;
+  showModal(`
+    <h3 class="text-lg font-bold mb-4 gradient-text">✦ 重命名卡组</h3>
+    <input id="renameDeckName" value="${escapeHTML(deck.name)}" class="anime-input w-full px-3 py-2.5 text-sm mb-4" onkeydown="if(event.key==='Enter')doRenameDeck(${did})">
+    <button onclick="doRenameDeck(${did})" class="btn-primary w-full py-2.5 text-sm">保存</button>`);
+  setTimeout(() => $('#renameDeckName')?.select(), 100);
+}
+
+async function doRenameDeck(did) {
+  const name = $('#renameDeckName').value.trim();
+  if (!name) { showToast('请输入名称', 'error'); return; }
+  const deck = await Deck.get(did);
+  if (!deck) return;
+  deck.name = name;
+  await Deck.update(deck);
+  closeModal();
+  showToast('卡组已重命名', 'success');
   renderDashboard();
 }
 
@@ -1871,18 +2107,18 @@ async function ctxDeleteFolder() {
     });
   } else {
     showModal(`
-      <h3 class="text-lg font-bold mb-3">删除文件夹</h3>
-      <p class="text-sm text-gray-600 mb-1">文件夹"${escapeHTML(folder.name)}"包含：</p>
-      <ul class="text-sm text-gray-500 mb-4 ml-4 list-disc">
+      <h3 class="text-lg font-bold mb-3 gradient-text">✦ 删除文件夹</h3>
+      <p class="text-sm mb-1" style="color:#4A3F6B;">文件夹"${escapeHTML(folder.name)}"包含：</p>
+      <ul class="text-sm mb-4 ml-4 list-disc" style="color:#8B7FA8;">
         ${decks.length > 0 ? `<li>${decks.length} 个卡组</li>` : ''}
         ${subFolders.length > 0 ? `<li>${subFolders.length} 个子文件夹</li>` : ''}
       </ul>
-      <p class="text-xs text-gray-400 mb-3">选择删除方式：</p>
+      <p class="text-xs mb-3" style="color:#B39DDB;">选择删除方式：</p>
       <div class="flex gap-2 mb-2">
-        <button onclick="doDeleteFolderShallow(${fid})" class="flex-1 py-2 bg-yellow-500 text-white rounded-lg text-sm hover:bg-yellow-600 transition-colors">保留内容</button>
-        <button onclick="doDeleteFolderDeep(${fid})" class="flex-1 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors">全部删除</button>
+        <button onclick="doDeleteFolderShallow(${fid})" class="flex-1 py-2 rounded-full text-sm text-white transition-all duration-200" style="background:#FFB74D;box-shadow:0 2px 12px rgba(255,183,77,0.3);">保留内容</button>
+        <button onclick="doDeleteFolderDeep(${fid})" class="flex-1 py-2 rounded-full text-sm text-white transition-all duration-200" style="background:linear-gradient(135deg,#EF9A9A,#E57373);box-shadow:0 2px 12px rgba(229,115,115,0.3);">全部删除</button>
       </div>
-      <button onclick="closeModal()" class="w-full py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">取消</button>`);
+      <button onclick="closeModal()" class="w-full py-2 rounded-full text-sm transition-all duration-200" style="background:#f3f0f8;color:#8B7FA8;">取消</button>`);
   }
 }
 
@@ -1905,22 +2141,22 @@ async function doDeleteFolderDeep(fid) {
 function showProgressModalImport(current, total) {
   showModal(`
     <div class="text-center" style="min-width:280px">
-      <h3 class="text-lg font-bold mb-4">正在导入卡片</h3>
-      <div class="w-full bg-gray-200 rounded-full h-4 mb-2 overflow-hidden">
-        <div id="progressFill" class="progress-bar h-4 rounded-full bg-green-500" style="width:0%"></div>
+      <h3 class="text-lg font-bold mb-4 gradient-text">正在导入卡片...</h3>
+      <div class="w-full rounded-full h-4 mb-2 overflow-hidden" style="background:#f0e6f6;">
+        <div id="progressFill" class="progress-bar h-4 rounded-full" style="width:0%;background:linear-gradient(90deg,#7EC8E3,#38bdf8);"></div>
       </div>
-      <p id="progressText" class="text-sm text-gray-500">0 / ${total}</p>
+      <p id="progressText" class="text-sm" style="color:#8B7FA8;">0 / ${total}</p>
     </div>`);
 }
 
 function showProgressModal(current, total) {
   showModal(`
     <div class="text-center" style="min-width:280px">
-      <h3 class="text-lg font-bold mb-4">正在清空卡片</h3>
-      <div id="progressWrapper" class="w-full bg-gray-200 rounded-full h-4 mb-2 overflow-hidden">
-        <div id="progressFill" class="progress-bar h-4 rounded-full bg-blue-500" style="width:0%"></div>
+      <h3 class="text-lg font-bold mb-4 gradient-text">正在清空卡片...</h3>
+      <div id="progressWrapper" class="w-full rounded-full h-4 mb-2 overflow-hidden" style="background:#f0e6f6;">
+        <div id="progressFill" class="progress-bar h-4 rounded-full" style="width:0%;background:linear-gradient(90deg,#ff7eb3,#B39DDB);"></div>
       </div>
-      <p id="progressText" class="text-sm text-gray-500">0 / ${total}</p>
+      <p id="progressText" class="text-sm" style="color:#8B7FA8;">0 / ${total}</p>
     </div>`);
 }
 
@@ -2001,6 +2237,28 @@ $('#imageInput').addEventListener('change', async (e) => {
   e.target.value = '';
 });
 
+// ===== Floating Sakura Petals =====
+(function() {
+  const petals = ['🌸', '💮', '🌷', '✿', '❀', '🌺'];
+  const container = document.getElementById('petalsContainer');
+  let count = 0;
+  function spawnPetal() {
+    if (!container || count > 18) return;
+    count++;
+    const petal = document.createElement('span');
+    petal.className = 'petal';
+    petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+    petal.style.left = Math.random() * 100 + '%';
+    petal.style.fontSize = (0.8 + Math.random() * 1.4) + 'rem';
+    petal.style.animationDuration = (8 + Math.random() * 16) + 's';
+    petal.style.animationDelay = Math.random() * 5 + 's';
+    container.appendChild(petal);
+    setTimeout(() => { if (petal.parentNode) { petal.remove(); count--; } }, 25000);
+  }
+  for (let i = 0; i < 10; i++) setTimeout(spawnPetal, i * 1200);
+  setInterval(spawnPetal, 3500);
+})();
+
 // ===== Init =====
 async function init() {
   try {
@@ -2011,10 +2269,10 @@ async function init() {
   } catch (e) {
     console.error('Init error:', e);
     $('#app').innerHTML = `<div class="text-center py-16">
-      <div class="text-5xl mb-3">⚠️</div>
-      <p class="text-sm font-medium text-red-500">服务器未启动</p>
-      <p class="text-xs text-gray-400 mt-1 max-w-md mx-auto">请在项目目录下运行 <code class="bg-gray-100 px-1 rounded">node server.js</code> 启动服务器，然后刷新此页面。</p>
-      <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-600 transition-colors">重试</button>
+      <div class="text-5xl mb-3">🌸</div>
+      <p class="text-sm font-medium" style="color:#e83e8c;">服务器未启动</p>
+      <p class="text-xs mt-1 max-w-md mx-auto" style="color:#8B7FA8;">请在项目目录下运行 <code class="px-1 rounded" style="background:#f3f0f8;color:#7c6faa;">node server.js</code> 启动服务器，然后刷新此页面。</p>
+      <button onclick="location.reload()" class="mt-4 btn-primary text-sm">重试</button>
     </div>`;
   }
 }
