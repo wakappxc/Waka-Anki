@@ -16,6 +16,7 @@ const MIME = {
   '.jpg': 'image/jpeg',
   '.svg': 'image/svg+xml',
   '.txt': 'text/plain;charset=utf-8',
+  '.webmanifest': 'application/manifest+json',
 };
 
 function send(res, code, data, type) {

@@ -2,8 +2,15 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Waka Anki - 二次元记忆卡片</title>
+<meta name="theme-color" content="#FF7EB3">
+<meta name="description" content="可视化快速制作 Anki 记忆卡片">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Waka Anki">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
@@ -298,12 +305,11 @@ function imageToDataURL(file) {
 }
 
 async function uploadImage(file) {
-  const fd = new FormData();
-  fd.append('file', file);
-  const r = await fetch('http://localhost:3456/api/attachment/upload', { method: 'POST', body: fd });
-  if (!r.ok) throw new Error('上传失败');
-  const j = await r.json();
-  return j.name;
+  return await fileToDataURL(file);
+}
+
+async function saveDataUriImage(dataUri) {
+  return dataUri;
 }
 
 async function htmlToMD(html) {
@@ -332,13 +338,13 @@ async function htmlToMD(html) {
     const img = imgs[i];
     let fname;
     if (img.src.startsWith('data:image/')) {
-      fname = await saveDataUriImage(img.src);
+      fname = img.src;
     } else if (img.src.includes('附件/')) {
       fname = img.src.split('附件/').pop();
     } else {
       fname = img.src.replace(/^.*[\\/]/, '');
     }
-    md = md.replace(`<<IMG_${i}>>`, `![${img.alt}](附件/${fname})`);
+    md = md.replace(`<<IMG_${i}>>`, `![${img.alt}](${fname.startsWith('data:') ? fname : '附件/' + fname})`);
   }
 
   md = md.replace(/\n{3,}/g, '\n\n').trim();
@@ -349,6 +355,7 @@ function mdToHTML(md) {
   let html = md;
   // Replace MD images with HTML img tags
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (m, alt, src) => {
+    if (src.startsWith('data:')) return `<img src="${src}">`;
     const fname = src.replace(/^.*[\\/]/, '');
     return `<img src="data/附件/${fname}">`;
   });
@@ -358,14 +365,7 @@ function mdToHTML(md) {
 }
 
 async function saveDataUriImage(dataUri) {
-  const m = dataUri.match(/^data:(image\/\w+);base64,(.+)$/);
-  if (!m) return null;
-  const ext = m[1] === 'image/png' ? '.png' : m[1] === 'image/jpeg' ? '.jpg' : m[1] === 'image/gif' ? '.gif' : '.png';
-  const binary = atob(m[2]);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-  const file = new File([bytes], 'img' + ext, { type: m[1] });
-  return await uploadImage(file);
+  return dataUri;
 }
 
 function insertAtCursor(el, text) {
@@ -1111,7 +1111,7 @@ window.addBatchCards = async function() {
 // ===== Browse =====
 let _browseExpandedFolders = new Set();
 let _browseDeckId = null;       // null = folder/deck tree; number = cards in deck
-let _browseDeckCache = null;    // { cards, notesMap } from /api/browse/deck/:id
+let _browseDeckCache = null;    // { cards, notesMap }
 const _browsePageSize = 50;     // 每批渲染卡片数
 let _browseLoadedCount = 0;     // 当前已渲染到第几条
 let _browseObserver = null;     // IntersectionObserver 实例
@@ -1122,22 +1122,14 @@ async function renderBrowse() {
   await _renderBrowseTree();
 }
 
-// ---- Tree view (one HTTP call via /api/browse/tree) ----
+// ---- Tree view (local data) ----
 async function _renderBrowseTree() {
-  let treeData;
-  try {
-    const r = await fetch('http://localhost:3456/api/browse/tree');
-    treeData = await r.json();
-  } catch (e) {
-    // fallback: use cached DB
-    const decks = await Deck.getAll();
-    const folders = await Folder.getAll();
-    const deckStats = {};
-    for (const d of decks) deckStats[d.id] = await Card.countByDeck(d.id);
-    treeData = { decks, folders, deckStats };
-  }
-
-  const { decks, folders, deckStats } = treeData;
+  const decks = await Deck.getAll();
+  const folders = await Folder.getAll();
+  const treeData = { decks, folders };
+  const deckStats = {};
+  for (const d of decks) deckStats[d.id] = await Card.countByDeck(d.id);
+  treeData.deckStats = deckStats;
   const rootDecks = decks.filter(d => !d.folderId);
   const rootFolders = folders.filter(f => !f.parentId);
 
@@ -1232,7 +1224,7 @@ window.browseToggleFolder = function(fid) {
 };
 window._renderBrowseTree = _renderBrowseTree;
 
-// ---- Deck cards view (one HTTP call via /api/browse/deck/:id, paginated render) ----
+// ---- Deck cards view (paginated render) ----
 window.browseOpenDeck = async function(did) {
   _browseDeckId = did;
   _browseDeckCache = null;
@@ -1241,17 +1233,9 @@ window.browseOpenDeck = async function(did) {
 };
 
 async function _renderBrowseDeckCards(did) {
-  let cards, notesMap;
-  try {
-    const r = await fetch(`http://localhost:3456/api/browse/deck/${did}`);
-    const data = await r.json();
-    cards = data.cards;
-    notesMap = data.notesMap;
-  } catch (e) {
-    cards = await Card.getByDeck(did);
-    notesMap = {};
-    for (const c of cards) { const n = await Note.get(c.nid); if (n) notesMap[c.nid] = n; }
-  }
+  const cards = await Card.getByDeck(did);
+  const notesMap = {};
+  for (const c of cards) { const n = await Note.get(c.nid); if (n) notesMap[c.nid] = n; }
   _browseDeckCache = { cards, notesMap };
   _browseCurrentCards = cards;
   _browseCurrentNotesMap = notesMap;
@@ -1446,20 +1430,26 @@ window.exportCards = async function() {
     const attachFolder = deckFolder.folder('附件');
 
     const mdLines = [];
-    const imageSet = new Set(); // filenames to include in this deck's 附件
+    const imageMap = new Map(); // fname → b64 for images in this deck
 
+    let imgIdx = 0;
     for (const card of deckCards) {
-      const frontMD = await htmlToMD(card.front);
-      const backMD = await htmlToMD(card.back);
+      let frontMD = await htmlToMD(card.front);
+      let backMD = await htmlToMD(card.back);
 
-      // Collect image filenames referenced in this card's MD
-      const imgRegex = /!\[[^\]]*\]\(附件\/([^)]+)\)/g;
-      for (const field of [frontMD, backMD]) {
-        let m;
-        while ((m = imgRegex.exec(field)) !== null) {
-          imageSet.add(m[1]);
-        }
-      }
+      // Convert data URL images to local files for export
+      const dataUriRegex = /!\[([^\]]*)\]\((data:image\/(\w+);base64,([^)]+))\)/g;
+      frontMD = frontMD.replace(dataUriRegex, (match, alt, fullUri, ext, b64) => {
+        const fname = `img_${++imgIdx}.${ext === 'jpeg' ? 'jpg' : ext}`;
+        imageMap.set(fname, b64);
+        return `![${alt}](附件/${fname})`;
+      });
+      dataUriRegex.lastIndex = 0;
+      backMD = backMD.replace(dataUriRegex, (match, alt, fullUri, ext, b64) => {
+        const fname = `img_${++imgIdx}.${ext === 'jpeg' ? 'jpg' : ext}`;
+        imageMap.set(fname, b64);
+        return `![${alt}](附件/${fname})`;
+      });
 
       mdLines.push(`# ${card.id}`);
       mdLines.push('');
@@ -1474,16 +1464,15 @@ window.exportCards = async function() {
     // Add MD file to the deck folder
     deckFolder.file(`${safeName}.md`, mdLines.join('\n'));
 
-    // Fetch and add images for this deck
-    for (const fname of imageSet) {
+    // Add data URL images to ZIP
+    for (const [fname, b64] of imageMap) {
       try {
-        const r = await fetch(`http://localhost:3456/data/附件/${encodeURIComponent(fname)}`);
-        if (r.ok) {
-          const blob = await r.blob();
-          attachFolder.file(fname, blob);
-          totalImages++;
-        }
-      } catch (e) { /* skip missing images */ }
+        const byteStr = atob(b64);
+        const bytes = new Uint8Array(byteStr.length);
+        for (let i = 0; i < byteStr.length; i++) bytes[i] = byteStr.charCodeAt(i);
+        attachFolder.file(fname, bytes);
+        totalImages++;
+      } catch (e) { /* skip bad data */ }
     }
   }
 
@@ -2205,8 +2194,8 @@ document.addEventListener('paste', async (e) => {
       const file = item.getAsFile();
       if (!file) continue;
       try {
-        const name = await uploadImage(file);
-        insertAtCursor(target, `<img src="data/附件/${name}">`);
+        const dataUrl = await uploadImage(file);
+        insertAtCursor(target, `<img src="${dataUrl}">`);
       } catch (err) {
         showToast('图片上传失败: ' + (err.message || String(err)), 'error');
       }
@@ -2229,8 +2218,8 @@ $('#imageInput').addEventListener('change', async (e) => {
   const target = document.getElementById(targetId) || document.querySelector(`[name="${targetId}"]`);
   if (!target) return;
   try {
-    const name = await uploadImage(file);
-    insertAtCursor(target, `<img src="data/附件/${name}">`);
+    const dataUrl = await uploadImage(file);
+    insertAtCursor(target, `<img src="${dataUrl}">`);
   } catch (err) {
     showToast('图片上传失败: ' + (err.message || String(err)), 'error');
   }
@@ -2262,17 +2251,14 @@ $('#imageInput').addEventListener('change', async (e) => {
 // ===== Init =====
 async function init() {
   try {
-    const r = await fetch('http://localhost:3456/api/data/ankiweb');
-    if (!r.ok) throw new Error('服务器连接失败');
     await ensureDefaultDeck();
     navigate();
   } catch (e) {
     console.error('Init error:', e);
-    $('#app').innerHTML = `<div class="text-center py-16">
-      <div class="text-5xl mb-3">🌸</div>
-      <p class="text-sm font-medium" style="color:#e83e8c;">服务器未启动</p>
-      <p class="text-xs mt-1 max-w-md mx-auto" style="color:#8B7FA8;">请在项目目录下运行 <code class="px-1 rounded" style="background:#f3f0f8;color:#7c6faa;">node server.js</code> 启动服务器，然后刷新此页面。</p>
-      <button onclick="location.reload()" class="mt-4 btn-primary text-sm">重试</button>
+    document.getElementById('app').innerHTML = `<div class="text-center py-16">
+      <div class="text-5xl mb-3">⚠</div>
+      <p class="text-sm font-medium" style="color:#e83e8c;">初始化出错</p>
+      <pre class="text-xs mt-2 p-3 mx-auto max-w-lg rounded-xl text-left overflow-auto" style="background:#fff0f5;color:#d42e78;">${e.stack || e.message || e}</pre>
     </div>`;
   }
 }
@@ -2280,6 +2266,10 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
   init();
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
 }
 </script>
 </body>

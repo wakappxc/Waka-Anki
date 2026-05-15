@@ -1,10 +1,28 @@
-// File-based storage via local server
-// Main data: data/ankiweb.json (decks, notes, cards, folders)
-// Revlog:     data/revlog.json  (review history)
+// localStorage-based storage
+// Main data: 'waka_ankiweb' (decks, notes, cards, folders)
+// Revlog:     'waka_revlog'  (review history)
+// Timehot:    'waka_timehot' (daily counts)
 
-const API = 'http://localhost:3456/api/data/ankiweb';
-const REVLOG_API = 'http://localhost:3456/api/data/revlog';
-const TIMEHOT_API = 'http://localhost:3456/api/data/timehot';
+const LS_ANKIWEB = 'waka_ankiweb';
+const LS_REVLOG = 'waka_revlog';
+const LS_TIMEHOT = 'waka_timehot';
+
+function generateUUID() {
+  if (crypto.randomUUID) return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+function lsGet(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch (e) { return fallback; }
+}
+
+function lsSet(key, data) {
+  try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
+}
 
 let DB = null;
 let REVLOG_DB = null;
@@ -12,95 +30,45 @@ let TIMEHOT_DB = null;
 
 async function loadRevlogDB() {
   if (REVLOG_DB) return REVLOG_DB;
-  try {
-    const r = await fetch(REVLOG_API, { cache: 'no-store' });
-    if (r.ok) {
-      const data = await r.json();
-      if (data && data.revlog) {
-        REVLOG_DB = data;
-        if (!REVLOG_DB.nextId) REVLOG_DB.nextId = { revlog: 1 };
-        return REVLOG_DB;
-      }
-    }
-  } catch (e) { console.error('Load revlog failed'); }
-  REVLOG_DB = { revlog: [], nextId: { revlog: 1 } };
+  REVLOG_DB = lsGet(LS_REVLOG, { revlog: [], nextId: { revlog: 1 } });
   return REVLOG_DB;
 }
 
 async function saveRevlogDB() {
-  try {
-    await fetch(REVLOG_API, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(REVLOG_DB),
-    });
-  } catch (e) { console.error('Save revlog failed:', e); }
+  lsSet(LS_REVLOG, REVLOG_DB);
 }
 
 async function loadTimehotDB() {
   if (TIMEHOT_DB) return TIMEHOT_DB;
-  try {
-    const r = await fetch(TIMEHOT_API, { cache: 'no-store' });
-    if (r.ok) {
-      const data = await r.json();
-      if (data && data.days) {
-        TIMEHOT_DB = data;
-        return TIMEHOT_DB;
-      }
-    }
-  } catch (e) { console.error('Load timehot failed'); }
-  TIMEHOT_DB = { days: {} };
+  TIMEHOT_DB = lsGet(LS_TIMEHOT, { days: {} });
   return TIMEHOT_DB;
 }
 
 async function saveTimehotDB() {
-  try {
-    await fetch(TIMEHOT_API, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(TIMEHOT_DB),
-    });
-  } catch (e) { console.error('Save timehot failed:', e); }
+  lsSet(LS_TIMEHOT, TIMEHOT_DB);
 }
 
 async function loadDB() {
   if (DB) return DB;
-  try {
-    const r = await fetch(API, { cache: 'no-store' });
-    if (r.ok) {
-      const data = await r.json();
-      if (data && data.decks) {
-        DB = data;
-        if (!DB.folders) DB.folders = [];
-        if (!DB.nextId) DB.nextId = { decks: 1, notes: 1, cards: 1, folders: 1 };
-        if (!DB.nextId.folders) DB.nextId.folders = 1;
-        return DB;
-      }
-    }
-  } catch (e) { console.error('Load DB failed, start fresh'); }
-  DB = { decks: [], notes: [], cards: [], folders: [], nextId: { decks: 1, notes: 1, cards: 1, folders: 1 } };
+  DB = lsGet(LS_ANKIWEB, { decks: [], notes: [], cards: [], folders: [], nextId: { decks: 1, notes: 1, cards: 1, folders: 1 } });
   return DB;
 }
 
 async function saveDB() {
-  const { revlog, ...mainDB } = DB;
-  if (mainDB.nextId) {
-    const { revlog: _, ...restNextId } = mainDB.nextId;
-    mainDB.nextId = restNextId;
-  }
-  try {
-    await fetch(API, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(mainDB),
-    });
-  } catch (e) { console.error('Save DB failed:', e); }
+  lsSet(LS_ANKIWEB, DB);
 }
 
 // ===== Decks =====
 const Deck = {
   async clearCards(did) {
-    const r = await fetch(`http://localhost:3456/api/deck/${did}/clear`, { method: 'POST' });
-    DB = null;
-    REVLOG_DB = null;
-    return r.json();
+    await loadDB();
+    const cids = DB.cards.filter(c => c.did === did).map(c => c.id);
+    const nids = new Set(DB.cards.filter(c => c.did === did).map(c => c.nid));
+    DB.cards = DB.cards.filter(c => c.did !== did);
+    DB.notes = DB.notes.filter(n => !nids.has(n.id));
+    await saveDB();
+    if (cids.length > 0) await Revlog.removeByCids(cids);
+    return { success: true, count: nids.size };
   },
   async create(name, folderId = null) {
     await loadDB();
@@ -176,7 +144,7 @@ const Note = {
   async create(fields, tags, notetypeId) {
     await loadDB();
     const note = {
-      id: DB.nextId.notes++, guid: crypto.randomUUID(),
+      id: DB.nextId.notes++, guid: generateUUID(),
       fields: fields || ['', ''], tags: tags || [],
       notetypeId: notetypeId || 0, created: Date.now()
     };
@@ -196,13 +164,24 @@ const Note = {
 // ===== Cards =====
 const Card = {
   async batchCreate(cards) {
-    const r = await fetch('http://localhost:3456/api/cards/batch-create', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ cards })
-    });
-    DB = null; // invalidate cache
-    return r.json();
+    await loadDB();
+    let added = 0;
+    for (const c of cards) {
+      const nid = DB.nextId.notes++;
+      DB.notes.push({
+        id: nid, guid: generateUUID(),
+        fields: [c.front || '', c.back || ''], tags: c.tags || [],
+        notetypeId: 0, created: Date.now()
+      });
+      DB.cards.push({
+        id: DB.nextId.cards++, nid, did: c.did || 1, ord: 0,
+        queue: 0, due: Date.now(), ivl: 0, factor: 2500,
+        reps: 0, lapses: 0, left: 0, type: 0, created: Date.now()
+      });
+      added++;
+    }
+    await saveDB();
+    return { success: true, count: added };
   },
   async create(nid, did, ord) {
     await loadDB();
