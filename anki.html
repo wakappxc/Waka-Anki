@@ -101,8 +101,75 @@ tailwind.config = {
   .modal-overlay { background: rgba(60,30,60,0.45); backdrop-filter: blur(2px); }
   .progress-bar { transition: width 0.3s ease; }
   #reviewFrontContent img, #reviewBackContent img,
-  #previewFront img, #previewBack img { cursor: pointer; border-radius: 0.75rem; }
+  #previewFront img, #previewBack img { cursor: pointer; border-radius: 0.75rem; max-width: 100%; }
   #ctxMenu { z-index: 9999; }
+
+  /* Markdown rendered content */
+  #reviewFrontContent, #reviewBackContent,
+  #previewFront, #previewBack { line-height: 1.7; }
+  #reviewFrontContent h1, #reviewBackContent h1,
+  #previewFront h1, #previewBack h1 { font-size: 1.4em; font-weight: 700; margin: 0.6em 0 0.3em; }
+  #reviewFrontContent h2, #reviewBackContent h2,
+  #previewFront h2, #previewBack h2 { font-size: 1.25em; font-weight: 700; margin: 0.5em 0 0.25em; }
+  #reviewFrontContent h3, #reviewBackContent h3,
+  #previewFront h3, #previewBack h3 { font-size: 1.1em; font-weight: 700; margin: 0.4em 0 0.2em; }
+  #reviewFrontContent h4, #reviewBackContent h4,
+  #previewFront h4, #previewBack h4 { font-size: 1em; font-weight: 700; margin: 0.3em 0 0.15em; }
+  #reviewFrontContent ul, #reviewBackContent ul,
+  #reviewFrontContent ol, #reviewBackContent ol,
+  #previewFront ul, #previewBack ul,
+  #previewFront ol, #previewBack ol { padding-left: 1.5em; margin: 0.3em 0; }
+  #reviewFrontContent li, #reviewBackContent li,
+  #previewFront li, #previewBack li { margin: 0.15em 0; }
+  #reviewFrontContent ul > li, #reviewBackContent ul > li,
+  #previewFront ul > li, #previewBack ul > li { list-style-type: disc; }
+  #reviewFrontContent ol > li, #reviewBackContent ol > li,
+  #previewFront ol > li, #previewBack ol > li { list-style-type: decimal; }
+  #reviewFrontContent code, #reviewBackContent code,
+  #previewFront code, #previewBack code {
+    background: rgba(100,80,140,0.08); color: #d63384; padding: 0.15em 0.35em;
+    border-radius: 0.3em; font-size: 0.9em; font-family: 'SF Mono','Cascadia Code','Consolas','Menlo',monospace;
+  }
+  #reviewFrontContent pre, #reviewBackContent pre,
+  #previewFront pre, #previewBack pre {
+    background: rgba(60,30,80,0.04); padding: 0.75em 1em; border-radius: 0.6em;
+    overflow-x: auto; margin: 0.4em 0; font-size: 0.85em; line-height: 1.5;
+    border: 1px solid rgba(100,80,140,0.08);
+  }
+  #reviewFrontContent pre code, #reviewBackContent pre code,
+  #previewFront pre code, #previewBack pre code {
+    background: none; color: inherit; padding: 0; border-radius: 0; font-size: inherit;
+  }
+  #reviewFrontContent blockquote, #reviewBackContent blockquote,
+  #previewFront blockquote, #previewBack blockquote {
+    border-left: 3px solid #B39DDB; padding-left: 0.75em; margin: 0.3em 0;
+    color: #6B5B8B; font-style: italic;
+  }
+  #reviewFrontContent table, #reviewBackContent table,
+  #previewFront table, #previewBack table {
+    border-collapse: collapse; width: 100%; margin: 0.4em 0; font-size: 0.9em;
+  }
+  #reviewFrontContent th, #reviewBackContent th,
+  #previewFront th, #previewBack th {
+    background: rgba(100,80,140,0.06); font-weight: 600; padding: 0.4em 0.6em;
+    border: 1px solid rgba(100,80,140,0.12); text-align: left;
+  }
+  #reviewFrontContent td, #reviewBackContent td,
+  #previewFront td, #previewBack td {
+    padding: 0.3em 0.6em; border: 1px solid rgba(100,80,140,0.08);
+  }
+  #reviewFrontContent hr, #reviewBackContent hr,
+  #previewFront hr, #previewBack hr {
+    border: none; border-top: 1px solid rgba(100,80,140,0.12); margin: 0.6em 0;
+  }
+  #reviewFrontContent a, #reviewBackContent a,
+  #previewFront a, #previewBack a { color: #7EC8E3; text-decoration: underline; }
+  #reviewFrontContent p, #reviewBackContent p,
+  #previewFront p, #previewBack p { margin: 0.3em 0; }
+  #reviewFrontContent strong, #reviewBackContent strong,
+  #previewFront strong, #previewBack strong { font-weight: 600; color: #3D2E5F; }
+  #reviewFrontContent del, #reviewBackContent del,
+  #previewFront del, #previewBack del { text-decoration: line-through; opacity: 0.6; }
   .drop-zone { transition: background-color 0.2s, box-shadow 0.2s; }
   .drop-active { background-color: #ffe0ec !important; box-shadow: inset 0 0 0 2px #ff9ec4; }
 
@@ -352,16 +419,141 @@ async function htmlToMD(html) {
 }
 
 function mdToHTML(md) {
+  // Full Markdown-to-HTML converter
+  const escapes = [];
+
+  function hold(s) { escapes.push(s); return `\x00E${escapes.length - 1}\x00`; }
+
   let html = md;
-  // Replace MD images with HTML img tags
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (m, alt, src) => {
-    if (src.startsWith('data:')) return `<img src="${src}">`;
+
+  // 1. Extract and protect fenced code blocks
+  html = html.replace(/```(\S*)\n([\s\S]*?)```/g, (_, lang, code) =>
+    hold(`<pre><code class="language-${lang}">${escapeHTML(code.trimEnd())}</code></pre>`)
+  );
+
+  // 2. Extract and protect inline code
+  html = html.replace(/``(.+?)``/g, (_, code) =>
+    hold(`<code>${escapeHTML(code)}</code>`)
+  );
+  html = html.replace(/`([^`\n]+?)`/g, (_, code) =>
+    hold(`<code>${escapeHTML(code)}</code>`)
+  );
+
+  // 3. Images (before links)
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
+    if (src.startsWith('data:')) return `<img src="${src}" alt="${alt}">`;
     const fname = src.replace(/^.*[\\/]/, '');
-    return `<img src="data/附件/${fname}">`;
+    return `<img src="data/附件/${fname}" alt="${alt}">`;
   });
-  // Convert newlines to <br>
-  html = html.replace(/\n/g, '<br>');
-  return html;
+
+  // 4. Bold, italic, strikethrough
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/___([^_]+?)___/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/__([^_]+?)__/g, '<strong>$1</strong>');
+  html = html.replace(/\*([^*\n]+?)\*/g, '<em>$1</em>');
+  html = html.replace(/_([^_\n]+?)_/g, '<em>$1</em>');
+  html = html.replace(/~~(.+?)~~/g, '<del>$1</del>');
+
+  // 5. Links
+  html = html.replace(/\[([^\]]+)\]\(([^)\s]+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+  // 6. Process block-level elements line by line
+  const lines = html.split('\n');
+  const out = [];
+  let inUL = false, inOL = false, inBQ = false;
+
+  function closeLists() {
+    if (inOL) { out.push('</ol>'); inOL = false; }
+    if (inUL) { out.push('</ul>'); inUL = false; }
+  }
+
+  function closeBQ() {
+    if (inBQ) { out.push('</blockquote>'); inBQ = false; }
+  }
+
+  function isBlockTag(s) {
+    return /^<\/?(h[1-6]|ul|ol|li|pre|blockquote|table|thead|tbody|tr|th|td|hr|div|img|p)\b/.test(s);
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const raw = lines[i];
+    const line = raw.trim();
+
+    if (line === '') {
+      closeLists();
+      closeBQ();
+      out.push('');
+      continue;
+    }
+
+    // Heading
+    let m;
+    if ((m = line.match(/^(#{1,6})\s+(.+)/))) {
+      closeLists(); closeBQ();
+      const level = m[1].length;
+      out.push(`<h${level}>${m[2]}</h${level}>`);
+      continue;
+    }
+
+    // Horizontal rule
+    if (/^[-*_]{3,}$/.test(line)) {
+      closeLists(); closeBQ();
+      out.push('<hr>');
+      continue;
+    }
+
+    // Blockquote
+    if (line.startsWith('>')) {
+      closeLists();
+      const content = line.replace(/^>\s?/, '');
+      if (!inBQ) { out.push('<blockquote>'); inBQ = true; }
+      out.push(content);
+      continue;
+    }
+    closeBQ();
+
+    // Unordered list
+    if (/^[\-\*]\s/.test(line)) {
+      if (inOL) { out.push('</ol>'); inOL = false; }
+      if (!inUL) { out.push('<ul>'); inUL = true; }
+      out.push(`<li>${line.replace(/^[\-\*]\s+/, '')}</li>`);
+      continue;
+    }
+
+    // Ordered list
+    if (/^\d+\.\s/.test(line)) {
+      if (inUL) { out.push('</ul>'); inUL = false; }
+      if (!inOL) { out.push('<ol>'); inOL = true; }
+      out.push(`<li>${line.replace(/^\d+\.\s+/, '')}</li>`);
+      continue;
+    }
+
+    closeLists();
+
+    // Regular line
+    out.push(raw);
+  }
+
+  closeLists();
+  closeBQ();
+  html = out.join('\n');
+
+  // 7. Paragraph wrapping: wrap text blocks separated by blank lines
+  html = html.replace(/(^|\n\n)((?:[^\n]+\n?)+?)(?=\n\n|$)/g, (_, sep, block) => {
+    const trimmed = block.trim();
+    if (!trimmed) return sep;
+    // If all lines are already block tags, don't wrap
+    const blockLines = trimmed.split('\n').map(s => s.trim()).filter(Boolean);
+    if (blockLines.every(isBlockTag)) return sep + trimmed;
+    // Wrap in paragraph(s)
+    return sep + `<p>${trimmed.replace(/\n/g, '<br>')}</p>`;
+  });
+
+  // 8. Restore escaped blocks
+  html = html.replace(/\x00E(\d+)\x00/g, (_, i) => escapes[i]);
+
+  return html.trim();
 }
 
 async function saveDataUriImage(dataUri) {
@@ -740,13 +932,13 @@ function renderReviewCard() {
                 <div class="card-front absolute inset-0 p-8 overflow-y-auto" style="background:linear-gradient(135deg,#fff0f5,#ffe0ec);">
                   <div class="flex flex-col items-center justify-center min-h-full w-full">
                     <p class="text-xs mb-3" style="color:#ff7eb3;">✦ 问 题 ✦</p>
-                    <p id="reviewFrontContent" class="text-lg sm:text-xl font-medium whitespace-pre-wrap" style="color:#4A3F6B;"></p>
+                    <div id="reviewFrontContent" class="text-lg sm:text-xl font-medium" style="color:#4A3F6B;"></div>
                   </div>
                 </div>
                 <div class="card-back absolute inset-0 p-8 overflow-y-auto" style="background:linear-gradient(135deg,#f0f8ff,#e0f2fe);">
                   <div class="flex flex-col items-center justify-center min-h-full w-full">
                     <p class="text-xs mb-3" style="color:#7EC8E3;">✦ 答 案 ✦</p>
-                    <p id="reviewBackContent" class="text-lg sm:text-xl font-medium whitespace-pre-wrap" style="color:#4A3F6B;"></p>
+                    <div id="reviewBackContent" class="text-lg sm:text-xl font-medium" style="color:#4A3F6B;"></div>
                   </div>
                 </div>
               </div>
@@ -942,13 +1134,13 @@ async function renderAdd() {
             <div class="card-front absolute inset-0 p-6 sm:p-8 overflow-y-auto" style="background:linear-gradient(135deg,#fff0f5,#ffe0ec);border:2px solid #ffc2d9;border-radius:1rem;">
               <div class="flex flex-col items-center justify-center min-h-full w-full">
                 <p class="text-xs mb-3" style="color:#ff7eb3;">正面 · 问题</p>
-                <p id="previewFront" class="text-base sm:text-lg font-medium whitespace-pre-wrap break-words w-full" style="color:#4A3F6B;"></p>
+                <div id="previewFront" class="text-base sm:text-lg font-medium break-words w-full" style="color:#4A3F6B;"></div>
               </div>
             </div>
             <div class="card-back absolute inset-0 p-6 sm:p-8 overflow-y-auto" style="background:linear-gradient(135deg,#f0f8ff,#e0f2fe);border:2px solid #bae6fd;border-radius:1rem;">
               <div class="flex flex-col items-center justify-center min-h-full w-full">
                 <p class="text-xs mb-3" style="color:#7EC8E3;">背面 · 答案</p>
-                <p id="previewBack" class="text-base sm:text-lg font-medium whitespace-pre-wrap break-words w-full" style="color:#4A3F6B;"></p>
+                <div id="previewBack" class="text-base sm:text-lg font-medium break-words w-full" style="color:#4A3F6B;"></div>
               </div>
             </div>
           </div>
@@ -1007,15 +1199,15 @@ function updatePreview() {
   const flipEl = document.querySelector('.card-flip');
   if (flipEl) flipEl.classList.remove('flipped');
   const pf = $('#previewFront'), pb = $('#previewBack');
-  if (pf) pf.innerHTML = safeHTML(front) || '(空)';
-  if (pb) pb.innerHTML = safeHTML(back) || '(空)';
+  if (pf) pf.innerHTML = safeHTML(mdToHTML(front)) || '(空)';
+  if (pb) pb.innerHTML = safeHTML(mdToHTML(back)) || '(空)';
 }
 
 window.addSingleCard = async function(e) {
   e.preventDefault();
   const form = e.target;
-  const front = form.front.value.trim();
-  const back = form.back.value.trim();
+  const front = mdToHTML(form.front.value.trim());
+  const back = mdToHTML(form.back.value.trim());
   if (!front || !back) { showToast('正面和背面为必填项', 'error'); return; }
   const tags = form.tags.value.trim().split(/\s+/).filter(Boolean);
   const did = parseInt(form.deck.value) || 1;
@@ -1100,7 +1292,7 @@ window.addBatchCards = async function() {
     if (d==='none') f=t;
     else if (d==='\t') { const p=t.split('\t'); f=p[0]?.trim()||''; b=p.slice(1).join('\t').trim(); }
     else { f=t.split(d)[0]?.trim()||''; b=t.split(d).slice(1).join(d).trim(); }
-    if (f.trim()) { await createNote(f,b,tags,did); added++; }
+    if (f.trim()) { await createNote(mdToHTML(f), mdToHTML(b), tags, did); added++; }
   }
   showToast(`已批量添加 ${added} 张卡片`,'success');
   $('#batchText').value='';
