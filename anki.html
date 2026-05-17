@@ -89,9 +89,9 @@ tailwind.config = {
   }
 
   .card-flip { perspective: 800px; }
-  .card-flip-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+  .card-flip-inner { position: relative; transition: transform 0.5s, height 0.35s ease; transform-style: preserve-3d; }
   .card-flip.flipped .card-flip-inner { transform: rotateY(180deg); }
-  .card-front, .card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  .card-front, .card-back { position: absolute; top: 0; left: 0; right: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
   .card-back { transform: rotateY(180deg); }
 
   .toast { animation: slideDown 0.3s ease; }
@@ -372,7 +372,7 @@ function imageToDataURL(file) {
 }
 
 async function uploadImage(file) {
-  return await fileToDataURL(file);
+  return await imageToDataURL(file);
 }
 
 async function saveDataUriImage(dataUri) {
@@ -928,18 +928,14 @@ function renderReviewCard() {
           <div class="text-center text-sm mb-2" style="color:#B39DDB;">${escapeHTML(d?.name||'')} · ${dueInfo} · ${reviewState.idx+1}/${reviewState.cards.length}</div>
           <div class="anime-card overflow-hidden" style="border-radius:1.5rem;">
             <div class="card-flip ${reviewState.showingBack?'flipped':''}" id="reviewCard" onclick="flipCard()">
-              <div class="card-flip-inner relative" style="min-height:360px">
-                <div class="card-front absolute inset-0 p-8 overflow-y-auto" style="background:linear-gradient(135deg,#fff0f5,#ffe0ec);">
-                  <div class="flex flex-col items-center justify-center min-h-full w-full">
-                    <p class="text-xs mb-3" style="color:#ff7eb3;">✦ 问 题 ✦</p>
-                    <div id="reviewFrontContent" class="text-lg sm:text-xl font-medium" style="color:#4A3F6B;"></div>
-                  </div>
+              <div class="card-flip-inner" id="reviewCardInner" style="min-height:360px">
+                <div class="card-front p-8" style="background:linear-gradient(135deg,#fff0f5,#ffe0ec);border-radius:1.5rem;">
+                  <p class="text-xs mb-3 text-center" style="color:#ff7eb3;">✦ 问 题 ✦</p>
+                  <div id="reviewFrontContent" class="text-lg sm:text-xl font-medium" style="color:#4A3F6B;"></div>
                 </div>
-                <div class="card-back absolute inset-0 p-8 overflow-y-auto" style="background:linear-gradient(135deg,#f0f8ff,#e0f2fe);">
-                  <div class="flex flex-col items-center justify-center min-h-full w-full">
-                    <p class="text-xs mb-3" style="color:#7EC8E3;">✦ 答 案 ✦</p>
-                    <div id="reviewBackContent" class="text-lg sm:text-xl font-medium" style="color:#4A3F6B;"></div>
-                  </div>
+                <div class="card-back p-8" style="background:linear-gradient(135deg,#f0f8ff,#e0f2fe);border-radius:1.5rem;">
+                  <p class="text-xs mb-3 text-center" style="color:#7EC8E3;">✦ 答 案 ✦</p>
+                  <div id="reviewBackContent" class="text-lg sm:text-xl font-medium" style="color:#4A3F6B;"></div>
                 </div>
               </div>
             </div>
@@ -969,7 +965,18 @@ function renderReviewCard() {
         </div>`;
         $('#reviewFrontContent').innerHTML = safeHTML(front);
         $('#reviewBackContent').innerHTML = safeHTML(back);
+        syncReviewCardHeight(false);
     });
+  });
+}
+
+function syncReviewCardHeight(showBack) {
+  requestAnimationFrame(() => {
+    const inner = $('#reviewCardInner');
+    const face = document.querySelector(showBack ? '#reviewCard .card-back' : '#reviewCard .card-front');
+    if (!inner || !face) return;
+    const h = face.scrollHeight;
+    if (h > 0) inner.style.minHeight = h + 'px';
   });
 }
 
@@ -979,6 +986,7 @@ window.flipCard = function() {
   if (el) el.classList.toggle('flipped');
   const btn = $('#answerButtons');
   if (btn) btn.classList.remove('hidden');
+  syncReviewCardHeight(true);
 };
 
 window.answerCard = async function(rating) {
@@ -1130,18 +1138,14 @@ async function renderAdd() {
           <p class="text-xs mt-1" style="color:#d0c4e8;">点击卡片可翻转</p>
         </div>
         <div id="previewCard" class="card-flip w-full max-w-md hidden" onclick="this.classList.toggle('flipped')">
-          <div class="card-flip-inner relative w-full" style="min-height:280px">
-            <div class="card-front absolute inset-0 p-6 sm:p-8 overflow-y-auto" style="background:linear-gradient(135deg,#fff0f5,#ffe0ec);border:2px solid #ffc2d9;border-radius:1rem;">
-              <div class="flex flex-col items-center justify-center min-h-full w-full">
-                <p class="text-xs mb-3" style="color:#ff7eb3;">正面 · 问题</p>
-                <div id="previewFront" class="text-base sm:text-lg font-medium break-words w-full" style="color:#4A3F6B;"></div>
-              </div>
+          <div class="card-flip-inner w-full" style="min-height:280px">
+            <div class="card-front p-6 sm:p-8" style="background:linear-gradient(135deg,#fff0f5,#ffe0ec);border:2px solid #ffc2d9;border-radius:1rem;">
+              <p class="text-xs mb-3 text-center" style="color:#ff7eb3;">正面 · 问题</p>
+              <div id="previewFront" class="text-base sm:text-lg font-medium break-words" style="color:#4A3F6B;"></div>
             </div>
-            <div class="card-back absolute inset-0 p-6 sm:p-8 overflow-y-auto" style="background:linear-gradient(135deg,#f0f8ff,#e0f2fe);border:2px solid #bae6fd;border-radius:1rem;">
-              <div class="flex flex-col items-center justify-center min-h-full w-full">
-                <p class="text-xs mb-3" style="color:#7EC8E3;">背面 · 答案</p>
-                <div id="previewBack" class="text-base sm:text-lg font-medium break-words w-full" style="color:#4A3F6B;"></div>
-              </div>
+            <div class="card-back p-6 sm:p-8" style="background:linear-gradient(135deg,#f0f8ff,#e0f2fe);border:2px solid #bae6fd;border-radius:1rem;">
+              <p class="text-xs mb-3 text-center" style="color:#7EC8E3;">背面 · 答案</p>
+              <div id="previewBack" class="text-base sm:text-lg font-medium break-words" style="color:#4A3F6B;"></div>
             </div>
           </div>
         </div>
@@ -1684,6 +1688,49 @@ window.exportCards = async function() {
 };
 
 // ===== Import (Markdown format) =====
+function collectLocalImageRefs(mdText) {
+  const refs = new Set();
+  const regex = /!\[([^\]]*)\]\(([^)]+)\)/g;
+  let m;
+  while ((m = regex.exec(mdText)) !== null) {
+    const src = m[2].trim();
+    if (!src.startsWith('data:') && !src.startsWith('http://') && !src.startsWith('https://')) {
+      refs.add(src);
+    }
+  }
+  // Also check Obsidian embed: ![[file]]
+  const obsidianRegex = /!\[\[([^\]]+)\]\]/g;
+  while ((m = obsidianRegex.exec(mdText)) !== null) {
+    const src = m[1].trim();
+    if (!src.startsWith('data:') && !src.startsWith('http://') && !src.startsWith('https://')) {
+      refs.add(src);
+    }
+  }
+  return [...refs];
+}
+
+function getFilename(path) {
+  return path.replace(/^.*[\\/]/, '');
+}
+
+function replaceLocalImagesInMD(mdText, fileMap) {
+  // Replace ![alt](local/path) with data URIs
+  mdText = mdText.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
+    if (src.startsWith('data:') || src.startsWith('http://') || src.startsWith('https://')) return match;
+    const fname = getFilename(src);
+    const dataUri = fileMap[fname];
+    return dataUri ? `![${alt}](${dataUri})` : match;
+  });
+  // Replace Obsidian ![[file]] embeds
+  mdText = mdText.replace(/!\[\[([^\]]+)\]\]/g, (match, src) => {
+    if (src.startsWith('data:') || src.startsWith('http://') || src.startsWith('https://')) return match;
+    const fname = getFilename(src);
+    const dataUri = fileMap[fname];
+    return dataUri ? `![${fname}](${dataUri})` : match;
+  });
+  return mdText;
+}
+
 function parseMDFile(text) {
   const cards = [];
   // Split by "# <id>" headers
@@ -1737,66 +1784,169 @@ window.handleImport = async function(event) {
   const file = event.target.files[0];
   if (!file) return;
   try {
-    const text = await file.text();
-    const cards = parseMDFile(text);
-    if (cards.length === 0) { showToast('未解析到有效卡片', 'error'); event.target.value = ''; return; }
+    let text = await file.text();
+    window._importRawMD = text;
+    window._importImageMap = {};
+
+    const localRefs = collectLocalImageRefs(text);
 
     const decks = await Deck.getAll();
     if (decks.length === 0) await ensureDefaultDeck();
 
-    // Group cards by deck
-    const deckGroups = {};
-    for (const c of cards) {
-      const name = c.deck || '';
-      if (!deckGroups[name]) deckGroups[name] = [];
-      deckGroups[name].push(c);
-    }
-    const deckNames = Object.keys(deckGroups);
+    const renderImportModal = function(mdText) {
+      const cards = parseMDFile(mdText);
+      if (cards.length === 0) { showToast('未解析到有效卡片', 'error'); return; }
 
-    // Build deck selector options; pre-select matching deck by name
-    const deckOpts = decks.map(d => `<option value="${d.id}">${escapeHTML(d.name)}</option>`).join('');
+      const deckGroups = {};
+      for (const c of cards) {
+        const name = c.deck || '';
+        if (!deckGroups[name]) deckGroups[name] = [];
+        deckGroups[name].push(c);
+      }
+      const deckNames = Object.keys(deckGroups);
 
-    showModal(`
-      <h3 class="text-lg font-bold mb-4">导入卡片</h3>
-      <p class="text-sm text-gray-500 mb-4">解析到 <span class="font-semibold text-gray-700">${cards.length}</span> 张卡片（Markdown 格式）</p>
-      <div class="mb-3 max-h-36 overflow-y-auto border border-gray-100 rounded-lg">
-        ${cards.slice(0, 20).map((c,i)=>`<div class="flex gap-2 py-1.5 px-3 text-xs ${i%2?'bg-gray-50':''}"><span class="text-gray-400 w-5">${i+1}.</span><span class="text-gray-700 truncate flex-1">${escapeHTML(stripHTML(c.front))}</span><span class="text-gray-400">→</span><span class="text-gray-500 truncate flex-1">${escapeHTML(stripHTML(c.back||'(空)'))}</span><span class="text-gray-300">|</span><span class="text-gray-400 truncate">${escapeHTML(c.deck || '(无分组)')}</span></div>`).join('')}
-        ${cards.length > 20 ? `<div class="text-center text-xs text-gray-400 py-1">…还有 ${cards.length - 20} 张</div>` : ''}
-      </div>
-      <label class="block text-xs font-medium text-gray-500 mb-2">选择分组及导入目标卡组</label>
-      <div class="mb-3 space-y-1 max-h-48 overflow-y-auto">
-        <label class="flex items-center gap-2 px-2 py-1.5 bg-gray-50 rounded-lg text-sm cursor-pointer hover:bg-gray-100 transition-colors">
-          <input type="checkbox" id="selectAllDecks" checked onchange="toggleAllDecks(this.checked)">
-          <span class="font-medium text-gray-700">全选 / 取消全选</span>
-        </label>
-        ${deckNames.map((name, idx) => {
-          const isUnnamed = !name;
-          const label = isUnnamed ? '(无分组)' : name;
-          const matchedDeck = decks.find(d => d.name === name);
-          return `
-          <div class="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm hover:bg-gray-50 transition-colors import-deck-item">
-            <input type="checkbox" class="deck-checkbox" checked onchange="updateImportCount()">
-            <span class="flex-1 ${isUnnamed ? 'text-gray-400' : ''}">${escapeHTML(label)}</span>
-            <span class="text-xs text-gray-400">${deckGroups[name].length} 张</span>
-            <select class="import-deck-select ml-2 px-2 py-0.5 border border-gray-200 rounded text-xs bg-white" data-group-idx="${idx}">
-              ${decks.map(d => `<option value="${d.id}" ${matchedDeck?.id === d.id ? 'selected' : ''}>${escapeHTML(d.name)}</option>`).join('')}
-            </select>
+      const matchedCount = Object.keys(window._importImageMap).length;
+      const unmatchedRefs = localRefs.filter(r => !window._importImageMap[getFilename(r)]);
+
+      let imageSection = '';
+      if (localRefs.length > 0) {
+        imageSection = `
+          <div id="importImageSection" class="mb-4 p-3 rounded-lg border" style="background:#fffbeb;border-color:#fde68a;">
+            <p class="text-sm font-medium mb-1" style="color:#92400e;">检测到 ${localRefs.length} 个本地图片引用</p>
+            <div class="text-xs mb-2 max-h-24 overflow-y-auto" style="color:#a16207;">
+              ${localRefs.map(r => `<div class="flex items-center gap-1"><span class="${window._importImageMap[getFilename(r)] ? 'text-green-600' : 'text-amber-600'}">${window._importImageMap[getFilename(r)] ? '✓' : '○'}</span> ${escapeHTML(r)}</div>`).join('')}
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="file" id="importImageInput" accept="image/*" multiple onchange="handleImportImages(event)" class="text-xs" style="max-width:200px;">
+              <span id="importImageStatus" class="text-xs ${matchedCount > 0 ? '' : 'hidden'}" style="color:#16a34a;">已匹配 ${matchedCount} 个文件</span>
+            </div>
+            ${unmatchedRefs.length > 0 && matchedCount > 0 ? `<p class="text-xs mt-1" style="color:#a16207;">${unmatchedRefs.length} 个引用未匹配，将保留原始路径</p>` : ''}
           </div>`;
-        }).join('')}
-      </div>
-      <p id="importSelectedCount" class="text-xs text-gray-400 mb-4"></p>
-      <div class="flex gap-2">
-        <button onclick="doImport()" class="flex-1 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors">确认导入</button>
-        <button onclick="closeModal()" class="flex-1 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">取消</button>
-      </div>`);
+      }
 
-    window._importCards = cards;
-    window._importDeckGroups = deckGroups;
-    window._importDeckNames = deckNames;
-    updateImportCount();
+      showModal(`
+        <h3 class="text-lg font-bold mb-4">导入卡片</h3>
+        <p class="text-sm text-gray-500 mb-4">解析到 <span class="font-semibold text-gray-700">${cards.length}</span> 张卡片（Markdown 格式）</p>
+        ${imageSection}
+        <div id="importCardPreview" class="mb-3 max-h-36 overflow-y-auto border border-gray-100 rounded-lg">
+          ${cards.slice(0, 20).map((c,i)=>`<div class="flex gap-2 py-1.5 px-3 text-xs ${i%2?'bg-gray-50':''}"><span class="text-gray-400 w-5">${i+1}.</span><span class="text-gray-700 truncate flex-1">${escapeHTML(stripHTML(c.front))}</span><span class="text-gray-400">→</span><span class="text-gray-500 truncate flex-1">${escapeHTML(stripHTML(c.back||'(空)'))}</span><span class="text-gray-300">|</span><span class="text-gray-400 truncate">${escapeHTML(c.deck || '(无分组)')}</span></div>`).join('')}
+          ${cards.length > 20 ? `<div class="text-center text-xs text-gray-400 py-1">…还有 ${cards.length - 20} 张</div>` : ''}
+        </div>
+        <label class="block text-xs font-medium text-gray-500 mb-2">选择分组及导入目标卡组</label>
+        <div class="mb-3 space-y-1 max-h-48 overflow-y-auto">
+          <label class="flex items-center gap-2 px-2 py-1.5 bg-gray-50 rounded-lg text-sm cursor-pointer hover:bg-gray-100 transition-colors">
+            <input type="checkbox" id="selectAllDecks" checked onchange="toggleAllDecks(this.checked)">
+            <span class="font-medium text-gray-700">全选 / 取消全选</span>
+          </label>
+          ${deckNames.map((name, idx) => {
+            const isUnnamed = !name;
+            const label = isUnnamed ? '(无分组)' : name;
+            const matchedDeck = decks.find(d => d.name === name);
+            return `
+            <div class="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm hover:bg-gray-50 transition-colors import-deck-item">
+              <input type="checkbox" class="deck-checkbox" checked onchange="updateImportCount()">
+              <span class="flex-1 ${isUnnamed ? 'text-gray-400' : ''}">${escapeHTML(label)}</span>
+              <span class="text-xs text-gray-400">${deckGroups[name].length} 张</span>
+              <select class="import-deck-select ml-2 px-2 py-0.5 border border-gray-200 rounded text-xs bg-white" data-group-idx="${idx}">
+                ${decks.map(d => `<option value="${d.id}" ${matchedDeck?.id === d.id ? 'selected' : ''}>${escapeHTML(d.name)}</option>`).join('')}
+              </select>
+            </div>`;
+          }).join('')}
+        </div>
+        <p id="importSelectedCount" class="text-xs text-gray-400 mb-4"></p>
+        <div class="flex gap-2">
+          <button onclick="doImport()" class="flex-1 py-2 bg-green-500 text-white rounded-lg text-sm hover:bg-green-600 transition-colors">确认导入</button>
+          <button onclick="closeModal()" class="flex-1 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200 transition-colors">取消</button>
+        </div>`);
+
+      window._importCards = cards;
+      window._importDeckGroups = deckGroups;
+      window._importDeckNames = deckNames;
+      updateImportCount();
+    };
+
+    renderImportModal(text);
   } catch (e) {
     showToast('文件读取失败: ' + (e.message || String(e)), 'error');
   }
+  event.target.value = '';
+};
+
+// Handle image file selection during import
+window.handleImportImages = async function(event) {
+  const files = event.target.files;
+  if (!files.length) return;
+
+  const statusEl = $('#importImageStatus');
+  let matched = 0;
+
+  for (const file of files) {
+    const dataUri = await imageToDataURL(file);
+    window._importImageMap[file.name] = dataUri;
+    matched++;
+  }
+
+  // Update the MD text with new image mappings
+  let updatedMD = replaceLocalImagesInMD(window._importRawMD, window._importImageMap);
+  window._importRawMD = updatedMD;
+
+  // Re-parse and re-render
+  const cards = parseMDFile(updatedMD);
+  const deckGroups = {};
+  for (const c of cards) {
+    const name = c.deck || '';
+    if (!deckGroups[name]) deckGroups[name] = [];
+    deckGroups[name].push(c);
+  }
+  window._importCards = cards;
+  window._importDeckGroups = deckGroups;
+  window._importDeckNames = Object.keys(deckGroups);
+
+  // Update the status text
+  const totalMatched = Object.keys(window._importImageMap).length;
+  if (statusEl) {
+    statusEl.textContent = `已匹配 ${totalMatched} 个文件`;
+    statusEl.classList.remove('hidden');
+  }
+
+  // Rebuild the modal content
+  const localRefs = collectLocalImageRefs(window._importRawMD);
+  const matchedCount = Object.keys(window._importImageMap).length;
+  const unmatchedRefs = localRefs.filter(r => !window._importImageMap[getFilename(r)]);
+
+  // Update image section in modal
+  const imageSection = $('#importImageSection');
+  if (imageSection) {
+    if (localRefs.length > 0) {
+      imageSection.innerHTML = `
+        <p class="text-sm font-medium mb-1" style="color:#92400e;">检测到 ${localRefs.length} 个本地图片引用</p>
+        <div class="text-xs mb-2 max-h-24 overflow-y-auto" style="color:#a16207;">
+          ${localRefs.map(r => `<div class="flex items-center gap-1"><span class="${window._importImageMap[getFilename(r)] ? 'text-green-600' : 'text-amber-600'}">${window._importImageMap[getFilename(r)] ? '✓' : '○'}</span> ${escapeHTML(r)}</div>`).join('')}
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="file" id="importImageInput" accept="image/*" multiple onchange="handleImportImages(event)" class="text-xs" style="max-width:200px;">
+          <span id="importImageStatus" class="text-xs" style="color:#16a34a;">已匹配 ${matchedCount} 个文件</span>
+        </div>
+        ${unmatchedRefs.length > 0 && matchedCount > 0 ? `<p class="text-xs mt-1" style="color:#a16207;">${unmatchedRefs.length} 个引用未匹配，将保留原始路径</p>` : ''}
+      `;
+    } else {
+      imageSection.innerHTML = `
+        <p class="text-sm font-medium mb-1" style="color:#16a34a;">全部 ${matchedCount} 个本地图片已匹配</p>
+        <div class="flex items-center gap-2">
+          <input type="file" id="importImageInput" accept="image/*" multiple onchange="handleImportImages(event)" class="text-xs" style="max-width:200px;">
+          <span id="importImageStatus" class="text-xs" style="color:#16a34a;">已匹配 ${matchedCount} 个文件</span>
+        </div>
+      `;
+    }
+  }
+
+  // Update card preview
+  const previewEl = $('#importCardPreview');
+  if (previewEl) {
+    previewEl.innerHTML = cards.slice(0, 20).map((c,i) => `<div class="flex gap-2 py-1.5 px-3 text-xs ${i%2?'bg-gray-50':''}"><span class="text-gray-400 w-5">${i+1}.</span><span class="text-gray-700 truncate flex-1">${escapeHTML(stripHTML(c.front))}</span><span class="text-gray-400">→</span><span class="text-gray-500 truncate flex-1">${escapeHTML(stripHTML(c.back||'(空)'))}</span><span class="text-gray-300">|</span><span class="text-gray-400 truncate">${escapeHTML(c.deck || '(无分组)')}</span></div>`).join('') + (cards.length > 20 ? `<div class="text-center text-xs text-gray-400 py-1">…还有 ${cards.length - 20} 张</div>` : '');
+  }
+
+  updateImportCount();
   event.target.value = '';
 };
 
@@ -2047,7 +2197,7 @@ async function renderStats() {
       '<div class="anime-card p-4 text-center"><div class="text-2xl font-bold" style="color:#FF9800;">' + overview.due + '</div><div class="text-xs mt-1" style="color:#8B7FA8;">待复习</div></div>' +
       '<div class="anime-card p-4 text-center"><div class="text-2xl font-bold" style="color:#B39DDB;">' + totalReviews + '</div><div class="text-xs mt-1" style="color:#8B7FA8;">总复习数</div></div>' +
     '</div>' +
-    '<div class="mb-4"><button onclick="clearAllData()" class="px-4 py-2 rounded-full text-sm transition-all duration-200" style="background:#fff0f5;color:#e83e8c;border:1px solid #ffc2d9;">清除所有数据</button></div>' +
+    '<div class="mb-4 flex gap-2"><button onclick="clearAllData()" class="px-4 py-2 rounded-full text-sm transition-all duration-200" style="background:#fff0f5;color:#e83e8c;border:1px solid #ffc2d9;">清除所有数据</button><button onclick="exportAllData()" class="px-4 py-2 rounded-full text-sm transition-all duration-200" style="background:#f0f5ff;color:#3b82f6;border:1px solid #c4b5fd;">导出全部数据</button><button onclick="importDataClick()" class="px-4 py-2 rounded-full text-sm transition-all duration-200" style="background:#f0fff4;color:#16a34a;border:1px solid #bbf7d0;">导入数据</button><input type="file" id="importDataFile" accept=".json" class="hidden" onchange="handleImportData(event)"></div>' +
     '<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">' +
       '<div class="anime-card p-5 lg:col-span-2">' +
         '<div class="flex items-center justify-between mb-4">' +
@@ -2102,6 +2252,57 @@ document.addEventListener('keydown', (e) => {
     }
   }
 });
+
+window.exportAllData = async function() {
+  const data = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    ankiweb: lsGet(LS_ANKIWEB, null),
+    revlog: lsGet(LS_REVLOG, null),
+    timehot: lsGet(LS_TIMEHOT, null)
+  };
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  downloadBlob(blob, 'waka-anki-backup-' + new Date().toISOString().slice(0, 10) + '.json');
+  const totalCards = data.ankiweb?.cards?.length || 0;
+  const totalReviews = data.revlog?.revlog?.length || 0;
+  showToast('已导出全部数据（' + totalCards + ' 张卡片，' + totalReviews + ' 条复习记录）', 'success');
+};
+
+window.importDataClick = function() {
+  document.getElementById('importDataFile').click();
+};
+
+window.handleImportData = async function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    if (!data.ankiweb && !data.revlog && !data.timehot) {
+      showToast('无效的备份文件', 'error');
+      event.target.value = '';
+      return;
+    }
+    const totalCards = data.ankiweb?.cards?.length || 0;
+    const totalReviews = data.revlog?.revlog?.length || 0;
+    const exportedAt = data.exportedAt ? new Date(data.exportedAt).toLocaleString() : '未知';
+    const msg = `备份日期：${exportedAt}\n卡片数：${totalCards}\n复习记录数：${totalReviews}\n\n确认导入将覆盖当前所有数据，此操作不可恢复！`;
+    showConfirm(msg, async () => {
+      if (data.ankiweb) lsSet(LS_ANKIWEB, data.ankiweb);
+      if (data.revlog) lsSet(LS_REVLOG, data.revlog);
+      if (data.timehot) lsSet(LS_TIMEHOT, data.timehot);
+      DB = null; REVLOG_DB = null; TIMEHOT_DB = null;
+      showToast('数据已恢复（' + totalCards + ' 张卡片，' + totalReviews + ' 条复习记录）', 'success');
+      if (location.hash.startsWith('#stats')) renderStats();
+      else if (location.hash.startsWith('#dashboard')) renderDashboard();
+      else if (location.hash.startsWith('#browse')) renderBrowse();
+    });
+  } catch (e) {
+    showToast('文件解析失败：' + (e.message || String(e)), 'error');
+  }
+  event.target.value = '';
+};
 
 window.clearAllData = async function() {
   showConfirm('确定要清空所有数据吗？此操作不可恢复！', async () => {
