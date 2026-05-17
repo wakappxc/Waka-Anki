@@ -149,6 +149,10 @@ tailwind.config = {
   #previewFront table, #previewBack table {
     border-collapse: collapse; width: 100%; margin: 0.4em 0; font-size: 0.9em;
   }
+  #reviewFrontContent .table-wrap, #reviewBackContent .table-wrap,
+  #previewFront .table-wrap, #previewBack .table-wrap {
+    overflow-x: auto; margin: 0.4em 0;
+  }
   #reviewFrontContent th, #reviewBackContent th,
   #previewFront th, #previewBack th {
     background: rgba(100,80,140,0.06); font-weight: 600; padding: 0.4em 0.6em;
@@ -462,6 +466,7 @@ function mdToHTML(md) {
   const lines = html.split('\n');
   const out = [];
   let inUL = false, inOL = false, inBQ = false;
+  let inTable = false, tableRows = [];
 
   function closeLists() {
     if (inOL) { out.push('</ol>'); inOL = false; }
@@ -470,6 +475,48 @@ function mdToHTML(md) {
 
   function closeBQ() {
     if (inBQ) { out.push('</blockquote>'); inBQ = false; }
+  }
+
+  function flushTable() {
+    if (!tableRows.length) { inTable = false; return; }
+    const splitCells = (line) => {
+      const parts = line.split('|');
+      if (parts[0].trim() === '') parts.shift();
+      if (parts.length && parts[parts.length - 1].trim() === '') parts.pop();
+      return parts.map(c => c.trim());
+    };
+    let html = '<table><thead><tr>';
+    const headerCells = splitCells(tableRows[0]);
+    headerCells.forEach(cell => { html += `<th>${cell}</th>`; });
+    html += '</tr></thead>';
+    let dataStart = 1;
+    const aligns = [];
+    if (tableRows.length >= 2 && /^\|[\s\-:]+\|$/.test(tableRows[1])) {
+      splitCells(tableRows[1]).forEach(c => {
+        const s = c.trim();
+        if (s.startsWith(':') && s.endsWith(':')) aligns.push('center');
+        else if (s.endsWith(':')) aligns.push('right');
+        else aligns.push('left');
+      });
+      dataStart = 2;
+    }
+    if (dataStart < tableRows.length) {
+      html += '<tbody>';
+      for (let i = dataStart; i < tableRows.length; i++) {
+        html += '<tr>';
+        splitCells(tableRows[i]).forEach((cell, idx) => {
+          const a = aligns[idx] ? ` style="text-align:${aligns[idx]}"` : '';
+          html += `<td${a}>${cell}</td>`;
+        });
+        html += '</tr>';
+      }
+      html += '</tbody>';
+    }
+    html += '</table>';
+    out.push('<div class="table-wrap">' + html + '</div>');
+    tableRows = [];
+    tableRows = [];
+    inTable = false;
   }
 
   function isBlockTag(s) {
@@ -481,11 +528,21 @@ function mdToHTML(md) {
     const line = raw.trim();
 
     if (line === '') {
+      flushTable();
       closeLists();
       closeBQ();
       out.push('');
       continue;
     }
+
+    // Table row
+    if (/^\|.+\|$/.test(line)) {
+      closeLists(); closeBQ();
+      if (!inTable) inTable = true;
+      tableRows.push(line);
+      continue;
+    }
+    if (inTable) flushTable();
 
     // Heading
     let m;
@@ -535,6 +592,7 @@ function mdToHTML(md) {
     out.push(raw);
   }
 
+  flushTable();
   closeLists();
   closeBQ();
   html = out.join('\n');
