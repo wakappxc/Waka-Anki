@@ -981,12 +981,16 @@ function syncReviewCardHeight(showBack) {
 }
 
 window.flipCard = function() {
-  reviewState.showingBack = true;
   const el = $('#reviewCard');
-  if (el) el.classList.toggle('flipped');
-  const btn = $('#answerButtons');
-  if (btn) btn.classList.remove('hidden');
-  syncReviewCardHeight(true);
+  if (!el) return;
+  el.classList.toggle('flipped');
+  const showBack = el.classList.contains('flipped');
+  reviewState.showingBack = showBack;
+  if (showBack) {
+    const btn = $('#answerButtons');
+    if (btn) btn.classList.remove('hidden');
+  }
+  syncReviewCardHeight(showBack);
 };
 
 window.answerCard = async function(rating) {
