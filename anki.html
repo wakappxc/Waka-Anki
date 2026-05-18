@@ -2316,12 +2316,13 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.exportAllData = async function() {
+  const raw = await exportAllRawData();
   const data = {
     version: 1,
     exportedAt: new Date().toISOString(),
-    ankiweb: lsGet(LS_ANKIWEB, null),
-    revlog: lsGet(LS_REVLOG, null),
-    timehot: lsGet(LS_TIMEHOT, null)
+    ankiweb: raw.ankiweb,
+    revlog: raw.revlog,
+    timehot: raw.timehot
   };
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
@@ -2351,9 +2352,7 @@ window.handleImportData = async function(event) {
     const exportedAt = data.exportedAt ? new Date(data.exportedAt).toLocaleString() : '未知';
     const msg = `备份日期：${exportedAt}\n卡片数：${totalCards}\n复习记录数：${totalReviews}\n\n确认导入将覆盖当前所有数据，此操作不可恢复！`;
     showConfirm(msg, async () => {
-      if (data.ankiweb) lsSet(LS_ANKIWEB, data.ankiweb);
-      if (data.revlog) lsSet(LS_REVLOG, data.revlog);
-      if (data.timehot) lsSet(LS_TIMEHOT, data.timehot);
+      await importRawData(data.ankiweb || null, data.revlog || null, data.timehot || null);
       DB = null; REVLOG_DB = null; TIMEHOT_DB = null;
       showToast('数据已恢复（' + totalCards + ' 张卡片，' + totalReviews + ' 条复习记录）', 'success');
       if (location.hash.startsWith('#stats')) renderStats();

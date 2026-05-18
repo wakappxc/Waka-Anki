@@ -1,11 +1,61 @@
-// localStorage-based storage
-// Main data: 'waka_ankiweb' (decks, notes, cards, folders)
-// Revlog:     'waka_revlog'  (review history)
-// Timehot:    'waka_timehot' (daily counts)
+// IndexedDB-based storage
+// Main data: store 'ankiweb' (decks, notes, cards, folders)
+// Revlog:     store 'revlog'  (review history)
+// Timehot:    store 'timehot' (daily counts)
 
+const IDB_NAME = 'waka_anki';
+const IDB_VERSION = 1;
+
+let _idb = null;
+
+function openIDB() {
+  if (_idb) return Promise.resolve(_idb);
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(IDB_NAME, IDB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('ankiweb')) db.createObjectStore('ankiweb');
+      if (!db.objectStoreNames.contains('revlog')) db.createObjectStore('revlog');
+      if (!db.objectStoreNames.contains('timehot')) db.createObjectStore('timehot');
+    };
+    req.onsuccess = (e) => { _idb = e.target.result; _idb.onclose = () => { _idb = null; }; resolve(_idb); };
+    req.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function idbGet(storeName, fallback) {
+  try {
+    const db = await openIDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction(storeName, 'readonly');
+      tx.objectStore(storeName).get('main').onsuccess = (e) => {
+        resolve(e.target.result ? e.target.result.data : null);
+      };
+    });
+  } catch (e) { return null; }
+}
+
+async function idbSet(storeName, data) {
+  try {
+    const db = await openIDB();
+    return new Promise((resolve) => {
+      const tx = db.transaction(storeName, 'readwrite');
+      tx.objectStore(storeName).put({ data }, 'main');
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => { console.error('IndexedDB write failed:', tx.error); resolve(); };
+    });
+  } catch (e) { console.error('IndexedDB write error:', e); }
+}
+
+// Legacy localStorage helpers – only used for one-time migration
 const LS_ANKIWEB = 'waka_ankiweb';
 const LS_REVLOG = 'waka_revlog';
 const LS_TIMEHOT = 'waka_timehot';
+
+function lsGet(key, fallback) {
+  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch (e) { return fallback; }
+}
 
 function generateUUID() {
   if (crypto.randomUUID) return crypto.randomUUID();
@@ -15,47 +65,56 @@ function generateUUID() {
   });
 }
 
-function lsGet(key, fallback) {
-  try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
-  catch (e) { return fallback; }
-}
-
-function lsSet(key, data) {
-  try { localStorage.setItem(key, JSON.stringify(data)); } catch (e) {}
-}
-
 let DB = null;
 let REVLOG_DB = null;
 let TIMEHOT_DB = null;
 
 async function loadRevlogDB() {
   if (REVLOG_DB) return REVLOG_DB;
-  REVLOG_DB = lsGet(LS_REVLOG, { revlog: [], nextId: { revlog: 1 } });
+  let data = await idbGet('revlog');
+  if (!data) {
+    data = lsGet(LS_REVLOG, null);
+    if (data) await idbSet('revlog', data);
+  }
+  if (!data) data = { revlog: [], nextId: { revlog: 1 } };
+  REVLOG_DB = data;
   return REVLOG_DB;
 }
 
 async function saveRevlogDB() {
-  lsSet(LS_REVLOG, REVLOG_DB);
+  await idbSet('revlog', REVLOG_DB);
 }
 
 async function loadTimehotDB() {
   if (TIMEHOT_DB) return TIMEHOT_DB;
-  TIMEHOT_DB = lsGet(LS_TIMEHOT, { days: {} });
+  let data = await idbGet('timehot');
+  if (!data) {
+    data = lsGet(LS_TIMEHOT, null);
+    if (data) await idbSet('timehot', data);
+  }
+  if (!data) data = { days: {} };
+  TIMEHOT_DB = data;
   return TIMEHOT_DB;
 }
 
 async function saveTimehotDB() {
-  lsSet(LS_TIMEHOT, TIMEHOT_DB);
+  await idbSet('timehot', TIMEHOT_DB);
 }
 
 async function loadDB() {
   if (DB) return DB;
-  DB = lsGet(LS_ANKIWEB, { decks: [], notes: [], cards: [], folders: [], nextId: { decks: 1, notes: 1, cards: 1, folders: 1 } });
+  let data = await idbGet('ankiweb');
+  if (!data) {
+    data = lsGet(LS_ANKIWEB, null);
+    if (data) await idbSet('ankiweb', data);
+  }
+  if (!data) data = { decks: [], notes: [], cards: [], folders: [], nextId: { decks: 1, notes: 1, cards: 1, folders: 1 } };
+  DB = data;
   return DB;
 }
 
 async function saveDB() {
-  lsSet(LS_ANKIWEB, DB);
+  await idbSet('ankiweb', DB);
 }
 
 // ===== Decks =====
@@ -241,7 +300,6 @@ const Revlog = {
     };
     REVLOG_DB.revlog.push(entry); await saveRevlogDB();
 
-    // Also increment daily count in timehot (persists independently of deck/card deletions)
     await loadTimehotDB();
     const d = new Date(entry.reviewTime);
     const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
@@ -259,13 +317,10 @@ const Revlog = {
     const before = REVLOG_DB.revlog.length;
     REVLOG_DB.revlog = REVLOG_DB.revlog.filter(e => !cidSet.has(e.cid));
     if (REVLOG_DB.revlog.length !== before) await saveRevlogDB();
-    // Note: timehot.json is intentionally NOT cleared — review heatmap persists independently
   }
 };
 
 // ===== Timehot =====
-// Persistent daily review counts, independent of deck/card deletions.
-// Format: { days: { "2026-05-15": 5, "2026-05-14": 12, ... } }
 const Timehot = {
   async getAll() { await loadTimehotDB(); return { ...TIMEHOT_DB.days }; },
   async getTotal() {
@@ -296,16 +351,30 @@ const Stats = {
   }
 };
 
+// Export for backup/restore (used by anki.html)
+async function exportAllRawData() {
+  await loadDB();
+  await loadRevlogDB();
+  await loadTimehotDB();
+  return { ankiweb: DB, revlog: REVLOG_DB, timehot: TIMEHOT_DB };
+}
+
+async function importRawData(ankiweb, revlog, timehot) {
+  if (ankiweb) { DB = ankiweb; await saveDB(); }
+  if (revlog) { REVLOG_DB = revlog; await saveRevlogDB(); }
+  if (timehot) { TIMEHOT_DB = timehot; await saveTimehotDB(); }
+}
+
 async function clearAllDB() {
   await loadDB();
   await loadRevlogDB();
+  await loadTimehotDB();
   DB.decks = []; DB.notes = []; DB.cards = []; DB.folders = [];
   DB.nextId = { decks: 1, notes: 1, cards: 1, folders: 1 };
   await saveDB();
   REVLOG_DB.revlog = [];
   REVLOG_DB.nextId = { revlog: 1 };
   await saveRevlogDB();
-  await loadTimehotDB();
   TIMEHOT_DB.days = {};
   await saveTimehotDB();
 }
